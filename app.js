@@ -1,17 +1,24 @@
 require('./style.styl')
+require('./components/splash/splash.styl')
+require('./components/home/home.styl')
+require('./components/header/header.styl')
+require('./components/forecast-today/forecastToday.styl')
+require('./components/forecast-footer/forecastFooter.styl')
+
 import React from 'react'
 import Router from 'react-router'
 import { Route, DefaultRoute, Link, RouteHandler } from 'react-router'
 
-import App from './app/app.js'
-import Home from './app/home.js'
-import Splash from './app/splash.js'
-import Settings from './app/settings.js'
+import App from './components/app.js'
+import Home from './components/home/home.js'
+import Splash from './components/splash/splash.js'
+import Settings from './components/settings.js'
 
 let routes = (
   <Route handler={App} path="/">
     <DefaultRoute handler={Splash} />
-    <Route name="splash" path="/splash" handler={Splash} />
+
+    <Route name="home" path="/home" handler={Home} />
   </Route>
 )
 
