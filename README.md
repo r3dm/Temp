@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/r3dm/Temp.png?label=ready&title=Ready)](https://waffle.io/r3dm/Temp)
 # Temp
 A react+Cordova app targeting web, iOS and Android
 
