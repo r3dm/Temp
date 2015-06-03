@@ -14,6 +14,7 @@ let ForecastToday = React.createClass({
             <i className="cloudy"></i>
             <p>rainy</p>
           </div>
+          <i className="wi wi-day-lightning"></i>
 
           <span className="divider">|</span>
 

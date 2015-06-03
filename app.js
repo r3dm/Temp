@@ -1,4 +1,5 @@
 require('./style.styl')
+require('./styles/weather-icons.css')
 require('./components/splash/splash.styl')
 require('./components/home/home.styl')
 require('./components/header/header.styl')
