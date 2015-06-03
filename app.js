@@ -1,10 +1,4 @@
 require('./styles/style.styl')
-require('./styles/weather-icons.css')
-require('./components/splash/splash.styl')
-require('./components/home/home.styl')
-require('./components/header/header.styl')
-require('./components/forecast-today/forecastToday.styl')
-require('./components/forecast-footer/forecastFooter.styl')
 
 import React from 'react'
 import Router from 'react-router'

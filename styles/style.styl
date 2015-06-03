@@ -2,8 +2,15 @@
   font-family "HelveticaNeue-UltraLight"
   src url(../font/HelveticaNeue-UltraLight.ttf)
 
+splash-red = #f0543c
+temp-blue = #7ea4b3
+alt-font-color = #4c869b
+border-color = #c9e2eb
+
 body
   margin 0 // reset
 
   div#content
 
+@import '../components/*' // include all style files for components
+@import 'weather-icons.css'

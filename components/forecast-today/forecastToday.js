@@ -11,15 +11,14 @@ let ForecastToday = React.createClass({
 
         <div className="forecast-and-chance">
           <div>
-            <i className="cloudy"></i>
+            <i className="wi wi-rain"></i>
             <p>rainy</p>
           </div>
-          <i className="wi wi-day-lightning"></i>
 
           <span className="divider">|</span>
 
           <div>
-            <i className="cloudy"></i>
+            <i className="wi wi-sprinkles"></i>
             <p>100%</p>
           </div>
         </div>
