@@ -4,11 +4,24 @@ let ForecastToday = React.createClass({
   render() {
     return (
       <div className="forecast-today-wrapper">
-        <h2 className="temperature">64 &deg;</h2>
-        <i className="cloudy"></i>
-        <p>rainy</p>
-        <i className="cloudy"></i>
-        <p>100%</p>
+        <div className="main-temp-wrapper">
+          <span className="temperature">64</span>
+          <span className="degrees">&deg;</span>
+        </div>
+
+        <div className="forecast-and-chance">
+          <div>
+            <i className="cloudy"></i>
+            <p>rainy</p>
+          </div>
+
+          <span className="divider">|</span>
+
+          <div>
+            <i className="cloudy"></i>
+            <p>100%</p>
+          </div>
+        </div>
       </div>
     )
   }
