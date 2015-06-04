@@ -3,17 +3,24 @@
   color white
   background splash-red
   text-align center
-  font-family "HelveticaNeue-UltraLight", sans-serif
+  font-family "Comfortaa-Light", sans-serif
   display flex
   flex-direction column
   justify-content center
   align-items center
 
-  #sun-icon
-    width 40vw
+  .sun-icon
+    font-size 7em
+    animation-duration 5s
+    animation-name sun-icon
+    animation-iteration-count infinite
+
+  @keyframes sun-icon
+    to
+      transform rotate(360deg)
 
   .splash
-    font-size 45px
+    font-size 3em
     padding 10px 0 0 10px
     margin 0
 
