@@ -1,6 +1,7 @@
 [![Stories in Ready](https://badge.waffle.io/r3dm/Temp.png?label=ready&title=Ready)](https://waffle.io/r3dm/Temp)
+
 # Temp
-A react+Cordova app targeting web, iOS and Android
+A React.js + Cordova App targeting the Web, iOS and Android.
 
 ## Usage
 
@@ -11,3 +12,13 @@ To run project locally do
     npm start
 
 webpack will bundle the project and start a server available at `localhost:8080`
+
+To build project
+
+    npm run build
+
+then upload project to hosting provider
+
+## License
+
+MIT
