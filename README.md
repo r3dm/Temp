@@ -1,6 +1,6 @@
-[![Stories in Ready](https://badge.waffle.io/r3dm/Temp.png?label=ready&title=Ready)](https://waffle.io/r3dm/Temp)
+[![Stories in Ready](https://badge.waffle.io/r3dm/temp.png?label=ready&title=Ready)](https://waffle.io/r3dm/temp)
 
-# Temp
+# temp
 A React.js + Cordova App targeting the Web, iOS and Android.
 
 ## Usage
