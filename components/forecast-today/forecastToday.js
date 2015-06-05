@@ -33,18 +33,15 @@ let ForecastToday = React.createClass({
         </div>
 
         <div className="overflow-div">
-          <ForecastHourly />
-          <ForecastHourly />
-          <ForecastHourly />
-          <ForecastHourly />
-          <ForecastHourly />
-          <ForecastHourly />
-          <ForecastHourly />
-          <ForecastHourly />
-          <ForecastHourly />
-          <ForecastHourly />
-          <ForecastHourly />
-          <ForecastHourly />
+          <ForecastHourly color="#4c869b" time="3:00pm" temperature="65" forecast="rain" />
+          <ForecastHourly color="#5aa0ba" time="4:00pm" temperature="66" forecast="cloudy" />
+          <ForecastHourly color="#5aa0ba" time="5:00pm" temperature="66" forecast="cloudy" />
+          <ForecastHourly color="#77b3c9" time="6:00pm" temperature="67" forecast="day-cloudy" />
+          <ForecastHourly color="#77b3c9" time="7:00pm" temperature="67" forecast="day-cloudy" />
+          <ForecastHourly color="#94cade" time="8:00pm" temperature="68" forecast="day-sunny" />
+          <ForecastHourly color="#94cade" time="9:00pm" temperature="68" forecast="day-sunny" />
+          <ForecastHourly color="#b6e5f7" time="10:00pm" temperature="69" forecast="cloudy" />
+          <ForecastHourly color="#b6e5f7" time="11:00pm" temperature="69" forecast="cloudy" />
         </div>
       </div>
     )

@@ -2,14 +2,19 @@ import React from 'react'
 
 let ForecastHourly = React.createClass({
   render() {
+    var divStyle = {
+      backgroundColor: this.props.color
+    }
+
     return (
-      <div className="forecast-hourly-wrapper">
+      <div className="forecast-hourly-wrapper"
+           style={ divStyle } >
         <div>
-          3:00pm
+          { this.props.time }
         </div>
         <i className="wi wi-rain"></i>
         <div>
-          65&deg;
+          { this.props.temperature }&deg;
         </div>
       </div>
     )
