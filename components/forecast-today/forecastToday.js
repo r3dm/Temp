@@ -25,6 +25,13 @@ let ForecastToday = React.createClass({
             </div>
           </div>
         </div>
+
+        <div className="main-bars">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+
         <ForecastHourly />
         <ForecastHourly />
         <ForecastHourly />
