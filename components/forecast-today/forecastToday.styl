@@ -1,25 +1,16 @@
 .forecast-top-offset
-  margin-top 82px // 62px offset from header height + 2 * 10px header padding
   background-color temp-blue
-
-.main-bars
-  padding 7px 0
-  border-bottom 2px solid alt-font-color
-
-  div
-    width 40px
-    padding-bottom 3px
-    margin 0 auto
-    border-top 2px solid white
+  flex-grow 1
+  overflow scroll
 
 .forecast-today-wrapper
-  height 73vh
   display flex
   flex-direction column
   flex-grow 1
   flex-wrap wrap
   justify-content center
   align-items center
+  height 65vh
 
   .main-temp-wrapper
     font-size 7em
@@ -47,3 +38,17 @@
       width 0
       color alt-font-color
       border 1px solid
+
+.main-bars
+  padding 7px 0
+  border-bottom 2px solid alt-font-color
+
+  div
+    width 40px
+    padding-bottom 3px
+    margin 0 auto
+    border-top 2px solid white
+
+.overflow-div
+  overflow auto
+  height 55vh

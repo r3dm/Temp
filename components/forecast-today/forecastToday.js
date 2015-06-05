@@ -32,12 +32,20 @@ let ForecastToday = React.createClass({
           <div></div>
         </div>
 
-        <ForecastHourly />
-        <ForecastHourly />
-        <ForecastHourly />
-        <ForecastHourly />
-        <ForecastHourly />
-        <ForecastHourly />
+        <div className="overflow-div">
+          <ForecastHourly />
+          <ForecastHourly />
+          <ForecastHourly />
+          <ForecastHourly />
+          <ForecastHourly />
+          <ForecastHourly />
+          <ForecastHourly />
+          <ForecastHourly />
+          <ForecastHourly />
+          <ForecastHourly />
+          <ForecastHourly />
+          <ForecastHourly />
+        </div>
       </div>
     )
   }
