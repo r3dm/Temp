@@ -7,7 +7,9 @@ let ForecastToday = React.createClass({
       <div className="forecast-top-offset">
         <div className="forecast-today-wrapper">
           <div className="main-temp-wrapper">
-            <span className="temperature">64</span>
+            <span className="temperature">
+              { this.props.temp }
+            </span>
             <span className="degrees">&deg;</span>
           </div>
 

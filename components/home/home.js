@@ -8,7 +8,7 @@ let Home = React.createClass({
     return (
       <div className="home-wrapper">
         <Header />
-        <ForecastToday />
+        <ForecastToday temp={ this.props.temp } />
         <ForecastFooter />
       </div>
     )

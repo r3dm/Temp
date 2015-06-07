@@ -13,7 +13,8 @@
   "dependencies": {
     "conversion.js": "0.0.5",
     "react": "^0.13.3",
-    "react-router": "^0.13.3"
+    "react-router": "^0.13.3",
+    "superagent": "^1.2.0"
   },
   "devDependencies": {
     "babel-core": "^5.4.7",
