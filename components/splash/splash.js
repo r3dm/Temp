@@ -1,6 +1,7 @@
 import React from 'react'
 import Radium from 'radium'
 import { Navigation } from 'react-router'
+import Common from '../../styles/common.js'
 
 let Splash = React.createClass({
   mixins: [Navigation],
@@ -21,7 +22,6 @@ let Splash = React.createClass({
   }
 })
 
-var splashRed = '#ff5136'
 var sunIconKeyframes = Radium.keyframes({
   '100%': { transform: 'rotate(360deg)'}
 })
@@ -29,7 +29,7 @@ var styles = {
   base: {
     height: '100%',
     color: 'white',
-    background: splashRed,
+    background: Common.splashRed,
     textAlign: 'center',
     fontFamily: '"Comfortaa-Light", sans-serif',
     display: 'flex',
@@ -41,9 +41,6 @@ var styles = {
   sunIcon: {
     fontSize: '7em',
     animation: sunIconKeyframes + ' 5s ease 0s infinite'
-    // animationDuration: '5s',
-    // animationName: 'sun-icon',
-    // animationIterationCount: 'infinite'
   },
 
   splash: {
