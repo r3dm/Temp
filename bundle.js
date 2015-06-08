@@ -26136,8 +26136,30 @@
 	  value: true
 	});
 
+	var _createClass = (function () {
+	  function defineProperties(target, props) {
+	    for (var i = 0; i < props.length; i++) {
+	      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+	    }
+	  }return function (Constructor, protoProps, staticProps) {
+	    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+	  };
+	})();
+
 	function _interopRequireDefault(obj) {
 	  return obj && obj.__esModule ? obj : { 'default': obj };
+	}
+
+	function _classCallCheck(instance, Constructor) {
+	  if (!(instance instanceof Constructor)) {
+	    throw new TypeError('Cannot call a class as a function');
+	  }
+	}
+
+	function _inherits(subClass, superClass) {
+	  if (typeof superClass !== 'function' && superClass !== null) {
+	    throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+	  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) subClass.__proto__ = superClass;
 	}
 
 	var _react = __webpack_require__(5);
@@ -26148,15 +26170,106 @@
 
 	var _forecastHourlyForecastHourlyJs2 = _interopRequireDefault(_forecastHourlyForecastHourlyJs);
 
-	var ForecastToday = _react2['default'].createClass({
-	  displayName: 'ForecastToday',
+	var _radium = __webpack_require__(202);
 
-	  render: function render() {
-	    return _react2['default'].createElement('div', { className: 'forecast-top-offset' }, _react2['default'].createElement('div', { className: 'forecast-today-wrapper' }, _react2['default'].createElement('div', { className: 'main-temp-wrapper' }, _react2['default'].createElement('span', { className: 'temperature' }, this.props.temp), _react2['default'].createElement('span', { className: 'degrees' }, '°')), _react2['default'].createElement('div', { className: 'forecast-and-chance' }, _react2['default'].createElement('div', null, _react2['default'].createElement('i', { className: 'wi wi-rain' }), _react2['default'].createElement('p', null, 'rainy')), _react2['default'].createElement('div', { className: 'divider' }), _react2['default'].createElement('div', null, _react2['default'].createElement('i', { className: 'wi wi-sprinkles' }), _react2['default'].createElement('p', null, '100%')))), _react2['default'].createElement('div', { className: 'main-bars' }, _react2['default'].createElement('div', null), _react2['default'].createElement('div', null), _react2['default'].createElement('div', null)), _react2['default'].createElement('div', { className: 'overflow-div' }, _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#4c869b', time: '3:00pm', temperature: '65', forecast: 'rain' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#5aa0ba', time: '4:00pm', temperature: '66', forecast: 'cloudy' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#5aa0ba', time: '5:00pm', temperature: '66', forecast: 'cloudy' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#77b3c9', time: '6:00pm', temperature: '67', forecast: 'day-cloudy' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#77b3c9', time: '7:00pm', temperature: '67', forecast: 'day-cloudy' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#94cade', time: '8:00pm', temperature: '68', forecast: 'day-sunny' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#94cade', time: '9:00pm', temperature: '68', forecast: 'day-sunny' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#b6e5f7', time: '10:00pm', temperature: '69', forecast: 'cloudy' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#b6e5f7', time: '11:00pm', temperature: '69', forecast: 'cloudy' })));
+	var _radium2 = _interopRequireDefault(_radium);
+
+	var _stylesCommonJs = __webpack_require__(215);
+
+	var _stylesCommonJs2 = _interopRequireDefault(_stylesCommonJs);
+
+	var ForecastToday = (function (_React$Component) {
+	  function ForecastToday() {
+	    _classCallCheck(this, ForecastToday);
+
+	    if (_React$Component != null) {
+	      _React$Component.apply(this, arguments);
+	    }
 	  }
-	});
 
-	exports['default'] = ForecastToday;
+	  _inherits(ForecastToday, _React$Component);
+
+	  _createClass(ForecastToday, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.forecastTodayWrapper }, _react2['default'].createElement('div', { style: styles.mainTempWrapper }, _react2['default'].createElement('span', { className: 'temperature' }, this.props.temp), _react2['default'].createElement('span', { style: styles.degrees }, '°')), _react2['default'].createElement('div', { style: styles.forecastAndChance }, _react2['default'].createElement('div', { style: styles.forecastAndChanceChild }, _react2['default'].createElement('i', { style: styles.icon,
+	        className: 'wi wi-rain' }), _react2['default'].createElement('p', null, 'rainy')), _react2['default'].createElement('div', { style: styles.divider }), _react2['default'].createElement('div', { style: styles.forecastAndChanceChild }, _react2['default'].createElement('i', { className: 'wi wi-sprinkles' }), _react2['default'].createElement('p', null, '100%')))), _react2['default'].createElement('div', { style: styles.mainBars }, _react2['default'].createElement('div', { style: styles.mainBarsChild }), _react2['default'].createElement('div', { style: styles.mainBarsChild }), _react2['default'].createElement('div', { style: styles.mainBarsChild })), _react2['default'].createElement('div', { style: styles.overflowDiv }, _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#4c869b', time: '3:00pm', temperature: '65', forecast: 'rain' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#5aa0ba', time: '4:00pm', temperature: '66', forecast: 'cloudy' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#5aa0ba', time: '5:00pm', temperature: '66', forecast: 'cloudy' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#77b3c9', time: '6:00pm', temperature: '67', forecast: 'day-cloudy' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#77b3c9', time: '7:00pm', temperature: '67', forecast: 'day-cloudy' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#94cade', time: '8:00pm', temperature: '68', forecast: 'day-sunny' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#94cade', time: '9:00pm', temperature: '68', forecast: 'day-sunny' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#b6e5f7', time: '10:00pm', temperature: '69', forecast: 'cloudy' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#b6e5f7', time: '11:00pm', temperature: '69', forecast: 'cloudy' })));
+	    }
+	  }]);
+
+	  return ForecastToday;
+	})(_react2['default'].Component);
+
+	var styles = {
+	  base: {
+	    backgroundColor: _stylesCommonJs2['default'].tempBlue,
+	    flexGrow: 1,
+	    overflow: 'scroll'
+	  },
+
+	  forecastTodayWrapper: {
+	    display: 'flex',
+	    flexDirection: 'column',
+	    flexGrow: 1,
+	    flexWrap: 'wrap',
+	    justifyContent: 'center',
+	    alignItems: 'center',
+	    height: '65vh'
+	  },
+
+	  mainTempWrapper: {
+	    fontSize: '7em',
+	    maxWidth: '50%'
+	  },
+
+	  degrees: {
+	    fontSize: '0.8em',
+	    verticalAlign: 'top'
+	  },
+
+	  forecastAndChance: {
+	    display: 'flex',
+	    flexDirection: 'row',
+	    justifyContent: 'center',
+	    maxWidth: '50%',
+	    textAlign: 'center' },
+
+	  icon: {
+	    fontSize: '3em'
+	  },
+
+	  forecastAndChanceChild: {
+	    width: '20vw'
+	  },
+
+	  divider: {
+	    height: '6em',
+	    width: 0,
+	    color: 'alt-font-color',
+	    border: '1px solid'
+	  },
+
+	  mainBars: {
+	    padding: '7px 0',
+	    borderBottom: '2px solid alt-font-color'
+	  },
+
+	  mainBarsChild: {
+	    width: '40px',
+	    paddingBottom: '3px',
+	    margin: '0 auto',
+	    borderTop: '2px solid white'
+	  },
+
+	  overflowDiv: {
+	    overflow: 'auto',
+	    height: '55vh',
+	    borderTop: '2px solid border-color',
+	    borderBottom: '2px solid alt-font-color'
+	  }
+	};
+
+	exports['default'] = (0, _radium2['default'])(ForecastToday);
 	module.exports = exports['default'];
 
 	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "forecastToday.js" + ": " + err.message); } }); } } })(); }
@@ -26463,7 +26576,7 @@
 	exports = module.exports = __webpack_require__(224)();
 	exports.i(__webpack_require__(225), "");
 	exports.i(__webpack_require__(230), "");
-	exports.push([module.id, "@font-face {\n  font-family: \"Comfortaa-Bold\";\n  src: url("+__webpack_require__(223)+");\n}\n@font-face {\n  font-family: \"Comfortaa-Light\";\n  src: url("+__webpack_require__(236)+");\n}\n@font-face {\n  font-family: \"Comfortaa-Regular\";\n  src: url("+__webpack_require__(237)+");\n}\nhtml {\n  height: 100%;\n}\nbody {\n  margin: 0;\n  height: 100%;\n}\nbody div#content {\n  height: 100%;\n}\n.forecast-hourly-wrapper {\n  display: flex;\n  flex-direction: row;\n  flex-grow: 1;\n  flex-wrap: nowrap;\n  justify-content: center;\n  align-items: center;\n  min-height: 90px;\n}\n.forecast-hourly-wrapper div,\n.forecast-hourly-wrapper i {\n  flex-grow: 1;\n  text-align: center;\n}\n.forecast-hourly-wrapper div {\n  font-size: 1.2em;\n}\n.forecast-hourly-wrapper i {\n  font-size: 3em;\n}\n.forecast-top-offset {\n  background-color: #7ea4b3;\n  flex-grow: 1;\n  overflow: scroll;\n}\n.forecast-today-wrapper {\n  display: flex;\n  flex-direction: column;\n  flex-grow: 1;\n  flex-wrap: wrap;\n  justify-content: center;\n  align-items: center;\n  height: 65vh;\n}\n.forecast-today-wrapper .main-temp-wrapper {\n  font-size: 7em;\n  max-width: 50%;\n}\n.forecast-today-wrapper .main-temp-wrapper .degrees {\n  font-size: 0.8em;\n  vertical-align: top;\n}\n.forecast-today-wrapper .forecast-and-chance {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  max-width: 50%;\n  text-align: center;\n}\n.forecast-today-wrapper .forecast-and-chance .wi {\n  font-size: 3em;\n}\n.forecast-today-wrapper .forecast-and-chance div {\n  width: 20vw;\n}\n.forecast-today-wrapper .forecast-and-chance .divider {\n  height: 6em;\n  width: 0;\n  color: #4c869b;\n  border: 1px solid;\n}\n.main-bars {\n  padding: 7px 0;\n  border-bottom: 2px solid #4c869b;\n}\n.main-bars div {\n  width: 40px;\n  padding-bottom: 3px;\n  margin: 0 auto;\n  border-top: 2px solid #fff;\n}\n.overflow-div {\n  overflow: auto;\n  height: 55vh;\n  border-top: 2px solid #c9e2eb;\n  border-bottom: 2px solid #4c869b;\n}\n\n\n", ""]);
+	exports.push([module.id, "@font-face {\n  font-family: \"Comfortaa-Bold\";\n  src: url("+__webpack_require__(223)+");\n}\n@font-face {\n  font-family: \"Comfortaa-Light\";\n  src: url("+__webpack_require__(236)+");\n}\n@font-face {\n  font-family: \"Comfortaa-Regular\";\n  src: url("+__webpack_require__(237)+");\n}\nhtml {\n  height: 100%;\n}\nbody {\n  margin: 0;\n  height: 100%;\n}\nbody div#content {\n  height: 100%;\n}\n.forecast-hourly-wrapper {\n  display: flex;\n  flex-direction: row;\n  flex-grow: 1;\n  flex-wrap: nowrap;\n  justify-content: center;\n  align-items: center;\n  min-height: 90px;\n}\n.forecast-hourly-wrapper div,\n.forecast-hourly-wrapper i {\n  flex-grow: 1;\n  text-align: center;\n}\n.forecast-hourly-wrapper div {\n  font-size: 1.2em;\n}\n.forecast-hourly-wrapper i {\n  font-size: 3em;\n}\n\n\n", ""]);
 
 /***/ },
 /* 223 */
