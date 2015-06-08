@@ -25,7 +25,8 @@ class ForecastToday extends React.Component {
             <div style={styles.divider} ></div>
 
             <div style={styles.forecastAndChanceChild} >
-              <i className="wi wi-sprinkles"></i>
+              <i style={styles.icon}
+                 className="wi wi-sprinkles"></i>
               <p>100%</p>
             </div>
           </div>
@@ -99,13 +100,13 @@ var styles = {
   divider: {
     height: '6em',
     width: 0,
-    color: 'alt-font-color',
+    color: Common.altFontColor,
     border: '1px solid'
   },
 
   mainBars: {
     padding: '7px 0',
-    borderBottom: '2px solid alt-font-color'
+    borderBottom: '2px solid ' + Common.altFontColor
   },
 
   mainBarsChild: {

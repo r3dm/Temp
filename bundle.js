@@ -26116,7 +26116,8 @@
 	var Common = {
 	  splashRed: '#ff5136',
 	  tempBlue: '#7ea4b3',
-	  borderColor: '#c9e2eb'
+	  borderColor: '#c9e2eb',
+	  altFontColor: '#4c869b'
 	};
 
 	exports['default'] = Common;
@@ -26193,7 +26194,8 @@
 	    key: 'render',
 	    value: function render() {
 	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.forecastTodayWrapper }, _react2['default'].createElement('div', { style: styles.mainTempWrapper }, _react2['default'].createElement('span', { className: 'temperature' }, this.props.temp), _react2['default'].createElement('span', { style: styles.degrees }, '°')), _react2['default'].createElement('div', { style: styles.forecastAndChance }, _react2['default'].createElement('div', { style: styles.forecastAndChanceChild }, _react2['default'].createElement('i', { style: styles.icon,
-	        className: 'wi wi-rain' }), _react2['default'].createElement('p', null, 'rainy')), _react2['default'].createElement('div', { style: styles.divider }), _react2['default'].createElement('div', { style: styles.forecastAndChanceChild }, _react2['default'].createElement('i', { className: 'wi wi-sprinkles' }), _react2['default'].createElement('p', null, '100%')))), _react2['default'].createElement('div', { style: styles.mainBars }, _react2['default'].createElement('div', { style: styles.mainBarsChild }), _react2['default'].createElement('div', { style: styles.mainBarsChild }), _react2['default'].createElement('div', { style: styles.mainBarsChild })), _react2['default'].createElement('div', { style: styles.overflowDiv }, _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#4c869b', time: '3:00pm', temperature: '65', forecast: 'rain' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#5aa0ba', time: '4:00pm', temperature: '66', forecast: 'cloudy' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#5aa0ba', time: '5:00pm', temperature: '66', forecast: 'cloudy' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#77b3c9', time: '6:00pm', temperature: '67', forecast: 'day-cloudy' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#77b3c9', time: '7:00pm', temperature: '67', forecast: 'day-cloudy' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#94cade', time: '8:00pm', temperature: '68', forecast: 'day-sunny' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#94cade', time: '9:00pm', temperature: '68', forecast: 'day-sunny' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#b6e5f7', time: '10:00pm', temperature: '69', forecast: 'cloudy' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#b6e5f7', time: '11:00pm', temperature: '69', forecast: 'cloudy' })));
+	        className: 'wi wi-rain' }), _react2['default'].createElement('p', null, 'rainy')), _react2['default'].createElement('div', { style: styles.divider }), _react2['default'].createElement('div', { style: styles.forecastAndChanceChild }, _react2['default'].createElement('i', { style: styles.icon,
+	        className: 'wi wi-sprinkles' }), _react2['default'].createElement('p', null, '100%')))), _react2['default'].createElement('div', { style: styles.mainBars }, _react2['default'].createElement('div', { style: styles.mainBarsChild }), _react2['default'].createElement('div', { style: styles.mainBarsChild }), _react2['default'].createElement('div', { style: styles.mainBarsChild })), _react2['default'].createElement('div', { style: styles.overflowDiv }, _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#4c869b', time: '3:00pm', temperature: '65', forecast: 'rain' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#5aa0ba', time: '4:00pm', temperature: '66', forecast: 'cloudy' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#5aa0ba', time: '5:00pm', temperature: '66', forecast: 'cloudy' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#77b3c9', time: '6:00pm', temperature: '67', forecast: 'day-cloudy' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#77b3c9', time: '7:00pm', temperature: '67', forecast: 'day-cloudy' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#94cade', time: '8:00pm', temperature: '68', forecast: 'day-sunny' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#94cade', time: '9:00pm', temperature: '68', forecast: 'day-sunny' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#b6e5f7', time: '10:00pm', temperature: '69', forecast: 'cloudy' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#b6e5f7', time: '11:00pm', temperature: '69', forecast: 'cloudy' })));
 	    }
 	  }]);
 
@@ -26245,13 +26247,13 @@
 	  divider: {
 	    height: '6em',
 	    width: 0,
-	    color: 'alt-font-color',
+	    color: _stylesCommonJs2['default'].altFontColor,
 	    border: '1px solid'
 	  },
 
 	  mainBars: {
 	    padding: '7px 0',
-	    borderBottom: '2px solid alt-font-color'
+	    borderBottom: '2px solid ' + _stylesCommonJs2['default'].altFontColor
 	  },
 
 	  mainBarsChild: {
@@ -26280,35 +26282,100 @@
 
 	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } (function () {
 
-	"use strict";
+	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
+	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
 
+	var _createClass = (function () {
+	  function defineProperties(target, props) {
+	    for (var i = 0; i < props.length; i++) {
+	      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+	    }
+	  }return function (Constructor, protoProps, staticProps) {
+	    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+	  };
+	})();
+
 	function _interopRequireDefault(obj) {
-	  return obj && obj.__esModule ? obj : { "default": obj };
+	  return obj && obj.__esModule ? obj : { 'default': obj };
+	}
+
+	function _classCallCheck(instance, Constructor) {
+	  if (!(instance instanceof Constructor)) {
+	    throw new TypeError('Cannot call a class as a function');
+	  }
+	}
+
+	function _inherits(subClass, superClass) {
+	  if (typeof superClass !== 'function' && superClass !== null) {
+	    throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+	  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) subClass.__proto__ = superClass;
 	}
 
 	var _react = __webpack_require__(5);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var ForecastHourly = _react2["default"].createClass({
-	  displayName: "ForecastHourly",
+	var _radium = __webpack_require__(202);
 
-	  render: function render() {
-	    var divStyle = {
-	      backgroundColor: this.props.color
-	    };
+	var _radium2 = _interopRequireDefault(_radium);
 
-	    return _react2["default"].createElement("div", { className: "forecast-hourly-wrapper",
-	      style: divStyle }, _react2["default"].createElement("div", null, this.props.time), _react2["default"].createElement("i", { className: "wi wi-rain" }), _react2["default"].createElement("div", null, this.props.temperature, "°"));
+	var _stylesCommonJs = __webpack_require__(215);
+
+	var _stylesCommonJs2 = _interopRequireDefault(_stylesCommonJs);
+
+	var ForecastHourly = (function (_React$Component) {
+	  function ForecastHourly() {
+	    _classCallCheck(this, ForecastHourly);
+
+	    if (_React$Component != null) {
+	      _React$Component.apply(this, arguments);
+	    }
 	  }
-	});
 
-	exports["default"] = ForecastHourly;
-	module.exports = exports["default"];
+	  _inherits(ForecastHourly, _React$Component);
+
+	  _createClass(ForecastHourly, [{
+	    key: 'render',
+	    value: function render() {
+	      styles.base.backgroundColor = this.props.color;
+
+	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.divStyle }, this.props.time), _react2['default'].createElement('i', { style: styles.iStyle,
+	        className: 'wi wi-rain' }), _react2['default'].createElement('div', { style: styles.divStyle }, this.props.temperature, '°'));
+	    }
+	  }]);
+
+	  return ForecastHourly;
+	})(_react2['default'].Component);
+
+	var styles = {
+	  base: {
+	    display: 'flex',
+	    flexDirection: 'row',
+	    flexGrow: 1,
+	    flexWrap: 'nowrap',
+	    justifyContent: 'center',
+	    alignItems: 'center',
+	    minHeight: '90px'
+	  },
+
+	  divStyle: {
+	    fontSize: '1.2em',
+	    flexGrow: 1,
+	    textAlign: 'center'
+	  },
+
+	  iStyle: {
+	    fontSize: '3em',
+	    flexGrow: 1,
+	    textAlign: 'center'
+	  }
+	};
+
+	exports['default'] = (0, _radium2['default'])(ForecastHourly);
+	module.exports = exports['default'];
 
 	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "forecastHourly.js" + ": " + err.message); } }); } } })(); }
 
@@ -26576,7 +26643,7 @@
 	exports = module.exports = __webpack_require__(224)();
 	exports.i(__webpack_require__(225), "");
 	exports.i(__webpack_require__(230), "");
-	exports.push([module.id, "@font-face {\n  font-family: \"Comfortaa-Bold\";\n  src: url("+__webpack_require__(223)+");\n}\n@font-face {\n  font-family: \"Comfortaa-Light\";\n  src: url("+__webpack_require__(236)+");\n}\n@font-face {\n  font-family: \"Comfortaa-Regular\";\n  src: url("+__webpack_require__(237)+");\n}\nhtml {\n  height: 100%;\n}\nbody {\n  margin: 0;\n  height: 100%;\n}\nbody div#content {\n  height: 100%;\n}\n.forecast-hourly-wrapper {\n  display: flex;\n  flex-direction: row;\n  flex-grow: 1;\n  flex-wrap: nowrap;\n  justify-content: center;\n  align-items: center;\n  min-height: 90px;\n}\n.forecast-hourly-wrapper div,\n.forecast-hourly-wrapper i {\n  flex-grow: 1;\n  text-align: center;\n}\n.forecast-hourly-wrapper div {\n  font-size: 1.2em;\n}\n.forecast-hourly-wrapper i {\n  font-size: 3em;\n}\n\n\n", ""]);
+	exports.push([module.id, "@font-face {\n  font-family: \"Comfortaa-Bold\";\n  src: url("+__webpack_require__(223)+");\n}\n@font-face {\n  font-family: \"Comfortaa-Light\";\n  src: url("+__webpack_require__(236)+");\n}\n@font-face {\n  font-family: \"Comfortaa-Regular\";\n  src: url("+__webpack_require__(237)+");\n}\nhtml {\n  height: 100%;\n}\nbody {\n  margin: 0;\n  height: 100%;\n}\nbody div#content {\n  height: 100%;\n}\n\n\n", ""]);
 
 /***/ },
 /* 223 */
