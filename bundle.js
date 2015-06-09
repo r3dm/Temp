@@ -25016,38 +25016,67 @@
 	  return obj && obj.__esModule ? obj : { 'default': obj };
 	}
 
-	var _superagent = __webpack_require__(198);
-
-	var _superagent2 = _interopRequireDefault(_superagent);
-
 	var _stylesCommonJs = __webpack_require__(202);
 
 	var _stylesCommonJs2 = _interopRequireDefault(_stylesCommonJs);
 
 	var _interpolation = __webpack_require__(208);
 
+	var _color = __webpack_require__(203);
+
+	var _color2 = _interopRequireDefault(_color);
+
 	/*
-	 * takes a temperature and returns an appropriate color
+	 * scale our currentTemp to a number between 0 and 1
 	 */
-	var weatherColor = function weatherColor(currentTemp) {
+	var scale = function scale(currentTemp) {
 	  var maxTemp = 100; // resonable temperatures
 	  var minTemp = 0;
 
+	  var numerand = currentTemp - minTemp;
+	  var denominator = maxTemp - minTemp;
+	  var result = numerand / denominator;
+
+	  // clip to [0, 1]
+	  result = result > 1 ? 1 : result;
+	  result = result < 0 ? 0 : result;
+
+	  return result;
+	};
+
+	// ensure color has sufficient contrast against text color
+	var contrast = function contrast(color) {
+	  var textColor = (0, _color2['default'])('white');
+
+	  while (color.contrast(textColor) < 2) {
+	    color = color.darken(0.1);
+	  }
+	};
+
+	/*
+	 * Takes a temperature and returns an appropriate color
+	 * in hsl you can modify by hue, saturation and lightness, so
+	 * we calculate a color between 'blue' & 'red' by Linear Interpolation
+	 * ex. lerp(start, end, ratio)
+	 */
+	var weatherColor = function weatherColor(currentTemp) {
 	  var start = _stylesCommonJs2['default'].blue;
 	  var end = _stylesCommonJs2['default'].red;
 	  var result = start.clone();
 
-	  var angleDelta = (currentTemp - minTemp) / (maxTemp - minTemp);
+	  var ratio = scale(currentTemp);
 
-	  var hueDelta = (0, _interpolation.lerp)(start.hue(), end.hue(), angleDelta);
-	  var saturationDelta = (0, _interpolation.lerp)(start.saturation(), end.saturation(), angleDelta);
-	  var lightnessDelta = (0, _interpolation.lerp)(start.lightness(), end.lightness(), angleDelta);
+	  var newHue = (0, _interpolation.lerp)(start.hue(), end.hue(), ratio);
+	  var newSaturation = (0, _interpolation.lerp)(start.saturation(), end.saturation(), ratio);
+	  var newLightness = (0, _interpolation.lerp)(start.lightness(), end.lightness(), ratio);
 
-	  result.hue(hueDelta);
-	  result.saturation(saturationDelta);
-	  result.lightness(lightnessDelta);
+	  result.hue(newHue);
+	  result.saturation(newSaturation);
+	  result.lightness(newLightness);
+	  contrast(result);
+	  // result.alpha(0.3)
 
-	  return result.hslString();
+	  return result.hslaString();
 	};
 
 	exports['default'] = weatherColor;
