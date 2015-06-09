@@ -1,4 +1,3 @@
-import request from 'superagent'
 import Common from './styles/common.js'
 import {lerp} from 'interpolation'
 
