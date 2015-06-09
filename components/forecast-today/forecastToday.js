@@ -5,6 +5,8 @@ import Common from '../../styles/common.js'
 
 class ForecastToday extends React.Component {
   render() {
+    styles.base.backgroundColor = this.props.color
+
     return (
       <div style={styles.base} >
         <div style={styles.forecastTodayWrapper} >
@@ -56,7 +58,7 @@ class ForecastToday extends React.Component {
 
 var styles = {
   base: {
-    backgroundColor: Common.tempBlue,
+    backgroundColor: Common.tempBlue.hslString(),
     flexGrow: 1,
     overflow: 'scroll'
   },
@@ -100,13 +102,13 @@ var styles = {
   divider: {
     height: '6em',
     width: 0,
-    color: Common.altFontColor,
+    color: Common.altFontColor.hslString(),
     border: '1px solid'
   },
 
   mainBars: {
     padding: '7px 0',
-    borderBottom: '2px solid ' + Common.altFontColor
+    borderBottom: '2px solid ' + Common.altFontColor.hslString()
   },
 
   mainBarsChild: {

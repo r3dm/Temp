@@ -29,7 +29,7 @@ var styles = {
   base: {
     height: '100%',
     color: 'white',
-    background: Common.splashRed,
+    background: Common.splashRed.hslString(),
     textAlign: 'center',
     fontFamily: '"Comfortaa-Light", sans-serif',
     display: 'flex',

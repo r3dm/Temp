@@ -38,11 +38,11 @@ class ForecastFooter extends React.Component {
 var styles = {
   base: {
     color: 'white',
-    background: Common.tempBlue,
+    background: Common.tempBlue.hslString(),
     display: 'flex',
     flexShrink: 0,
     flexDirection: 'row',
-    borderTop: '2px solid ' + Common.borderColor,
+    borderTop: '2px solid ' + Common.borderColor.hslString(),
     zIndex: 1
   },
 

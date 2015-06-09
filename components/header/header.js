@@ -17,7 +17,7 @@ class Header extends React.Component {
 
 var styles = {
   base: {
-    background: Common.tempBlue,
+    background: Common.tempBlue.hslString(),
     padding: '10px 10px',
     flexShrink: '0'
   },
