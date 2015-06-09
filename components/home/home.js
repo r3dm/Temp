@@ -9,8 +9,7 @@ class Home extends React.Component {
     return (
       <div style={styles.base} >
         <Header />
-        <ForecastToday temp={ this.props.temp }
-                       color={ this.props.mainColor} />
+        <ForecastToday temp={ this.props.temp } />
         <ForecastFooter />
       </div>
     )

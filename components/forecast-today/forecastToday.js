@@ -2,10 +2,11 @@ import React from 'react'
 import ForecastHourly from '../forecast-hourly/forecastHourly.js'
 import Radium from 'radium'
 import Common from '../../styles/common.js'
+import WeatherColor from '../../weatherColor.js'
 
 class ForecastToday extends React.Component {
   render() {
-    styles.base.backgroundColor = this.props.color
+    styles.base.backgroundColor = WeatherColor(this.props.temp)
 
     return (
       <div style={styles.base} >

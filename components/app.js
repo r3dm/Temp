@@ -14,16 +14,14 @@ let App = React.createClass({
   componentDidMount () {
     Weather((result) => {
       this.setState({
-        temp: Math.round(result.body.main.temp),
-        mainColor: WeatherColor(result.body.main.temp)
+        temp: Math.round(result.body.main.temp)
       })
     })
   },
 
   render () {
     return (
-      <RouteHandler temp={ this.state.temp }
-                    mainColor={ this.state.mainColor } />
+      <RouteHandler temp={ this.state.temp } />
     )
   }
 })
