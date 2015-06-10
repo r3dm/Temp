@@ -3,25 +3,6 @@ import Radium from 'radium'
 import { Navigation } from 'react-router'
 import Common from '../../styles/common.js'
 
-let Splash = React.createClass({
-  mixins: [Navigation],
-
-  render: function() {
-    return (
-      <div style={styles.base}
-           onClick={() => this.transitionTo('home')} >
-        <i className="wi wi-day-sunny"
-           style={styles.sunIcon} ></i>
-        <h1 style={styles.splash} >
-          temp
-          <span style={styles.splashDegree} >&deg;</span>
-        </h1>
-        <div style={styles.splashFiller} ></div>
-      </div>
-    )
-  }
-})
-
 var sunIconKeyframes = Radium.keyframes({
   '100%': { transform: 'rotate(360deg)'}
 })
@@ -59,4 +40,23 @@ var styles = {
   }
 }
 
-export default Radium(Splash)
+let Splash = React.createClass({
+  mixins: [Navigation],
+
+  render: function() {
+    return (
+      <div onClick={() => this.transitionTo('home')}
+           style={styles.base} >
+        <i className="wi wi-day-sunny"
+           style={styles.sunIcon} ></i>
+        <h1 style={styles.splash} >
+          temp
+          <span style={styles.splashDegree} >&deg;</span>
+        </h1>
+        <div style={styles.splashFiller} ></div>
+      </div>
+    )
+  }
+})
+
+export default new Radium(Splash)

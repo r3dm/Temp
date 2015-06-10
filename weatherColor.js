@@ -9,7 +9,7 @@ let scale = function(currentTemp) {
   const maxTemp = 100 // resonable temperatures
   const minTemp = 0
 
-  var numerand    = currentTemp - minTemp
+  var numerand = currentTemp - minTemp
   var denominator = maxTemp - minTemp
   var result = numerand / denominator
 
@@ -22,7 +22,7 @@ let scale = function(currentTemp) {
 
 // ensure color has sufficient contrast against text color
 let contrast = function(color) {
-  const textColor = Color('white')
+  const textColor = new Color('white')
 
   while(color.contrast(textColor) < 2) {
     color = color.darken(0.1)
@@ -40,7 +40,7 @@ let weatherColor = function(currentTemp) {
   var end = Common.red
   var result = start.clone()
 
-  var ratio  = scale(currentTemp)
+  var ratio = scale(currentTemp)
 
   var newHue = lerp(start.hue(), end.hue(), ratio)
   var newSaturation = lerp(start.saturation(), end.saturation(), ratio)

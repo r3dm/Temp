@@ -1,25 +1,5 @@
 import React from 'react'
 import Radium from 'radium'
-import Common from '../../styles/common.js'
-
-class ForecastHourly extends React.Component {
-  render() {
-    styles.base.backgroundColor = this.props.color
-
-    return (
-      <div style={styles.base} >
-        <div style={styles.divStyle} >
-          { this.props.time }
-        </div>
-        <i style={styles.iStyle}
-           className="wi wi-rain"></i>
-        <div style={styles.divStyle} >
-          { this.props.temperature }&deg;
-        </div>
-      </div>
-    )
-  }
-}
 
 var styles = {
   base: {
@@ -45,4 +25,28 @@ var styles = {
   }
 }
 
-export default Radium(ForecastHourly)
+class ForecastHourly extends React.Component {
+  render() {
+    styles.base.backgroundColor = this.props.color
+
+    return (
+      <div style={styles.base} >
+        <div style={styles.divStyle} >
+          { this.props.time }
+        </div>
+        <i className="wi wi-rain"
+           style={styles.iStyle}></i>
+        <div style={styles.divStyle} >
+          { this.props.temperature }&deg;
+        </div>
+      </div>
+    )
+  }
+}
+ForecastHourly.propTypes = {
+  color: React.PropTypes.string,
+  temperature: React.PropTypes.number,
+  time: React.PropTypes.string
+}
+
+export default new Radium(ForecastHourly)

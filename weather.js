@@ -1,7 +1,7 @@
 import request from 'superagent'
 const weatherUrl = 'http://api.openweathermap.org/data/2.5/weather'
 
-let Weather = function(callback) {
+let fetchWeather = function(callback) {
   request
     .get(weatherUrl)
     .query({
@@ -10,9 +10,11 @@ let Weather = function(callback) {
       units: 'imperial'
     })
     .end(function(err, res) {
-      console.log('response', res)
+      if(err) {
+        callback(err)
+      }
       callback(res)
     })
 }
 
-export default Weather
+export default fetchWeather

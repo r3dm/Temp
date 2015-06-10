@@ -1,18 +1,17 @@
 import React from 'react'
 import { RouteHandler } from 'react-router'
-import Weather from '../weather.js'
-import WeatherColor from '../weatherColor.js'
+import fetchWeather from '../weather.js'
 
 let App = React.createClass({
   getInitialState () {
     return {
-      temp: '',
+      temp: Number.NaN,
       mainColor: 'white'
     }
   },
 
   componentDidMount () {
-    Weather((result) => {
+    fetchWeather((result) => {
       this.setState({
         temp: Math.round(result.body.main.temp)
       })

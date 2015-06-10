@@ -2,60 +2,7 @@ import React from 'react'
 import ForecastHourly from '../forecast-hourly/forecastHourly.js'
 import Radium from 'radium'
 import Common from '../../styles/common.js'
-import WeatherColor from '../../weatherColor.js'
-
-class ForecastToday extends React.Component {
-  render() {
-    styles.base.backgroundColor = WeatherColor(this.props.temp)
-
-    return (
-      <div style={styles.base} >
-        <div style={styles.forecastTodayWrapper} >
-          <div style={styles.mainTempWrapper} >
-            <span className="temperature">
-              { this.props.temp }
-            </span>
-            <span style={styles.degrees} >&deg;</span>
-          </div>
-
-          <div style={styles.forecastAndChance} >
-            <div style={styles.forecastAndChanceChild} >
-              <i style={styles.icon}
-                 className="wi wi-rain"></i>
-              <p>rainy</p>
-            </div>
-
-            <div style={styles.divider} ></div>
-
-            <div style={styles.forecastAndChanceChild} >
-              <i style={styles.icon}
-                 className="wi wi-sprinkles"></i>
-              <p>100%</p>
-            </div>
-          </div>
-        </div>
-
-        <div style={styles.mainBars} >
-          <div style={styles.mainBarsChild} ></div>
-          <div style={styles.mainBarsChild} ></div>
-          <div style={styles.mainBarsChild} ></div>
-        </div>
-
-        <div style={styles.overflowDiv} >
-          <ForecastHourly color="#4c869b" time="3:00pm" temperature="65" forecast="rain" />
-          <ForecastHourly color="#5aa0ba" time="4:00pm" temperature="66" forecast="cloudy" />
-          <ForecastHourly color="#5aa0ba" time="5:00pm" temperature="66" forecast="cloudy" />
-          <ForecastHourly color="#77b3c9" time="6:00pm" temperature="67" forecast="day-cloudy" />
-          <ForecastHourly color="#77b3c9" time="7:00pm" temperature="67" forecast="day-cloudy" />
-          <ForecastHourly color="#94cade" time="8:00pm" temperature="68" forecast="day-sunny" />
-          <ForecastHourly color="#94cade" time="9:00pm" temperature="68" forecast="day-sunny" />
-          <ForecastHourly color="#b6e5f7" time="10:00pm" temperature="69" forecast="cloudy" />
-          <ForecastHourly color="#b6e5f7" time="11:00pm" temperature="69" forecast="cloudy" />
-        </div>
-      </div>
-    )
-  }
-}
+import weatherColor from '../../weatherColor.js'
 
 var styles = {
   base: {
@@ -89,7 +36,7 @@ var styles = {
     flexDirection: 'row',
     justifyContent: 'center',
     maxWidth: '50%',
-    textAlign: 'center',
+    textAlign: 'center'
   },
 
   icon: {
@@ -127,4 +74,58 @@ var styles = {
   }
 }
 
-export default Radium(ForecastToday)
+class ForecastToday extends React.Component {
+  render() {
+    styles.base.backgroundColor = weatherColor(this.props.temp)
+
+    return (
+      <div style={styles.base} >
+        <div style={styles.forecastTodayWrapper} >
+          <div style={styles.mainTempWrapper} >
+            <span className="temperature">
+              { this.props.temp }
+            </span>
+            <span style={styles.degrees} >&deg;</span>
+          </div>
+
+          <div style={styles.forecastAndChance} >
+            <div style={styles.forecastAndChanceChild} >
+              <i className="wi wi-rain"
+                 style={styles.icon}></i>
+              <p>rainy</p>
+            </div>
+
+            <div style={styles.divider} ></div>
+
+            <div style={styles.forecastAndChanceChild} >
+              <i className="wi wi-sprinkles"
+                 style={styles.icon}></i>
+              <p>100%</p>
+            </div>
+          </div>
+        </div>
+
+        <div style={styles.mainBars} >
+          <div style={styles.mainBarsChild} ></div>
+          <div style={styles.mainBarsChild} ></div>
+          <div style={styles.mainBarsChild} ></div>
+        </div>
+
+        <div style={styles.overflowDiv} >
+          <ForecastHourly color="#4c869b" forecast="rain" temperature={65} time="3:00pm" />
+          <ForecastHourly color="#5aa0ba" forecast="cloudy" temperature={66} time="4:00pm" />
+          <ForecastHourly color="#5aa0ba" forecast="cloudy" temperature={66} time="5:00pm" />
+          <ForecastHourly color="#77b3c9" forecast="day-cloudy" temperature={67} time="6:00pm" />
+          <ForecastHourly color="#77b3c9" forecast="day-cloudy" temperature={67} time="7:00pm" />
+          <ForecastHourly color="#94cade" forecast="day-sunny" temperature={68} time="8:00pm" />
+          <ForecastHourly color="#94cade" forecast="day-sunny" temperature={68} time="9:00pm" />
+          <ForecastHourly color="#b6e5f7" forecast="cloudy" temperature={69} time="10:00pm" />
+          <ForecastHourly color="#b6e5f7" forecast="cloudy" temperature={69} time="11:00pm" />
+        </div>
+      </div>
+    )
+  }
+}
+ForecastToday.propTypes = { temp: React.PropTypes.number }
+
+export default new Radium(ForecastToday)
