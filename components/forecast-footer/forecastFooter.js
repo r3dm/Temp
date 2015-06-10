@@ -1,7 +1,7 @@
 import React from 'react'
 import Radium from 'radium'
 import Color from 'color'
-import weatherColor from '../../weatherColor.js'
+import { weatherColor } from '../../utils/weatherColor.js'
 
 var styles = {
   base: {

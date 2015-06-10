@@ -1,7 +1,7 @@
 import React from 'react'
 import Radium from 'radium'
 import { Navigation } from 'react-router'
-import Common from '../../styles/common.js'
+import { splashRed } from '../../utils/weatherColor.js'
 
 var sunIconKeyframes = Radium.keyframes({
   '100%': { transform: 'rotate(360deg)'}
@@ -10,7 +10,7 @@ var styles = {
   base: {
     height: '100%',
     color: 'white',
-    background: Common.splashRed.hslaString(),
+    background: splashRed.hslaString(),
     textAlign: 'center',
     fontFamily: '"Comfortaa-Light", sans-serif',
     display: 'flex',

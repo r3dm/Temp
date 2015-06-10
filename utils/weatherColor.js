@@ -1,13 +1,17 @@
-import Common from './styles/common.js'
 import {lerp} from 'interpolation'
 import Color from 'color'
+
+export const splashRed = new Color('#ff5136')
+const start = new Color('#7ea4b3')
+const end = new Color('#ff5136')
+const textColor = new Color('white')
+const maxTemp = 100 // resonable temperatures
+const minTemp = 0
 
 /*
  * scale our currentTemp to a number between 0 and 1
  */
 let scale = function(currentTemp) {
-  const maxTemp = 100 // resonable temperatures
-  const minTemp = 0
 
   var numerand = currentTemp - minTemp
   var denominator = maxTemp - minTemp
@@ -22,8 +26,6 @@ let scale = function(currentTemp) {
 
 // ensure color has sufficient contrast against text color
 let contrast = function(color) {
-  const textColor = new Color('white')
-
   while(color.contrast(textColor) < 2) {
     color = color.darken(0.1)
   }
@@ -35,13 +37,11 @@ let contrast = function(color) {
  * we calculate a color between 'blue' & 'red' by Linear Interpolation
  * ex. lerp(start, end, ratio)
  */
-let weatherColor = function(currentTemp) {
+export function weatherColor(currentTemp) {
   if(isNaN(currentTemp)) {
     return 'white'
   }
 
-  var start = Common.blue
-  var end = Common.red
   var result = start.clone()
 
   var ratio = scale(currentTemp)
@@ -58,5 +58,3 @@ let weatherColor = function(currentTemp) {
 
   return result.hslaString()
 }
-
-export default weatherColor

@@ -1,6 +1,6 @@
 import React from 'react'
 import { RouteHandler } from 'react-router'
-import fetchWeather from '../weather.js'
+import fetchWeather from '../utils/weather.js'
 
 /*
  * we let state reside here so async weather can be fetched on the splash
