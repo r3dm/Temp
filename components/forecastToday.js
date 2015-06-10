@@ -38,8 +38,8 @@ class ForecastToday extends React.Component {
         style={styles.base}
       >
         <ForecastNow
-          temp={ this.props.temp }
-        />
+          currentConditions = { this.props.currentConditions }
+          temp = { this.props.temp } />
 
         <div style={styles.overflowDiv} >
           <ForecastHourly color="#4c869b" forecast="rain" temperature={65} time="3:00pm" />
@@ -57,6 +57,7 @@ class ForecastToday extends React.Component {
   }
 }
 ForecastToday.propTypes = {
+  currentConditions: React.PropTypes.string,
   temp: React.PropTypes.number
 }
 

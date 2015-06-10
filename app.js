@@ -6,7 +6,7 @@ import { Route, DefaultRoute, RouteHandler } from 'react-router'
 import Home from './components/home.js'
 import Splash from './components/splash.js'
 // import Settings from './settings.js'
-import fetchWeather from './utils/weather.js'
+import { fetchWeather } from './utils/weather.js'
 
 /*
  * we let state reside in App so async weather can be fetched on the splash
@@ -14,15 +14,40 @@ import fetchWeather from './utils/weather.js'
  */
 let App = React.createClass({
   getInitialState() {
-    return { temp: Number.NaN }
+    return {
+      temp: Number.NaN,
+      lat: 37.7587,
+      lon: -122.3951,
+      units: 'imperial'
+    }
   },
   componentDidMount() {
-    fetchWeather((result) => {
-      this.setState({ temp: Math.round(result.body.main.temp) })
-    })
+    fetchWeather(this.state.lat, this.state.lon, this.state.units)
+      .then((results) => {
+        var weather = results[0].body
+        var fiveDayForecast = results[1].body
+
+        // weather api may return an array here, so we check
+        var currentWeather = Array.isArray(weather.weather) ?
+                        weather.weather[0] :
+                        weather.weather
+        this.setState({
+          weather,
+          fiveDayForecast,
+          temp: Math.round(weather.main.temp),
+          cityName: weather.name,
+          sunrise: weather.sys.sunrise,
+          sunset: weather.sys.sunset,
+          currentConditions: currentWeather.main
+        })
+      })
   },
   render() {
-    return <RouteHandler temp={ this.state.temp } />
+    return (
+      <RouteHandler
+        forecast = { this.state }
+        temp = { this.state.temp } />
+    )
   }
 })
 

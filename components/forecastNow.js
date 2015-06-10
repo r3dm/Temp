@@ -3,6 +3,7 @@ import Radium from 'radium'
 import Divider from './divider.js'
 import Color from 'color'
 import { weatherColor } from '../utils/weatherColor.js'
+import { mapWeather, humanize } from '../utils/weather.js'
 
 var styles = {
   base: {
@@ -91,9 +92,9 @@ class ForecastNow extends React.Component {
 
         <div style={styles.forecastAndChance} >
           <div style={styles.forecastAndChanceChild} >
-            <i className="wi wi-rain"
+            <i className={`wi wi-${ mapWeather(this.props.currentConditions)}`}
                style={styles.icon}></i>
-            <p>rainy</p>
+            <p>{ humanize(this.props.currentConditions) }</p>
           </div>
 
           <div style={styles.verticalDivider} ></div>
@@ -101,7 +102,7 @@ class ForecastNow extends React.Component {
           <div style={styles.forecastAndChanceChild} >
             <i className="wi wi-sprinkles"
                style={styles.icon}></i>
-            <p>100%</p>
+            <p>50%</p>
           </div>
         </div>
 

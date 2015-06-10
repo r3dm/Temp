@@ -20,13 +20,16 @@ class Home extends React.Component {
     return (
       <div style={styles.base} >
         <Header temp={ this.props.temp } />
-        <ForecastToday temp={ this.props.temp } />
+        <ForecastToday
+          currentConditions = { this.props.forecast.currentConditions }
+          temp={ this.props.temp } />
         <ForecastFooter temp={ this.props.temp } />
       </div>
     )
   }
 }
 Home.propTypes = {
+  forecast: React.PropTypes.object,
   temp: React.PropTypes.number
 }
 
