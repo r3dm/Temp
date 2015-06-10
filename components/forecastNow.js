@@ -1,8 +1,8 @@
 import React from 'react'
 import Radium from 'radium'
-import Divider from '../divider/divider.js'
+import Divider from './divider.js'
 import Color from 'color'
-import { weatherColor } from '../../utils/weatherColor.js'
+import { weatherColor } from '../utils/weatherColor.js'
 
 var styles = {
   base: {

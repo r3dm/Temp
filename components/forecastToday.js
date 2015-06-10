@@ -1,6 +1,6 @@
 import React from 'react'
-import ForecastHourly from '../forecast-hourly/forecastHourly.js'
-import ForecastNow from '../forecast-now/forecastNow.js'
+import ForecastHourly from './forecastHourly.js'
+import ForecastNow from './forecastNow.js'
 import Radium from 'radium'
 // import Color from 'color'
 

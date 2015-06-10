@@ -60,15 +60,15 @@
 
 	var _reactRouter2 = _interopRequireDefault(_reactRouter);
 
-	var _componentsHomeHomeJs = __webpack_require__(218);
+	var _componentsHomeJs = __webpack_require__(218);
 
-	var _componentsHomeHomeJs2 = _interopRequireDefault(_componentsHomeHomeJs);
+	var _componentsHomeJs2 = _interopRequireDefault(_componentsHomeJs);
 
-	var _componentsSplashSplashJs = __webpack_require__(1);
+	var _componentsSplashJs = __webpack_require__(1);
 
-	var _componentsSplashSplashJs2 = _interopRequireDefault(_componentsSplashSplashJs);
+	var _componentsSplashJs2 = _interopRequireDefault(_componentsSplashJs);
 
-	// import Settings from './components/settings.js'
+	// import Settings from './settings.js'
 
 	var _utilsWeatherJs = __webpack_require__(225);
 
@@ -98,7 +98,7 @@
 	  }
 	});
 
-	var routes = _react2['default'].createElement(_reactRouter.Route, { handler: App, path: '/' }, _react2['default'].createElement(_reactRouter.DefaultRoute, { handler: _componentsSplashSplashJs2['default'] }), _react2['default'].createElement(_reactRouter.Route, { handler: _componentsHomeHomeJs2['default'],
+	var routes = _react2['default'].createElement(_reactRouter.Route, { handler: App, path: '/' }, _react2['default'].createElement(_reactRouter.DefaultRoute, { handler: _componentsSplashJs2['default'] }), _react2['default'].createElement(_reactRouter.Route, { handler: _componentsHomeJs2['default'],
 	  name: 'home',
 	  path: '/home' }));
 
@@ -26968,17 +26968,17 @@
 
 	var _radium2 = _interopRequireDefault(_radium);
 
-	var _headerHeaderJs = __webpack_require__(219);
+	var _headerJs = __webpack_require__(219);
 
-	var _headerHeaderJs2 = _interopRequireDefault(_headerHeaderJs);
+	var _headerJs2 = _interopRequireDefault(_headerJs);
 
-	var _forecastTodayForecastTodayJs = __webpack_require__(220);
+	var _forecastTodayJs = __webpack_require__(220);
 
-	var _forecastTodayForecastTodayJs2 = _interopRequireDefault(_forecastTodayForecastTodayJs);
+	var _forecastTodayJs2 = _interopRequireDefault(_forecastTodayJs);
 
-	var _forecastFooterForecastFooterJs = __webpack_require__(224);
+	var _forecastFooterJs = __webpack_require__(224);
 
-	var _forecastFooterForecastFooterJs2 = _interopRequireDefault(_forecastFooterForecastFooterJs);
+	var _forecastFooterJs2 = _interopRequireDefault(_forecastFooterJs);
 
 	var styles = {
 	  base: {
@@ -27005,7 +27005,7 @@
 	  _createClass(Home, [{
 	    key: 'render',
 	    value: function render() {
-	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement(_headerHeaderJs2['default'], { temp: this.props.temp }), _react2['default'].createElement(_forecastTodayForecastTodayJs2['default'], { temp: this.props.temp }), _react2['default'].createElement(_forecastFooterForecastFooterJs2['default'], { temp: this.props.temp }));
+	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement(_headerJs2['default'], { temp: this.props.temp }), _react2['default'].createElement(_forecastTodayJs2['default'], { temp: this.props.temp }), _react2['default'].createElement(_forecastFooterJs2['default'], { temp: this.props.temp }));
 	    }
 	  }]);
 
@@ -27165,13 +27165,13 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _forecastHourlyForecastHourlyJs = __webpack_require__(221);
+	var _forecastHourlyJs = __webpack_require__(221);
 
-	var _forecastHourlyForecastHourlyJs2 = _interopRequireDefault(_forecastHourlyForecastHourlyJs);
+	var _forecastHourlyJs2 = _interopRequireDefault(_forecastHourlyJs);
 
-	var _forecastNowForecastNowJs = __webpack_require__(222);
+	var _forecastNowJs = __webpack_require__(222);
 
-	var _forecastNowForecastNowJs2 = _interopRequireDefault(_forecastNowForecastNowJs);
+	var _forecastNowJs2 = _interopRequireDefault(_forecastNowJs);
 
 	var _radium = __webpack_require__(158);
 
@@ -27219,9 +27219,9 @@
 	      return _react2['default'].createElement('div', {
 	        id: 'todayDiv',
 	        style: styles.base
-	      }, _react2['default'].createElement(_forecastNowForecastNowJs2['default'], {
+	      }, _react2['default'].createElement(_forecastNowJs2['default'], {
 	        temp: this.props.temp
-	      }), _react2['default'].createElement('div', { style: styles.overflowDiv }, _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#4c869b', forecast: 'rain', temperature: 65, time: '3:00pm' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#5aa0ba', forecast: 'cloudy', temperature: 66, time: '4:00pm' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#5aa0ba', forecast: 'cloudy', temperature: 66, time: '5:00pm' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#77b3c9', forecast: 'day-cloudy', temperature: 67, time: '6:00pm' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#77b3c9', forecast: 'day-cloudy', temperature: 67, time: '7:00pm' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#94cade', forecast: 'day-sunny', temperature: 68, time: '8:00pm' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#94cade', forecast: 'day-sunny', temperature: 68, time: '9:00pm' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#b6e5f7', forecast: 'cloudy', temperature: 69, time: '10:00pm' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#b6e5f7', forecast: 'cloudy', temperature: 69, time: '11:00pm' })));
+	      }), _react2['default'].createElement('div', { style: styles.overflowDiv }, _react2['default'].createElement(_forecastHourlyJs2['default'], { color: '#4c869b', forecast: 'rain', temperature: 65, time: '3:00pm' }), _react2['default'].createElement(_forecastHourlyJs2['default'], { color: '#5aa0ba', forecast: 'cloudy', temperature: 66, time: '4:00pm' }), _react2['default'].createElement(_forecastHourlyJs2['default'], { color: '#5aa0ba', forecast: 'cloudy', temperature: 66, time: '5:00pm' }), _react2['default'].createElement(_forecastHourlyJs2['default'], { color: '#77b3c9', forecast: 'day-cloudy', temperature: 67, time: '6:00pm' }), _react2['default'].createElement(_forecastHourlyJs2['default'], { color: '#77b3c9', forecast: 'day-cloudy', temperature: 67, time: '7:00pm' }), _react2['default'].createElement(_forecastHourlyJs2['default'], { color: '#94cade', forecast: 'day-sunny', temperature: 68, time: '8:00pm' }), _react2['default'].createElement(_forecastHourlyJs2['default'], { color: '#94cade', forecast: 'day-sunny', temperature: 68, time: '9:00pm' }), _react2['default'].createElement(_forecastHourlyJs2['default'], { color: '#b6e5f7', forecast: 'cloudy', temperature: 69, time: '10:00pm' }), _react2['default'].createElement(_forecastHourlyJs2['default'], { color: '#b6e5f7', forecast: 'cloudy', temperature: 69, time: '11:00pm' })));
 	    }
 	  }]);
 
@@ -27388,9 +27388,9 @@
 
 	var _radium2 = _interopRequireDefault(_radium);
 
-	var _dividerDividerJs = __webpack_require__(223);
+	var _dividerJs = __webpack_require__(223);
 
-	var _dividerDividerJs2 = _interopRequireDefault(_dividerDividerJs);
+	var _dividerJs2 = _interopRequireDefault(_dividerJs);
 
 	var _color = __webpack_require__(213);
 
@@ -27483,7 +27483,7 @@
 
 	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.flexGrow }), _react2['default'].createElement('div', { style: styles.mainTempWrapper }, _react2['default'].createElement('span', null, this.props.temp), _react2['default'].createElement('span', { style: styles.degrees }, '°')), _react2['default'].createElement('div', { style: styles.forecastAndChance }, _react2['default'].createElement('div', { style: styles.forecastAndChanceChild }, _react2['default'].createElement('i', { className: 'wi wi-rain',
 	        style: styles.icon }), _react2['default'].createElement('p', null, 'rainy')), _react2['default'].createElement('div', { style: styles.verticalDivider }), _react2['default'].createElement('div', { style: styles.forecastAndChanceChild }, _react2['default'].createElement('i', { className: 'wi wi-sprinkles',
-	        style: styles.icon }), _react2['default'].createElement('p', null, '100%'))), _react2['default'].createElement('div', { style: styles.flexGrow }), _react2['default'].createElement(_dividerDividerJs2['default'], null));
+	        style: styles.icon }), _react2['default'].createElement('p', null, '100%'))), _react2['default'].createElement('div', { style: styles.flexGrow }), _react2['default'].createElement(_dividerJs2['default'], null));
 	    }
 	  }]);
 

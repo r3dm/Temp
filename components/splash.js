@@ -1,7 +1,7 @@
 import React from 'react'
 import Radium from 'radium'
 import { Navigation } from 'react-router'
-import { splashRed } from '../../utils/weatherColor.js'
+import { splashRed } from '../utils/weatherColor.js'
 
 var sunIconKeyframes = Radium.keyframes({
   '100%': { transform: 'rotate(360deg)'}

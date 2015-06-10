@@ -1,8 +1,8 @@
 import React from 'react'
 import Radium from 'radium'
-import Header from '../header/header.js'
-import ForecastToday from '../forecast-today/forecastToday.js'
-import ForecastFooter from '../forecast-footer/forecastFooter.js'
+import Header from './header.js'
+import ForecastToday from './forecastToday.js'
+import ForecastFooter from './forecastFooter.js'
 
 var styles = {
   base: {

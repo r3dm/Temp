@@ -1,6 +1,6 @@
 import React from 'react'
 import Radium from 'radium'
-import { weatherColor } from '../../utils/weatherColor.js'
+import { weatherColor } from '../utils/weatherColor.js'
 
 var styles = {
   base: {
