@@ -4,6 +4,7 @@ import Radium from 'radium'
 import Common from '../../styles/common.js'
 import weatherColor from '../../weatherColor.js'
 import Color from 'color'
+import Divider from '../divider/divider.js'
 
 var styles = {
   base: {
@@ -19,7 +20,10 @@ var styles = {
     flexWrap: 'wrap',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '65vh'
+    height: '65vh',
+    borderBottom: '2px solid',
+    zIndex: 0,
+    position: 'relative'
   },
 
   mainTempWrapper: {
@@ -30,6 +34,12 @@ var styles = {
   degrees: {
     fontSize: '0.8em',
     verticalAlign: 'top'
+  },
+
+  divider: {
+    height: '6em',
+    width: 0,
+    border: '1px solid'
   },
 
   forecastAndChance: {
@@ -48,46 +58,33 @@ var styles = {
     width: '20vw'
   },
 
-  divider: {
-    height: '6em',
-    width: 0,
-    border: '1px solid'
-  },
-
-  mainBars: {
-    padding: '7px 0',
-    borderBottom: '2px solid'
-  },
-
-  mainBarsChild: {
-    width: '40px',
-    paddingBottom: '3px',
-    margin: '0 auto',
-    borderTop: '2px solid white'
+  flexGrow: {
+    flexGrow: 1,
   },
 
   overflowDiv: {
     overflow: 'auto',
-    height: '55vh',
-    borderTop: '2px solid',
-    borderBottom: '3px solid'
+    height: '55vh'
   }
 }
 
 class ForecastToday extends React.Component {
   render() {
     var mainColor = new Color(weatherColor(this.props.temp))
-    var mainColorDark = mainColor.clone().darken(0.3)
-    var mainColorLight = mainColor.clone().lighten(0.3)
-    styles.base.backgroundColor = mainColor.hslaString()
-    styles.divider.color = mainColorDark.hslaString()
-    styles.mainBars.borderBottomColor = mainColorDark.hslaString()
-    styles.overflowDiv.borderTopColor = mainColorLight.hslaString()
-    styles.overflowDiv.borderBottomColor = mainColorDark.hslaString()
+    var mainColorDark = mainColor.clone().darken(0.3).hslaString()
+    var mainColorLight = mainColor.clone().lighten(0.3).hslaString()
+    mainColor = mainColor.hslaString()
+
+    styles.base.backgroundColor = mainColor
+    styles.divider.color = mainColorDark
+    styles.forecastTodayWrapper.borderBottomColor = mainColorDark
+    styles.forecastTodayWrapper.boxShadow = `0 2px ${mainColorLight}`
 
     return (
       <div style={styles.base} >
         <div style={styles.forecastTodayWrapper} >
+          <div style={styles.flexGrow} ></div>
+
           <div style={styles.mainTempWrapper} >
             <span className="temperature">
               { this.props.temp }
@@ -110,13 +107,12 @@ class ForecastToday extends React.Component {
               <p>100%</p>
             </div>
           </div>
+
+          <div style={styles.flexGrow} ></div>
+
+          <Divider />
         </div>
 
-        <div style={styles.mainBars} >
-          <div style={styles.mainBarsChild} ></div>
-          <div style={styles.mainBarsChild} ></div>
-          <div style={styles.mainBarsChild} ></div>
-        </div>
 
         <div style={styles.overflowDiv} >
           <ForecastHourly color="#4c869b" forecast="rain" temperature={65} time="3:00pm" />

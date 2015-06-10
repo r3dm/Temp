@@ -9,8 +9,10 @@ var styles = {
     display: 'flex',
     flexShrink: 0,
     flexDirection: 'row',
-    borderTop: `2px solid ${Common.borderColor.hslString()}`,
-    zIndex: 1
+    borderTop: `2px solid ${Common.borderColor.hslaString()}`,
+    boxShadow: `0 -2px ${Common.altFontColor.hslaString()}`,
+    zIndex: 1,
+    position: 'relative'
   },
 
   oneDayForecast: {
