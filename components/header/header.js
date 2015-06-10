@@ -1,10 +1,8 @@
 import React from 'react'
 import Radium from 'radium'
-import Common from '../../styles/common.js'
 
 var styles = {
   base: {
-    background: Common.tempBlue.hslString(),
     padding: '10px 10px',
     flexShrink: '0'
   },
@@ -28,6 +26,8 @@ var styles = {
 
 class Header extends React.Component {
   render() {
+    styles.base.backgroundColor = this.props.color
+
     return (
       <div style={styles.base} >
         <i className="fa fa-gears"
@@ -38,5 +38,6 @@ class Header extends React.Component {
     )
   }
 }
+Header.propTypes = { color: React.PropTypes.string }
 
 export default new Radium(Header)

@@ -1,14 +1,11 @@
 import React from 'react'
 import ForecastHourly from '../forecast-hourly/forecastHourly.js'
 import Radium from 'radium'
-import Common from '../../styles/common.js'
-import weatherColor from '../../weatherColor.js'
 import Color from 'color'
 import Divider from '../divider/divider.js'
 
 var styles = {
   base: {
-    backgroundColor: Common.tempBlue.hslString(),
     flexGrow: 1,
     overflow: 'scroll'
   },
@@ -59,7 +56,7 @@ var styles = {
   },
 
   flexGrow: {
-    flexGrow: 1,
+    flexGrow: 1
   },
 
   overflowDiv: {
@@ -70,15 +67,13 @@ var styles = {
 
 class ForecastToday extends React.Component {
   render() {
-    var mainColor = new Color(weatherColor(this.props.temp))
-    var mainColorDark = mainColor.clone().darken(0.3).hslaString()
-    var mainColorLight = mainColor.clone().lighten(0.3).hslaString()
-    mainColor = mainColor.hslaString()
+    let colorDark = new Color(this.props.color).darken(0.1).hslaString()
+    let colorLight = new Color(this.props.color).lighten(0.1).hslaString()
 
-    styles.base.backgroundColor = mainColor
-    styles.divider.color = mainColorDark
-    styles.forecastTodayWrapper.borderBottomColor = mainColorDark
-    styles.forecastTodayWrapper.boxShadow = `0 2px ${mainColorLight}`
+    styles.base.backgroundColor = this.props.color
+    styles.divider.color = colorDark
+    styles.forecastTodayWrapper.borderBottomColor = colorDark
+    styles.forecastTodayWrapper.boxShadow = `0 2px ${colorLight}`
 
     return (
       <div style={styles.base} >
@@ -129,6 +124,9 @@ class ForecastToday extends React.Component {
     )
   }
 }
-ForecastToday.propTypes = { temp: React.PropTypes.number }
+ForecastToday.propTypes = {
+  color: React.PropTypes.string,
+  temp: React.PropTypes.number
+}
 
 export default new Radium(ForecastToday)

@@ -19,13 +19,20 @@ class Home extends React.Component {
   render() {
     return (
       <div style={styles.base} >
-        <Header />
-        <ForecastToday temp={ this.props.temp } />
-        <ForecastFooter />
+        <Header color={ this.props.color }
+        />
+        <ForecastToday
+          color={ this.props.color }
+          temp={ this.props.temp }
+        />
+        <ForecastFooter color={ this.props.color } />
       </div>
     )
   }
 }
-Home.propTypes = { temp: React.PropTypes.number }
+Home.propTypes = {
+  color: React.PropTypes.color,
+  temp: React.PropTypes.number
+}
 
 export default new Radium(Home)

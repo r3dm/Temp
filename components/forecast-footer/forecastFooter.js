@@ -1,16 +1,13 @@
 import React from 'react'
 import Radium from 'radium'
-import Common from '../../styles/common.js'
+import Color from 'color'
 
 var styles = {
   base: {
     color: 'white',
-    background: Common.tempBlue.hslString(),
     display: 'flex',
     flexShrink: 0,
     flexDirection: 'row',
-    borderTop: `2px solid ${Common.borderColor.hslaString()}`,
-    boxShadow: `0 -2px ${Common.altFontColor.hslaString()}`,
     zIndex: 1,
     position: 'relative'
   },
@@ -36,6 +33,13 @@ var styles = {
 
 class ForecastFooter extends React.Component {
   render() {
+    let colorDark = new Color(this.props.color).darken(0.1).hslaString()
+    let colorLight = new Color(this.props.color).lighten(0.2).hslaString()
+
+    styles.base.backgroundColor = this.props.color
+    styles.base.borderTop = `2px solid ${colorLight}`
+    styles.base.boxShadow = `0 -2px ${colorDark}`
+
     return (
       <div style={styles.base} >
         <div style={styles.oneDayForecast} >
@@ -66,5 +70,6 @@ class ForecastFooter extends React.Component {
     )
   }
 }
+ForecastFooter.propTypes = { color: React.PropTypes.string }
 
 export default new Radium(ForecastFooter)
