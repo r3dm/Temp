@@ -12,7 +12,6 @@ var styles = {
     flexWrap: 'wrap',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '65vh', // overridden at runtime
     borderBottom: '2px solid',
     zIndex: 0,
     position: 'relative'
@@ -56,16 +55,19 @@ var styles = {
 }
 
 class ForecastNow extends React.Component {
-  /*
-   * set component height after initial render. Due to Flexbox there's no
-   * way to know the parent's size before runtime
-   */
   componentDidMount() {
     // ~ 8 px to account for footer-padding + this-padding
-    styles.base.height = document.getElementById('todayDiv').clientHeight - 6
+    this.setState({
+      height: document.getElementById('todayDiv').clientHeight - 6
+    })
+  }
+
+  state: {
+    height: '65vh'
   }
 
   render() {
+    styles.base.height = this.state.height
     let mainColor = weatherColor(this.props.temp)
     let colorDark = new Color(mainColor).darken(0.2).hslaString()
     let colorLight = new Color(mainColor).lighten(0.2).hslaString()

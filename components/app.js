@@ -22,7 +22,6 @@ let App = React.createClass({
   },
 
   render() {
-    console.log('render')
     return (
       <RouteHandler
         temp={ this.state.temp }

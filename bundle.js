@@ -169,10 +169,7 @@
 	  _createClass(Home, [{
 	    key: 'render',
 	    value: function render() {
-	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement(_headerHeaderJs2['default'], { temp: this.props.temp
-	      }), _react2['default'].createElement(_forecastTodayForecastTodayJs2['default'], {
-	        temp: this.props.temp
-	      }), _react2['default'].createElement(_forecastFooterForecastFooterJs2['default'], { temp: this.props.temp }));
+	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement(_headerHeaderJs2['default'], { temp: this.props.temp }), _react2['default'].createElement(_forecastTodayForecastTodayJs2['default'], { temp: this.props.temp }), _react2['default'].createElement(_forecastFooterForecastFooterJs2['default'], { temp: this.props.temp }));
 	    }
 	  }]);
 
@@ -24000,10 +23997,6 @@
 
 	var _radium2 = _interopRequireDefault(_radium);
 
-	var _weatherColorJs = __webpack_require__(171);
-
-	var _weatherColorJs2 = _interopRequireDefault(_weatherColorJs);
-
 	// import Color from 'color'
 
 	var styles = {
@@ -24031,19 +24024,18 @@
 
 	  _createClass(ForecastToday, [{
 	    key: 'componentDidMount',
-
-	    /*
-	     * set component height after initial render. Due to Flexbox there's no
-	     * way to know the parent's size before runtime
-	     */
 	    value: function componentDidMount() {
 	      var todayDivHeight = document.getElementById('todayDiv').clientHeight;
 	      var mainDividerHeight = document.getElementById('mainDivider').clientHeight;
-	      styles.overflowDiv.height = todayDivHeight - mainDividerHeight - 8;
+	      this.setState({
+	        overflowHeight: todayDivHeight - mainDividerHeight - 8
+	      });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      styles.overflowDiv.height = this.state.overflowHeight;
+
 	      return _react2['default'].createElement('div', {
 	        id: 'todayDiv',
 	        style: styles.base
@@ -24236,7 +24228,6 @@
 	    flexWrap: 'wrap',
 	    justifyContent: 'center',
 	    alignItems: 'center',
-	    height: '65vh', // overridden at runtime
 	    borderBottom: '2px solid',
 	    zIndex: 0,
 	    position: 'relative'
@@ -24292,18 +24283,16 @@
 
 	  _createClass(ForecastNow, [{
 	    key: 'componentDidMount',
-
-	    /*
-	     * set component height after initial render. Due to Flexbox there's no
-	     * way to know the parent's size before runtime
-	     */
 	    value: function componentDidMount() {
 	      // ~ 8 px to account for footer-padding + this-padding
-	      styles.base.height = document.getElementById('todayDiv').clientHeight - 6;
+	      this.setState({
+	        height: document.getElementById('todayDiv').clientHeight - 6
+	      });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      styles.base.height = this.state.height;
 	      var mainColor = (0, _weatherColorJs2['default'])(this.props.temp);
 	      var colorDark = new _color2['default'](mainColor).darken(0.2).hslaString();
 	      var colorLight = new _color2['default'](mainColor).lighten(0.2).hslaString();
@@ -27708,7 +27697,6 @@
 	  },
 
 	  render: function render() {
-	    console.log('render');
 	    return _react2['default'].createElement(_reactRouter.RouteHandler, {
 	      temp: this.state.temp
 	    });

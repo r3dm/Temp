@@ -2,7 +2,6 @@ import React from 'react'
 import ForecastHourly from '../forecast-hourly/forecastHourly.js'
 import ForecastNow from '../forecast-now/forecastNow.js'
 import Radium from 'radium'
-import weatherColor from '../../weatherColor.js'
 // import Color from 'color'
 
 var styles = {
@@ -18,17 +17,21 @@ var styles = {
 }
 
 class ForecastToday extends React.Component {
-  /*
-   * set component height after initial render. Due to Flexbox there's no
-   * way to know the parent's size before runtime
-   */
   componentDidMount() {
     var todayDivHeight = document.getElementById('todayDiv').clientHeight
     var mainDividerHeight = document.getElementById('mainDivider').clientHeight
-    styles.overflowDiv.height = todayDivHeight - mainDividerHeight - 8
+    this.setState({
+      overflowHeight: todayDivHeight - mainDividerHeight - 8
+    })
+  }
+
+  state: {
+    overflowHeight: '55vh'
   }
 
   render() {
+    styles.overflowDiv.height = this.state.overflowHeight
+
     return (
       <div
         id="todayDiv"

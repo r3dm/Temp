@@ -19,11 +19,8 @@ class Home extends React.Component {
   render() {
     return (
       <div style={styles.base} >
-        <Header temp={ this.props.temp }
-        />
-        <ForecastToday
-          temp={ this.props.temp }
-        />
+        <Header temp={ this.props.temp } />
+        <ForecastToday temp={ this.props.temp } />
         <ForecastFooter temp={ this.props.temp } />
       </div>
     )
