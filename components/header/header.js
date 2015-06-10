@@ -1,5 +1,6 @@
 import React from 'react'
 import Radium from 'radium'
+import weatherColor from '../../weatherColor.js'
 
 var styles = {
   base: {
@@ -26,7 +27,7 @@ var styles = {
 
 class Header extends React.Component {
   render() {
-    styles.base.backgroundColor = this.props.color
+    styles.base.backgroundColor = weatherColor(this.props.temp)
 
     return (
       <div style={styles.base} >
@@ -38,6 +39,6 @@ class Header extends React.Component {
     )
   }
 }
-Header.propTypes = { color: React.PropTypes.string }
+Header.propTypes = { temp: React.PropTypes.number }
 
 export default new Radium(Header)

@@ -56,11 +56,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactRouter = __webpack_require__(181);
+	var _reactRouter = __webpack_require__(186);
 
 	var _reactRouter2 = _interopRequireDefault(_reactRouter);
 
-	var _componentsAppJs = __webpack_require__(220);
+	var _componentsAppJs = __webpack_require__(225);
 
 	var _componentsAppJs2 = _interopRequireDefault(_componentsAppJs);
 
@@ -136,11 +136,11 @@
 
 	var _headerHeaderJs2 = _interopRequireDefault(_headerHeaderJs);
 
-	var _forecastTodayForecastTodayJs = __webpack_require__(171);
+	var _forecastTodayForecastTodayJs = __webpack_require__(181);
 
 	var _forecastTodayForecastTodayJs2 = _interopRequireDefault(_forecastTodayForecastTodayJs);
 
-	var _forecastFooterForecastFooterJs = __webpack_require__(180);
+	var _forecastFooterForecastFooterJs = __webpack_require__(185);
 
 	var _forecastFooterForecastFooterJs2 = _interopRequireDefault(_forecastFooterForecastFooterJs);
 
@@ -169,11 +169,10 @@
 	  _createClass(Home, [{
 	    key: 'render',
 	    value: function render() {
-	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement(_headerHeaderJs2['default'], { color: this.props.color
+	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement(_headerHeaderJs2['default'], { temp: this.props.temp
 	      }), _react2['default'].createElement(_forecastTodayForecastTodayJs2['default'], {
-	        color: this.props.color,
 	        temp: this.props.temp
-	      }), _react2['default'].createElement(_forecastFooterForecastFooterJs2['default'], { color: this.props.color }));
+	      }), _react2['default'].createElement(_forecastFooterForecastFooterJs2['default'], { temp: this.props.temp }));
 	    }
 	  }]);
 
@@ -181,7 +180,6 @@
 	})(_react2['default'].Component);
 
 	Home.propTypes = {
-	  color: _react2['default'].PropTypes.string,
 	  temp: _react2['default'].PropTypes.number
 	};
 
@@ -21525,6 +21523,10 @@
 
 	var _radium2 = _interopRequireDefault(_radium);
 
+	var _weatherColorJs = __webpack_require__(171);
+
+	var _weatherColorJs2 = _interopRequireDefault(_weatherColorJs);
+
 	var styles = {
 	  base: {
 	    padding: '10px 10px',
@@ -21562,7 +21564,7 @@
 	  _createClass(Header, [{
 	    key: 'render',
 	    value: function render() {
-	      styles.base.backgroundColor = this.props.color;
+	      styles.base.backgroundColor = (0, _weatherColorJs2['default'])(this.props.temp);
 
 	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('i', { className: 'fa fa-gears',
 	        style: styles.settingsIcon }), _react2['default'].createElement('p', { style: styles.cityState }, 'San Francisco, CA'), _react2['default'].createElement('p', { style: styles.headerDate }, 'tuesday, june 26'));
@@ -21572,7 +21574,7 @@
 	  return Header;
 	})(_react2['default'].Component);
 
-	Header.propTypes = { color: _react2['default'].PropTypes.string };
+	Header.propTypes = { temp: _react2['default'].PropTypes.number };
 
 	exports['default'] = new _radium2['default'](Header);
 	module.exports = exports['default'];
@@ -21591,95 +21593,81 @@
 	  value: true
 	});
 
-	var _createClass = (function () {
-	  function defineProperties(target, props) {
-	    for (var i = 0; i < props.length; i++) {
-	      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-	    }
-	  }return function (Constructor, protoProps, staticProps) {
-	    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-	  };
-	})();
-
 	function _interopRequireDefault(obj) {
 	  return obj && obj.__esModule ? obj : { 'default': obj };
 	}
 
-	function _classCallCheck(instance, Constructor) {
-	  if (!(instance instanceof Constructor)) {
-	    throw new TypeError('Cannot call a class as a function');
-	  }
-	}
+	var _stylesCommonJs = __webpack_require__(172);
 
-	function _inherits(subClass, superClass) {
-	  if (typeof superClass !== 'function' && superClass !== null) {
-	    throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
-	  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) subClass.__proto__ = superClass;
-	}
+	var _stylesCommonJs2 = _interopRequireDefault(_stylesCommonJs);
 
-	var _react = __webpack_require__(10);
+	var _interpolation = __webpack_require__(178);
 
-	var _react2 = _interopRequireDefault(_react);
+	var _color = __webpack_require__(173);
 
-	var _forecastHourlyForecastHourlyJs = __webpack_require__(172);
+	var _color2 = _interopRequireDefault(_color);
 
-	var _forecastHourlyForecastHourlyJs2 = _interopRequireDefault(_forecastHourlyForecastHourlyJs);
+	/*
+	 * scale our currentTemp to a number between 0 and 1
+	 */
+	var scale = function scale(currentTemp) {
+	  var maxTemp = 100; // resonable temperatures
+	  var minTemp = 0;
 
-	var _forecastNowForecastNowJs = __webpack_require__(173);
+	  var numerand = currentTemp - minTemp;
+	  var denominator = maxTemp - minTemp;
+	  var result = numerand / denominator;
 
-	var _forecastNowForecastNowJs2 = _interopRequireDefault(_forecastNowForecastNowJs);
+	  // clip to [0, 1]
+	  result = result > 1 ? 1 : result;
+	  result = result < 0 ? 0 : result;
 
-	var _radium = __webpack_require__(2);
+	  return result;
+	};
 
-	var _radium2 = _interopRequireDefault(_radium);
+	// ensure color has sufficient contrast against text color
+	var contrast = function contrast(color) {
+	  var textColor = new _color2['default']('white');
 
-	// import Color from 'color'
-
-	var styles = {
-	  base: {
-	    flexGrow: 1,
-	    overflow: 'scroll'
-	  },
-
-	  overflowDiv: {
-	    overflow: 'auto',
-	    height: '55vh'
+	  while (color.contrast(textColor) < 2) {
+	    color = color.darken(0.1);
 	  }
 	};
 
-	var ForecastToday = (function (_React$Component) {
-	  function ForecastToday() {
-	    _classCallCheck(this, ForecastToday);
-
-	    if (_React$Component != null) {
-	      _React$Component.apply(this, arguments);
-	    }
+	/*
+	 * Takes a temperature and returns an appropriate color
+	 * in hsl you can modify by hue, saturation and lightness, so
+	 * we calculate a color between 'blue' & 'red' by Linear Interpolation
+	 * ex. lerp(start, end, ratio)
+	 */
+	var weatherColor = function weatherColor(currentTemp) {
+	  if (isNaN(currentTemp)) {
+	    return 'white';
 	  }
 
-	  _inherits(ForecastToday, _React$Component);
+	  var start = _stylesCommonJs2['default'].blue;
+	  var end = _stylesCommonJs2['default'].red;
+	  var result = start.clone();
 
-	  _createClass(ForecastToday, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement(_forecastNowForecastNowJs2['default'], {
-	        color: this.props.color,
-	        temp: this.props.temp
-	      }), _react2['default'].createElement('div', { style: styles.overflowDiv }, _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#4c869b', forecast: 'rain', temperature: 65, time: '3:00pm' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#5aa0ba', forecast: 'cloudy', temperature: 66, time: '4:00pm' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#5aa0ba', forecast: 'cloudy', temperature: 66, time: '5:00pm' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#77b3c9', forecast: 'day-cloudy', temperature: 67, time: '6:00pm' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#77b3c9', forecast: 'day-cloudy', temperature: 67, time: '7:00pm' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#94cade', forecast: 'day-sunny', temperature: 68, time: '8:00pm' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#94cade', forecast: 'day-sunny', temperature: 68, time: '9:00pm' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#b6e5f7', forecast: 'cloudy', temperature: 69, time: '10:00pm' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#b6e5f7', forecast: 'cloudy', temperature: 69, time: '11:00pm' })));
-	    }
-	  }]);
+	  var ratio = scale(currentTemp);
 
-	  return ForecastToday;
-	})(_react2['default'].Component);
+	  var newHue = (0, _interpolation.lerp)(start.hue(), end.hue(), ratio);
+	  var newSaturation = (0, _interpolation.lerp)(start.saturation(), end.saturation(), ratio);
+	  var newLightness = (0, _interpolation.lerp)(start.lightness(), end.lightness(), ratio);
 
-	ForecastToday.propTypes = {
-	  color: _react2['default'].PropTypes.string,
-	  temp: _react2['default'].PropTypes.number
+	  result.hue(newHue);
+	  result.saturation(newSaturation);
+	  result.lightness(newLightness);
+	  contrast(result);
+	  // result.alpha(0.3)
+
+	  return result.hslaString();
 	};
 
-	exports['default'] = new _radium2['default'](ForecastToday);
+	exports['default'] = weatherColor;
 	module.exports = exports['default'];
 
-	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "forecastToday.js" + ": " + err.message); } }); } } })(); }
+	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "weatherColor.js" + ": " + err.message); } }); } } })(); }
 
 /***/ },
 /* 172 */
@@ -21693,341 +21681,35 @@
 	  value: true
 	});
 
-	var _createClass = (function () {
-	  function defineProperties(target, props) {
-	    for (var i = 0; i < props.length; i++) {
-	      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-	    }
-	  }return function (Constructor, protoProps, staticProps) {
-	    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-	  };
-	})();
-
 	function _interopRequireDefault(obj) {
 	  return obj && obj.__esModule ? obj : { 'default': obj };
 	}
 
-	function _classCallCheck(instance, Constructor) {
-	  if (!(instance instanceof Constructor)) {
-	    throw new TypeError('Cannot call a class as a function');
-	  }
-	}
+	var _color = __webpack_require__(173);
 
-	function _inherits(subClass, superClass) {
-	  if (typeof superClass !== 'function' && superClass !== null) {
-	    throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
-	  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) subClass.__proto__ = superClass;
-	}
+	var _color2 = _interopRequireDefault(_color);
 
-	var _react = __webpack_require__(10);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _radium = __webpack_require__(2);
-
-	var _radium2 = _interopRequireDefault(_radium);
-
-	var styles = {
-	  base: {
-	    display: 'flex',
-	    flexDirection: 'row',
-	    flexGrow: 1,
-	    flexWrap: 'nowrap',
-	    justifyContent: 'center',
-	    alignItems: 'center',
-	    minHeight: '90px'
-	  },
-
-	  divStyle: {
-	    fontSize: '1.2em',
-	    flexGrow: 1,
-	    textAlign: 'center'
-	  },
-
-	  iStyle: {
-	    fontSize: '3em',
-	    flexGrow: 1,
-	    textAlign: 'center'
-	  }
+	var Common = {
+	  splashRed: new _color2['default']('#ff5136'),
+	  tempBlue: new _color2['default']('#7ea4b3'),
+	  borderColor: new _color2['default']('#C7E1EA'),
+	  altFontColor: new _color2['default']('#4C859A'),
+	  red: new _color2['default']('#ff5136'),
+	  blue: new _color2['default']('#7ea4b3')
 	};
 
-	var ForecastHourly = (function (_React$Component) {
-	  function ForecastHourly() {
-	    _classCallCheck(this, ForecastHourly);
-
-	    if (_React$Component != null) {
-	      _React$Component.apply(this, arguments);
-	    }
-	  }
-
-	  _inherits(ForecastHourly, _React$Component);
-
-	  _createClass(ForecastHourly, [{
-	    key: 'render',
-	    value: function render() {
-	      styles.base.backgroundColor = this.props.color;
-
-	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.divStyle }, this.props.time), _react2['default'].createElement('i', { className: 'wi wi-rain',
-	        style: styles.iStyle }), _react2['default'].createElement('div', { style: styles.divStyle }, this.props.temperature, '°'));
-	    }
-	  }]);
-
-	  return ForecastHourly;
-	})(_react2['default'].Component);
-
-	ForecastHourly.propTypes = {
-	  color: _react2['default'].PropTypes.string,
-	  temperature: _react2['default'].PropTypes.number,
-	  time: _react2['default'].PropTypes.string
-	};
-
-	exports['default'] = new _radium2['default'](ForecastHourly);
+	exports['default'] = Common;
 	module.exports = exports['default'];
 
-	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "forecastHourly.js" + ": " + err.message); } }); } } })(); }
+	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "common.js" + ": " + err.message); } }); } } })(); }
 
 /***/ },
 /* 173 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } (function () {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-
-	var _createClass = (function () {
-	  function defineProperties(target, props) {
-	    for (var i = 0; i < props.length; i++) {
-	      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-	    }
-	  }return function (Constructor, protoProps, staticProps) {
-	    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-	  };
-	})();
-
-	function _interopRequireDefault(obj) {
-	  return obj && obj.__esModule ? obj : { 'default': obj };
-	}
-
-	function _classCallCheck(instance, Constructor) {
-	  if (!(instance instanceof Constructor)) {
-	    throw new TypeError('Cannot call a class as a function');
-	  }
-	}
-
-	function _inherits(subClass, superClass) {
-	  if (typeof superClass !== 'function' && superClass !== null) {
-	    throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
-	  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) subClass.__proto__ = superClass;
-	}
-
-	var _react = __webpack_require__(10);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _radium = __webpack_require__(2);
-
-	var _radium2 = _interopRequireDefault(_radium);
-
-	var _dividerDividerJs = __webpack_require__(174);
-
-	var _dividerDividerJs2 = _interopRequireDefault(_dividerDividerJs);
-
-	var _color = __webpack_require__(175);
-
-	var _color2 = _interopRequireDefault(_color);
-
-	var styles = {
-	  base: {
-	    display: 'flex',
-	    flexDirection: 'column',
-	    flexGrow: 1,
-	    flexWrap: 'wrap',
-	    justifyContent: 'center',
-	    alignItems: 'center',
-	    height: '65vh',
-	    borderBottom: '2px solid',
-	    zIndex: 0,
-	    position: 'relative'
-	  },
-
-	  mainTempWrapper: {
-	    fontSize: '7em',
-	    maxWidth: '50%'
-	  },
-
-	  flexGrow: {
-	    flexGrow: 1
-	  },
-
-	  degrees: {
-	    fontSize: '0.8em',
-	    verticalAlign: 'top'
-	  },
-
-	  forecastAndChance: {
-	    display: 'flex',
-	    flexDirection: 'row',
-	    justifyContent: 'center',
-	    maxWidth: '50%',
-	    textAlign: 'center'
-	  },
-
-	  verticalDivider: {
-	    height: '6em',
-	    width: 0,
-	    border: '1px solid'
-	  },
-
-	  icon: {
-	    fontSize: '3em'
-	  },
-
-	  forecastAndChanceChild: {
-	    width: '20vw'
-	  }
-	};
-
-	var ForecastNow = (function (_React$Component) {
-	  function ForecastNow() {
-	    _classCallCheck(this, ForecastNow);
-
-	    if (_React$Component != null) {
-	      _React$Component.apply(this, arguments);
-	    }
-	  }
-
-	  _inherits(ForecastNow, _React$Component);
-
-	  _createClass(ForecastNow, [{
-	    key: 'render',
-	    value: function render() {
-	      var colorDark = new _color2['default'](this.props.color).darken(0.1).hslaString();
-	      var colorLight = new _color2['default'](this.props.color).lighten(0.1).hslaString();
-
-	      styles.base.backgroundColor = this.props.color;
-	      styles.verticalDivider.color = colorDark;
-
-	      styles.base.borderBottomColor = colorDark;
-	      styles.base.boxShadow = '0 2px ' + colorLight;
-
-	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.flexGrow }), _react2['default'].createElement('div', { style: styles.mainTempWrapper }, _react2['default'].createElement('span', null, this.props.temp), _react2['default'].createElement('span', { style: styles.degrees }, '°')), _react2['default'].createElement('div', { style: styles.forecastAndChance }, _react2['default'].createElement('div', { style: styles.forecastAndChanceChild }, _react2['default'].createElement('i', { className: 'wi wi-rain',
-	        style: styles.icon }), _react2['default'].createElement('p', null, 'rainy')), _react2['default'].createElement('div', { style: styles.verticalDivider }), _react2['default'].createElement('div', { style: styles.forecastAndChanceChild }, _react2['default'].createElement('i', { className: 'wi wi-sprinkles',
-	        style: styles.icon }), _react2['default'].createElement('p', null, '100%'))), _react2['default'].createElement('div', { style: styles.flexGrow }), _react2['default'].createElement(_dividerDividerJs2['default'], null));
-	    }
-	  }]);
-
-	  return ForecastNow;
-	})(_react2['default'].Component);
-
-	ForecastNow.propTypes = {
-	  color: _react2['default'].PropTypes.string,
-	  temp: _react2['default'].PropTypes.number
-	};
-
-	exports['default'] = new _radium2['default'](ForecastNow);
-	module.exports = exports['default'];
-
-	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "forecastNow.js" + ": " + err.message); } }); } } })(); }
-
-/***/ },
-/* 174 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } (function () {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-
-	var _createClass = (function () {
-	  function defineProperties(target, props) {
-	    for (var i = 0; i < props.length; i++) {
-	      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-	    }
-	  }return function (Constructor, protoProps, staticProps) {
-	    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-	  };
-	})();
-
-	function _interopRequireDefault(obj) {
-	  return obj && obj.__esModule ? obj : { 'default': obj };
-	}
-
-	function _classCallCheck(instance, Constructor) {
-	  if (!(instance instanceof Constructor)) {
-	    throw new TypeError('Cannot call a class as a function');
-	  }
-	}
-
-	function _inherits(subClass, superClass) {
-	  if (typeof superClass !== 'function' && superClass !== null) {
-	    throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
-	  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) subClass.__proto__ = superClass;
-	}
-
-	var _react = __webpack_require__(10);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _radium = __webpack_require__(2);
-
-	var _radium2 = _interopRequireDefault(_radium);
-
-	/*
-	 * main horizontal divider for app
-	 */
-	var styles = {
-	  base: {
-	    padding: '7px 0',
-	    width: '100%'
-	  },
-	  mainBarsChild: {
-	    width: '40px',
-	    paddingBottom: '3px',
-	    margin: '0 auto',
-	    borderTop: '2px solid white'
-	  }
-	};
-
-	var Divider = (function (_React$Component) {
-	  function Divider() {
-	    _classCallCheck(this, Divider);
-
-	    if (_React$Component != null) {
-	      _React$Component.apply(this, arguments);
-	    }
-	  }
-
-	  _inherits(Divider, _React$Component);
-
-	  _createClass(Divider, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.mainBarsChild }), _react2['default'].createElement('div', { style: styles.mainBarsChild }), _react2['default'].createElement('div', { style: styles.mainBarsChild }));
-	    }
-	  }]);
-
-	  return Divider;
-	})(_react2['default'].Component);
-
-	exports['default'] = new _radium2['default'](Divider);
-	module.exports = exports['default'];
-
-	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "divider.js" + ": " + err.message); } }); } } })(); }
-
-/***/ },
-/* 175 */
-/***/ function(module, exports, __webpack_require__) {
-
 	/* MIT license */
-	var convert = __webpack_require__(176),
-	    string = __webpack_require__(178);
+	var convert = __webpack_require__(174),
+	    string = __webpack_require__(176);
 
 	var Color = function(obj) {
 	  if (obj instanceof Color) return obj;
@@ -22461,10 +22143,10 @@
 
 
 /***/ },
-/* 176 */
+/* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var conversions = __webpack_require__(177);
+	var conversions = __webpack_require__(175);
 
 	var convert = function() {
 	   return new Converter();
@@ -22558,7 +22240,7 @@
 	module.exports = convert;
 
 /***/ },
-/* 177 */
+/* 175 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* MIT license */
@@ -23262,11 +22944,11 @@
 
 
 /***/ },
-/* 178 */
+/* 176 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* MIT license */
-	var colorNames = __webpack_require__(179);
+	var colorNames = __webpack_require__(177);
 
 	module.exports = {
 	   getRgba: getRgba,
@@ -23489,7 +23171,7 @@
 
 
 /***/ },
-/* 179 */
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = {
@@ -24236,7 +23918,136 @@
 	}
 
 /***/ },
+/* 178 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** Utility function for linear interpolation. */
+	module.exports.lerp = __webpack_require__(179)
+
+	/** Utility function for Hermite interpolation. */
+	module.exports.smoothstep = __webpack_require__(180)
+
+/***/ },
+/* 179 */
+/***/ function(module, exports, __webpack_require__) {
+
+	function lerp(v0, v1, t) {
+	    return v0*(1-t)+v1*t
+	}
+	module.exports = lerp
+
+/***/ },
 /* 180 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function smoothstep (min, max, value) {
+	  var x = Math.max(0, Math.min(1, (value-min)/(max-min)));
+	  return x*x*(3 - 2*x);
+	};
+
+
+/***/ },
+/* 181 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } (function () {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () {
+	  function defineProperties(target, props) {
+	    for (var i = 0; i < props.length; i++) {
+	      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+	    }
+	  }return function (Constructor, protoProps, staticProps) {
+	    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+	  };
+	})();
+
+	function _interopRequireDefault(obj) {
+	  return obj && obj.__esModule ? obj : { 'default': obj };
+	}
+
+	function _classCallCheck(instance, Constructor) {
+	  if (!(instance instanceof Constructor)) {
+	    throw new TypeError('Cannot call a class as a function');
+	  }
+	}
+
+	function _inherits(subClass, superClass) {
+	  if (typeof superClass !== 'function' && superClass !== null) {
+	    throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+	  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) subClass.__proto__ = superClass;
+	}
+
+	var _react = __webpack_require__(10);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _forecastHourlyForecastHourlyJs = __webpack_require__(182);
+
+	var _forecastHourlyForecastHourlyJs2 = _interopRequireDefault(_forecastHourlyForecastHourlyJs);
+
+	var _forecastNowForecastNowJs = __webpack_require__(183);
+
+	var _forecastNowForecastNowJs2 = _interopRequireDefault(_forecastNowForecastNowJs);
+
+	var _radium = __webpack_require__(2);
+
+	var _radium2 = _interopRequireDefault(_radium);
+
+	// import Color from 'color'
+
+	var styles = {
+	  base: {
+	    flexGrow: 1,
+	    overflow: 'scroll'
+	  },
+
+	  overflowDiv: {
+	    overflow: 'auto',
+	    height: '55vh'
+	  }
+	};
+
+	var ForecastToday = (function (_React$Component) {
+	  function ForecastToday() {
+	    _classCallCheck(this, ForecastToday);
+
+	    if (_React$Component != null) {
+	      _React$Component.apply(this, arguments);
+	    }
+	  }
+
+	  _inherits(ForecastToday, _React$Component);
+
+	  _createClass(ForecastToday, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement(_forecastNowForecastNowJs2['default'], {
+	        temp: this.props.temp
+	      }), _react2['default'].createElement('div', { style: styles.overflowDiv }, _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#4c869b', forecast: 'rain', temperature: 65, time: '3:00pm' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#5aa0ba', forecast: 'cloudy', temperature: 66, time: '4:00pm' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#5aa0ba', forecast: 'cloudy', temperature: 66, time: '5:00pm' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#77b3c9', forecast: 'day-cloudy', temperature: 67, time: '6:00pm' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#77b3c9', forecast: 'day-cloudy', temperature: 67, time: '7:00pm' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#94cade', forecast: 'day-sunny', temperature: 68, time: '8:00pm' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#94cade', forecast: 'day-sunny', temperature: 68, time: '9:00pm' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#b6e5f7', forecast: 'cloudy', temperature: 69, time: '10:00pm' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#b6e5f7', forecast: 'cloudy', temperature: 69, time: '11:00pm' })));
+	    }
+	  }]);
+
+	  return ForecastToday;
+	})(_react2['default'].Component);
+
+	ForecastToday.propTypes = {
+	  temp: _react2['default'].PropTypes.number
+	};
+
+	exports['default'] = new _radium2['default'](ForecastToday);
+	module.exports = exports['default'];
+
+	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "forecastToday.js" + ": " + err.message); } }); } } })(); }
+
+/***/ },
+/* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } (function () {
@@ -24281,9 +24092,357 @@
 
 	var _radium2 = _interopRequireDefault(_radium);
 
-	var _color = __webpack_require__(175);
+	var styles = {
+	  base: {
+	    display: 'flex',
+	    flexDirection: 'row',
+	    flexGrow: 1,
+	    flexWrap: 'nowrap',
+	    justifyContent: 'center',
+	    alignItems: 'center',
+	    minHeight: '90px'
+	  },
+
+	  divStyle: {
+	    fontSize: '1.2em',
+	    flexGrow: 1,
+	    textAlign: 'center'
+	  },
+
+	  iStyle: {
+	    fontSize: '3em',
+	    flexGrow: 1,
+	    textAlign: 'center'
+	  }
+	};
+
+	var ForecastHourly = (function (_React$Component) {
+	  function ForecastHourly() {
+	    _classCallCheck(this, ForecastHourly);
+
+	    if (_React$Component != null) {
+	      _React$Component.apply(this, arguments);
+	    }
+	  }
+
+	  _inherits(ForecastHourly, _React$Component);
+
+	  _createClass(ForecastHourly, [{
+	    key: 'render',
+	    value: function render() {
+	      styles.base.backgroundColor = this.props.color;
+
+	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.divStyle }, this.props.time), _react2['default'].createElement('i', { className: 'wi wi-rain',
+	        style: styles.iStyle }), _react2['default'].createElement('div', { style: styles.divStyle }, this.props.temperature, '°'));
+	    }
+	  }]);
+
+	  return ForecastHourly;
+	})(_react2['default'].Component);
+
+	ForecastHourly.propTypes = {
+	  color: _react2['default'].PropTypes.string,
+	  temperature: _react2['default'].PropTypes.number,
+	  time: _react2['default'].PropTypes.string
+	};
+
+	exports['default'] = new _radium2['default'](ForecastHourly);
+	module.exports = exports['default'];
+
+	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "forecastHourly.js" + ": " + err.message); } }); } } })(); }
+
+/***/ },
+/* 183 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } (function () {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () {
+	  function defineProperties(target, props) {
+	    for (var i = 0; i < props.length; i++) {
+	      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+	    }
+	  }return function (Constructor, protoProps, staticProps) {
+	    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+	  };
+	})();
+
+	function _interopRequireDefault(obj) {
+	  return obj && obj.__esModule ? obj : { 'default': obj };
+	}
+
+	function _classCallCheck(instance, Constructor) {
+	  if (!(instance instanceof Constructor)) {
+	    throw new TypeError('Cannot call a class as a function');
+	  }
+	}
+
+	function _inherits(subClass, superClass) {
+	  if (typeof superClass !== 'function' && superClass !== null) {
+	    throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+	  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) subClass.__proto__ = superClass;
+	}
+
+	var _react = __webpack_require__(10);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _radium = __webpack_require__(2);
+
+	var _radium2 = _interopRequireDefault(_radium);
+
+	var _dividerDividerJs = __webpack_require__(184);
+
+	var _dividerDividerJs2 = _interopRequireDefault(_dividerDividerJs);
+
+	var _color = __webpack_require__(173);
 
 	var _color2 = _interopRequireDefault(_color);
+
+	var _weatherColorJs = __webpack_require__(171);
+
+	var _weatherColorJs2 = _interopRequireDefault(_weatherColorJs);
+
+	var styles = {
+	  base: {
+	    display: 'flex',
+	    flexDirection: 'column',
+	    flexGrow: 1,
+	    flexWrap: 'wrap',
+	    justifyContent: 'center',
+	    alignItems: 'center',
+	    height: '65vh',
+	    borderBottom: '2px solid',
+	    zIndex: 0,
+	    position: 'relative'
+	  },
+
+	  mainTempWrapper: {
+	    fontSize: '7em',
+	    maxWidth: '50%'
+	  },
+
+	  flexGrow: {
+	    flexGrow: 1
+	  },
+
+	  degrees: {
+	    fontSize: '0.8em',
+	    verticalAlign: 'top'
+	  },
+
+	  forecastAndChance: {
+	    display: 'flex',
+	    flexDirection: 'row',
+	    justifyContent: 'center',
+	    maxWidth: '50%',
+	    textAlign: 'center'
+	  },
+
+	  verticalDivider: {
+	    height: '6em',
+	    width: 0,
+	    border: '1px solid'
+	  },
+
+	  icon: {
+	    fontSize: '3em'
+	  },
+
+	  forecastAndChanceChild: {
+	    width: '20vw'
+	  }
+	};
+
+	var ForecastNow = (function (_React$Component) {
+	  function ForecastNow() {
+	    _classCallCheck(this, ForecastNow);
+
+	    if (_React$Component != null) {
+	      _React$Component.apply(this, arguments);
+	    }
+	  }
+
+	  _inherits(ForecastNow, _React$Component);
+
+	  _createClass(ForecastNow, [{
+	    key: 'render',
+	    value: function render() {
+	      var mainColor = (0, _weatherColorJs2['default'])(this.props.temp);
+	      var colorDark = new _color2['default'](mainColor).darken(0.1).hslaString();
+	      var colorLight = new _color2['default'](mainColor).lighten(0.1).hslaString();
+
+	      styles.base.backgroundColor = mainColor;
+	      styles.verticalDivider.color = colorDark;
+
+	      styles.base.borderBottomColor = colorDark;
+	      styles.base.boxShadow = '0 2px ' + colorLight;
+
+	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.flexGrow }), _react2['default'].createElement('div', { style: styles.mainTempWrapper }, _react2['default'].createElement('span', null, this.props.temp), _react2['default'].createElement('span', { style: styles.degrees }, '°')), _react2['default'].createElement('div', { style: styles.forecastAndChance }, _react2['default'].createElement('div', { style: styles.forecastAndChanceChild }, _react2['default'].createElement('i', { className: 'wi wi-rain',
+	        style: styles.icon }), _react2['default'].createElement('p', null, 'rainy')), _react2['default'].createElement('div', { style: styles.verticalDivider }), _react2['default'].createElement('div', { style: styles.forecastAndChanceChild }, _react2['default'].createElement('i', { className: 'wi wi-sprinkles',
+	        style: styles.icon }), _react2['default'].createElement('p', null, '100%'))), _react2['default'].createElement('div', { style: styles.flexGrow }), _react2['default'].createElement(_dividerDividerJs2['default'], null));
+	    }
+	  }]);
+
+	  return ForecastNow;
+	})(_react2['default'].Component);
+
+	ForecastNow.propTypes = {
+	  temp: _react2['default'].PropTypes.number
+	};
+
+	exports['default'] = new _radium2['default'](ForecastNow);
+	module.exports = exports['default'];
+
+	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "forecastNow.js" + ": " + err.message); } }); } } })(); }
+
+/***/ },
+/* 184 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } (function () {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () {
+	  function defineProperties(target, props) {
+	    for (var i = 0; i < props.length; i++) {
+	      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+	    }
+	  }return function (Constructor, protoProps, staticProps) {
+	    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+	  };
+	})();
+
+	function _interopRequireDefault(obj) {
+	  return obj && obj.__esModule ? obj : { 'default': obj };
+	}
+
+	function _classCallCheck(instance, Constructor) {
+	  if (!(instance instanceof Constructor)) {
+	    throw new TypeError('Cannot call a class as a function');
+	  }
+	}
+
+	function _inherits(subClass, superClass) {
+	  if (typeof superClass !== 'function' && superClass !== null) {
+	    throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+	  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) subClass.__proto__ = superClass;
+	}
+
+	var _react = __webpack_require__(10);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _radium = __webpack_require__(2);
+
+	var _radium2 = _interopRequireDefault(_radium);
+
+	/*
+	 * main horizontal divider for app
+	 */
+	var styles = {
+	  base: {
+	    padding: '7px 0',
+	    width: '100%'
+	  },
+	  mainBarsChild: {
+	    width: '40px',
+	    paddingBottom: '3px',
+	    margin: '0 auto',
+	    borderTop: '2px solid white'
+	  }
+	};
+
+	var Divider = (function (_React$Component) {
+	  function Divider() {
+	    _classCallCheck(this, Divider);
+
+	    if (_React$Component != null) {
+	      _React$Component.apply(this, arguments);
+	    }
+	  }
+
+	  _inherits(Divider, _React$Component);
+
+	  _createClass(Divider, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.mainBarsChild }), _react2['default'].createElement('div', { style: styles.mainBarsChild }), _react2['default'].createElement('div', { style: styles.mainBarsChild }));
+	    }
+	  }]);
+
+	  return Divider;
+	})(_react2['default'].Component);
+
+	exports['default'] = new _radium2['default'](Divider);
+	module.exports = exports['default'];
+
+	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "divider.js" + ": " + err.message); } }); } } })(); }
+
+/***/ },
+/* 185 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } (function () {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () {
+	  function defineProperties(target, props) {
+	    for (var i = 0; i < props.length; i++) {
+	      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+	    }
+	  }return function (Constructor, protoProps, staticProps) {
+	    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+	  };
+	})();
+
+	function _interopRequireDefault(obj) {
+	  return obj && obj.__esModule ? obj : { 'default': obj };
+	}
+
+	function _classCallCheck(instance, Constructor) {
+	  if (!(instance instanceof Constructor)) {
+	    throw new TypeError('Cannot call a class as a function');
+	  }
+	}
+
+	function _inherits(subClass, superClass) {
+	  if (typeof superClass !== 'function' && superClass !== null) {
+	    throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+	  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) subClass.__proto__ = superClass;
+	}
+
+	var _react = __webpack_require__(10);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _radium = __webpack_require__(2);
+
+	var _radium2 = _interopRequireDefault(_radium);
+
+	var _color = __webpack_require__(173);
+
+	var _color2 = _interopRequireDefault(_color);
+
+	var _weatherColorJs = __webpack_require__(171);
+
+	var _weatherColorJs2 = _interopRequireDefault(_weatherColorJs);
 
 	var styles = {
 	  base: {
@@ -24328,10 +24487,11 @@
 	  _createClass(ForecastFooter, [{
 	    key: 'render',
 	    value: function render() {
-	      var colorDark = new _color2['default'](this.props.color).darken(0.1).hslaString();
-	      var colorLight = new _color2['default'](this.props.color).lighten(0.2).hslaString();
+	      var mainColor = (0, _weatherColorJs2['default'])(this.props.temp);
+	      var colorDark = new _color2['default'](mainColor).darken(0.1).hslaString();
+	      var colorLight = new _color2['default'](mainColor).lighten(0.2).hslaString();
 
-	      styles.base.backgroundColor = this.props.color;
+	      styles.base.backgroundColor = mainColor;
 	      styles.base.borderTop = '2px solid ' + colorLight;
 	      styles.base.boxShadow = '0 -2px ' + colorDark;
 
@@ -24346,7 +24506,7 @@
 	  return ForecastFooter;
 	})(_react2['default'].Component);
 
-	ForecastFooter.propTypes = { color: _react2['default'].PropTypes.string };
+	ForecastFooter.propTypes = { temp: _react2['default'].PropTypes.number };
 
 	exports['default'] = new _radium2['default'](ForecastFooter);
 	module.exports = exports['default'];
@@ -24354,43 +24514,43 @@
 	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "forecastFooter.js" + ": " + err.message); } }); } } })(); }
 
 /***/ },
-/* 181 */
+/* 186 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	exports.DefaultRoute = __webpack_require__(182);
-	exports.Link = __webpack_require__(195);
-	exports.NotFoundRoute = __webpack_require__(196);
-	exports.Redirect = __webpack_require__(197);
-	exports.Route = __webpack_require__(194);
-	exports.ActiveHandler = __webpack_require__(192);
+	exports.DefaultRoute = __webpack_require__(187);
+	exports.Link = __webpack_require__(200);
+	exports.NotFoundRoute = __webpack_require__(201);
+	exports.Redirect = __webpack_require__(202);
+	exports.Route = __webpack_require__(199);
+	exports.ActiveHandler = __webpack_require__(197);
 	exports.RouteHandler = exports.ActiveHandler;
 
-	exports.HashLocation = __webpack_require__(198);
-	exports.HistoryLocation = __webpack_require__(201);
-	exports.RefreshLocation = __webpack_require__(202);
-	exports.StaticLocation = __webpack_require__(203);
-	exports.TestLocation = __webpack_require__(204);
+	exports.HashLocation = __webpack_require__(203);
+	exports.HistoryLocation = __webpack_require__(206);
+	exports.RefreshLocation = __webpack_require__(207);
+	exports.StaticLocation = __webpack_require__(208);
+	exports.TestLocation = __webpack_require__(209);
 
-	exports.ImitateBrowserBehavior = __webpack_require__(205);
-	exports.ScrollToTopBehavior = __webpack_require__(206);
+	exports.ImitateBrowserBehavior = __webpack_require__(210);
+	exports.ScrollToTopBehavior = __webpack_require__(211);
 
-	exports.History = __webpack_require__(200);
-	exports.Navigation = __webpack_require__(207);
-	exports.State = __webpack_require__(208);
+	exports.History = __webpack_require__(205);
+	exports.Navigation = __webpack_require__(212);
+	exports.State = __webpack_require__(213);
 
-	exports.createRoute = __webpack_require__(184).createRoute;
-	exports.createDefaultRoute = __webpack_require__(184).createDefaultRoute;
-	exports.createNotFoundRoute = __webpack_require__(184).createNotFoundRoute;
-	exports.createRedirect = __webpack_require__(184).createRedirect;
-	exports.createRoutesFromReactChildren = __webpack_require__(209);
+	exports.createRoute = __webpack_require__(189).createRoute;
+	exports.createDefaultRoute = __webpack_require__(189).createDefaultRoute;
+	exports.createNotFoundRoute = __webpack_require__(189).createNotFoundRoute;
+	exports.createRedirect = __webpack_require__(189).createRedirect;
+	exports.createRoutesFromReactChildren = __webpack_require__(214);
 
-	exports.create = __webpack_require__(210);
-	exports.run = __webpack_require__(219);
+	exports.create = __webpack_require__(215);
+	exports.run = __webpack_require__(224);
 
 /***/ },
-/* 182 */
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24399,9 +24559,9 @@
 
 	var _inherits = function (subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
 
-	var PropTypes = __webpack_require__(183);
-	var RouteHandler = __webpack_require__(192);
-	var Route = __webpack_require__(194);
+	var PropTypes = __webpack_require__(188);
+	var RouteHandler = __webpack_require__(197);
+	var Route = __webpack_require__(199);
 
 	/**
 	 * A <DefaultRoute> component is a special kind of <Route> that
@@ -24442,14 +24602,14 @@
 	module.exports = DefaultRoute;
 
 /***/ },
-/* 183 */
+/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var assign = __webpack_require__(22);
 	var ReactPropTypes = __webpack_require__(10).PropTypes;
-	var Route = __webpack_require__(184);
+	var Route = __webpack_require__(189);
 
 	var PropTypes = assign({}, ReactPropTypes, {
 
@@ -24478,7 +24638,7 @@
 	module.exports = PropTypes;
 
 /***/ },
-/* 184 */
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24490,7 +24650,7 @@
 	var assign = __webpack_require__(22);
 	var invariant = __webpack_require__(16);
 	var warning = __webpack_require__(24);
-	var PathUtils = __webpack_require__(185);
+	var PathUtils = __webpack_require__(190);
 
 	var _currentRoute;
 
@@ -24683,14 +24843,14 @@
 	module.exports = Route;
 
 /***/ },
-/* 185 */
+/* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var invariant = __webpack_require__(16);
-	var assign = __webpack_require__(186);
-	var qs = __webpack_require__(187);
+	var assign = __webpack_require__(191);
+	var qs = __webpack_require__(192);
 
 	var paramCompileMatcher = /:([a-zA-Z_$][a-zA-Z0-9_$]*)|[*.()\[\]\\+|{}^$]/g;
 	var paramInjectMatcher = /:([a-zA-Z_$][a-zA-Z0-9_$?]*[?]?)|[*]/g;
@@ -24841,7 +25001,7 @@
 	module.exports = PathUtils;
 
 /***/ },
-/* 186 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24873,20 +25033,20 @@
 
 
 /***/ },
-/* 187 */
+/* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(188);
+	module.exports = __webpack_require__(193);
 
 
 /***/ },
-/* 188 */
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Load modules
 
-	var Stringify = __webpack_require__(189);
-	var Parse = __webpack_require__(191);
+	var Stringify = __webpack_require__(194);
+	var Parse = __webpack_require__(196);
 
 
 	// Declare internals
@@ -24901,12 +25061,12 @@
 
 
 /***/ },
-/* 189 */
+/* 194 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Load modules
 
-	var Utils = __webpack_require__(190);
+	var Utils = __webpack_require__(195);
 
 
 	// Declare internals
@@ -25004,7 +25164,7 @@
 
 
 /***/ },
-/* 190 */
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Load modules
@@ -25142,12 +25302,12 @@
 
 
 /***/ },
-/* 191 */
+/* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Load modules
 
-	var Utils = __webpack_require__(190);
+	var Utils = __webpack_require__(195);
 
 
 	// Declare internals
@@ -25309,7 +25469,7 @@
 
 
 /***/ },
-/* 192 */
+/* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25321,9 +25481,9 @@
 	var _inherits = function (subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
 
 	var React = __webpack_require__(10);
-	var ContextWrapper = __webpack_require__(193);
+	var ContextWrapper = __webpack_require__(198);
 	var assign = __webpack_require__(22);
-	var PropTypes = __webpack_require__(183);
+	var PropTypes = __webpack_require__(188);
 
 	var REF_NAME = '__routeHandler__';
 
@@ -25422,7 +25582,7 @@
 	module.exports = RouteHandler;
 
 /***/ },
-/* 193 */
+/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25465,7 +25625,7 @@
 	module.exports = ContextWrapper;
 
 /***/ },
-/* 194 */
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25478,8 +25638,8 @@
 
 	var React = __webpack_require__(10);
 	var invariant = __webpack_require__(16);
-	var PropTypes = __webpack_require__(183);
-	var RouteHandler = __webpack_require__(192);
+	var PropTypes = __webpack_require__(188);
+	var RouteHandler = __webpack_require__(197);
 
 	/**
 	 * <Route> components specify components that are rendered to the page when the
@@ -25561,7 +25721,7 @@
 	module.exports = Route;
 
 /***/ },
-/* 195 */
+/* 200 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25574,7 +25734,7 @@
 
 	var React = __webpack_require__(10);
 	var assign = __webpack_require__(22);
-	var PropTypes = __webpack_require__(183);
+	var PropTypes = __webpack_require__(188);
 
 	function isLeftClickEvent(event) {
 	  return event.button === 0;
@@ -25701,7 +25861,7 @@
 	module.exports = Link;
 
 /***/ },
-/* 196 */
+/* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25710,9 +25870,9 @@
 
 	var _inherits = function (subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
 
-	var PropTypes = __webpack_require__(183);
-	var RouteHandler = __webpack_require__(192);
-	var Route = __webpack_require__(194);
+	var PropTypes = __webpack_require__(188);
+	var RouteHandler = __webpack_require__(197);
+	var Route = __webpack_require__(199);
 
 	/**
 	 * A <NotFoundRoute> is a special kind of <Route> that
@@ -25754,7 +25914,7 @@
 	module.exports = NotFoundRoute;
 
 /***/ },
-/* 197 */
+/* 202 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25763,8 +25923,8 @@
 
 	var _inherits = function (subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
 
-	var PropTypes = __webpack_require__(183);
-	var Route = __webpack_require__(194);
+	var PropTypes = __webpack_require__(188);
+	var Route = __webpack_require__(199);
 
 	/**
 	 * A <Redirect> component is a special kind of <Route> that always
@@ -25802,13 +25962,13 @@
 	module.exports = Redirect;
 
 /***/ },
-/* 198 */
+/* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var LocationActions = __webpack_require__(199);
-	var History = __webpack_require__(200);
+	var LocationActions = __webpack_require__(204);
+	var History = __webpack_require__(205);
 
 	var _listeners = [];
 	var _isListening = false;
@@ -25918,7 +26078,7 @@
 	module.exports = HashLocation;
 
 /***/ },
-/* 199 */
+/* 204 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -25948,7 +26108,7 @@
 	module.exports = LocationActions;
 
 /***/ },
-/* 200 */
+/* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25983,13 +26143,13 @@
 	module.exports = History;
 
 /***/ },
-/* 201 */
+/* 206 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var LocationActions = __webpack_require__(199);
-	var History = __webpack_require__(200);
+	var LocationActions = __webpack_require__(204);
+	var History = __webpack_require__(205);
 
 	var _listeners = [];
 	var _isListening = false;
@@ -26074,13 +26234,13 @@
 	module.exports = HistoryLocation;
 
 /***/ },
-/* 202 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var HistoryLocation = __webpack_require__(201);
-	var History = __webpack_require__(200);
+	var HistoryLocation = __webpack_require__(206);
+	var History = __webpack_require__(205);
 
 	/**
 	 * A Location that uses full page refreshes. This is used as
@@ -26110,7 +26270,7 @@
 	module.exports = RefreshLocation;
 
 /***/ },
-/* 203 */
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26164,7 +26324,7 @@
 	module.exports = StaticLocation;
 
 /***/ },
-/* 204 */
+/* 209 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26174,8 +26334,8 @@
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	var invariant = __webpack_require__(16);
-	var LocationActions = __webpack_require__(199);
-	var History = __webpack_require__(200);
+	var LocationActions = __webpack_require__(204);
+	var History = __webpack_require__(205);
 
 	/**
 	 * A location that is convenient for testing and does not require a DOM.
@@ -26263,12 +26423,12 @@
 	module.exports = TestLocation;
 
 /***/ },
-/* 205 */
+/* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var LocationActions = __webpack_require__(199);
+	var LocationActions = __webpack_require__(204);
 
 	/**
 	 * A scroll behavior that attempts to imitate the default behavior
@@ -26297,7 +26457,7 @@
 	module.exports = ImitateBrowserBehavior;
 
 /***/ },
-/* 206 */
+/* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -26317,12 +26477,12 @@
 	module.exports = ScrollToTopBehavior;
 
 /***/ },
-/* 207 */
+/* 212 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var PropTypes = __webpack_require__(183);
+	var PropTypes = __webpack_require__(188);
 
 	/**
 	 * A mixin for components that modify the URL.
@@ -26392,12 +26552,12 @@
 	module.exports = Navigation;
 
 /***/ },
-/* 208 */
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var PropTypes = __webpack_require__(183);
+	var PropTypes = __webpack_require__(188);
 
 	/**
 	 * A mixin for components that need to know the path, routes, URL
@@ -26471,7 +26631,7 @@
 	module.exports = State;
 
 /***/ },
-/* 209 */
+/* 214 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* jshint -W084 */
@@ -26480,10 +26640,10 @@
 	var React = __webpack_require__(10);
 	var assign = __webpack_require__(22);
 	var warning = __webpack_require__(24);
-	var DefaultRoute = __webpack_require__(182);
-	var NotFoundRoute = __webpack_require__(196);
-	var Redirect = __webpack_require__(197);
-	var Route = __webpack_require__(184);
+	var DefaultRoute = __webpack_require__(187);
+	var NotFoundRoute = __webpack_require__(201);
+	var Redirect = __webpack_require__(202);
+	var Route = __webpack_require__(189);
 
 	function checkPropTypes(componentName, propTypes, props) {
 	  componentName = componentName || 'UnknownComponent';
@@ -26557,7 +26717,7 @@
 	module.exports = createRoutesFromReactChildren;
 
 /***/ },
-/* 210 */
+/* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/* jshint -W058 */
@@ -26567,24 +26727,24 @@
 	var warning = __webpack_require__(24);
 	var invariant = __webpack_require__(16);
 	var canUseDOM = __webpack_require__(60).canUseDOM;
-	var LocationActions = __webpack_require__(199);
-	var ImitateBrowserBehavior = __webpack_require__(205);
-	var HashLocation = __webpack_require__(198);
-	var HistoryLocation = __webpack_require__(201);
-	var RefreshLocation = __webpack_require__(202);
-	var StaticLocation = __webpack_require__(203);
-	var ScrollHistory = __webpack_require__(211);
-	var createRoutesFromReactChildren = __webpack_require__(209);
-	var isReactChildren = __webpack_require__(213);
-	var Transition = __webpack_require__(214);
-	var PropTypes = __webpack_require__(183);
-	var Redirect = __webpack_require__(216);
-	var History = __webpack_require__(200);
-	var Cancellation = __webpack_require__(215);
-	var Match = __webpack_require__(217);
-	var Route = __webpack_require__(184);
-	var supportsHistory = __webpack_require__(218);
-	var PathUtils = __webpack_require__(185);
+	var LocationActions = __webpack_require__(204);
+	var ImitateBrowserBehavior = __webpack_require__(210);
+	var HashLocation = __webpack_require__(203);
+	var HistoryLocation = __webpack_require__(206);
+	var RefreshLocation = __webpack_require__(207);
+	var StaticLocation = __webpack_require__(208);
+	var ScrollHistory = __webpack_require__(216);
+	var createRoutesFromReactChildren = __webpack_require__(214);
+	var isReactChildren = __webpack_require__(218);
+	var Transition = __webpack_require__(219);
+	var PropTypes = __webpack_require__(188);
+	var Redirect = __webpack_require__(221);
+	var History = __webpack_require__(205);
+	var Cancellation = __webpack_require__(220);
+	var Match = __webpack_require__(222);
+	var Route = __webpack_require__(189);
+	var supportsHistory = __webpack_require__(223);
+	var PathUtils = __webpack_require__(190);
 
 	/**
 	 * The default location for new routers.
@@ -27077,14 +27237,14 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12)))
 
 /***/ },
-/* 211 */
+/* 216 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var invariant = __webpack_require__(16);
 	var canUseDOM = __webpack_require__(60).canUseDOM;
-	var getWindowScrollPosition = __webpack_require__(212);
+	var getWindowScrollPosition = __webpack_require__(217);
 
 	function shouldUpdateScroll(state, prevState) {
 	  if (!prevState) {
@@ -27157,7 +27317,7 @@
 	module.exports = ScrollHistory;
 
 /***/ },
-/* 212 */
+/* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27180,7 +27340,7 @@
 	module.exports = getWindowScrollPosition;
 
 /***/ },
-/* 213 */
+/* 218 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27198,15 +27358,15 @@
 	module.exports = isReactChildren;
 
 /***/ },
-/* 214 */
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* jshint -W058 */
 
 	'use strict';
 
-	var Cancellation = __webpack_require__(215);
-	var Redirect = __webpack_require__(216);
+	var Cancellation = __webpack_require__(220);
+	var Redirect = __webpack_require__(221);
 
 	/**
 	 * Encapsulates a transition to a given path.
@@ -27278,7 +27438,7 @@
 	module.exports = Transition;
 
 /***/ },
-/* 215 */
+/* 220 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -27292,7 +27452,7 @@
 	module.exports = Cancellation;
 
 /***/ },
-/* 216 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -27309,7 +27469,7 @@
 	module.exports = Redirect;
 
 /***/ },
-/* 217 */
+/* 222 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27319,7 +27479,7 @@
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	/* jshint -W084 */
-	var PathUtils = __webpack_require__(185);
+	var PathUtils = __webpack_require__(190);
 
 	function deepSearch(route, pathname, query) {
 	  // Check the subtree first to find the most deeply-nested match.
@@ -27389,7 +27549,7 @@
 	module.exports = Match;
 
 /***/ },
-/* 218 */
+/* 223 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27410,12 +27570,12 @@
 	module.exports = supportsHistory;
 
 /***/ },
-/* 219 */
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var createRouter = __webpack_require__(210);
+	var createRouter = __webpack_require__(215);
 
 	/**
 	 * A high-level convenience method that creates, configures, and
@@ -27465,7 +27625,7 @@
 	module.exports = runRouter;
 
 /***/ },
-/* 220 */
+/* 225 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } (function () {
@@ -27484,15 +27644,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactRouter = __webpack_require__(181);
+	var _reactRouter = __webpack_require__(186);
 
-	var _weatherJs = __webpack_require__(221);
+	var _weatherJs = __webpack_require__(226);
 
 	var _weatherJs2 = _interopRequireDefault(_weatherJs);
-
-	var _weatherColorJs = __webpack_require__(225);
-
-	var _weatherColorJs2 = _interopRequireDefault(_weatherColorJs);
 
 	/*
 	 * we let state reside here so async weather can be fetched on the splash
@@ -27503,8 +27659,7 @@
 
 	  getInitialState: function getInitialState() {
 	    return {
-	      temp: Number.NaN,
-	      mainColor: 'white'
+	      temp: Number.NaN
 	    };
 	  },
 
@@ -27513,18 +27668,14 @@
 
 	    (0, _weatherJs2['default'])(function (result) {
 	      var temp = Math.round(result.body.main.temp);
-	      var mainColor = (0, _weatherColorJs2['default'])(temp);
 
-	      _this.setState({
-	        temp: temp,
-	        mainColor: mainColor
-	      });
+	      _this.setState({ temp: temp });
 	    });
 	  },
 
 	  render: function render() {
+	    console.log('render');
 	    return _react2['default'].createElement(_reactRouter.RouteHandler, {
-	      color: this.state.mainColor,
 	      temp: this.state.temp
 	    });
 	  }
@@ -27536,7 +27687,7 @@
 	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "app.js" + ": " + err.message); } }); } } })(); }
 
 /***/ },
-/* 221 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } (function () {
@@ -27551,7 +27702,7 @@
 	  return obj && obj.__esModule ? obj : { 'default': obj };
 	}
 
-	var _superagent = __webpack_require__(222);
+	var _superagent = __webpack_require__(227);
 
 	var _superagent2 = _interopRequireDefault(_superagent);
 
@@ -27579,15 +27730,15 @@
 	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "weather.js" + ": " + err.message); } }); } } })(); }
 
 /***/ },
-/* 222 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Module dependencies.
 	 */
 
-	var Emitter = __webpack_require__(223);
-	var reduce = __webpack_require__(224);
+	var Emitter = __webpack_require__(228);
+	var reduce = __webpack_require__(229);
 
 	/**
 	 * Root reference for iframes.
@@ -28708,7 +28859,7 @@
 
 
 /***/ },
-/* 223 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -28878,7 +29029,7 @@
 
 
 /***/ },
-/* 224 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -28907,157 +29058,6 @@
 	};
 
 /***/ },
-/* 225 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } (function () {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-
-	function _interopRequireDefault(obj) {
-	  return obj && obj.__esModule ? obj : { 'default': obj };
-	}
-
-	var _stylesCommonJs = __webpack_require__(226);
-
-	var _stylesCommonJs2 = _interopRequireDefault(_stylesCommonJs);
-
-	var _interpolation = __webpack_require__(227);
-
-	var _color = __webpack_require__(175);
-
-	var _color2 = _interopRequireDefault(_color);
-
-	/*
-	 * scale our currentTemp to a number between 0 and 1
-	 */
-	var scale = function scale(currentTemp) {
-	  var maxTemp = 100; // resonable temperatures
-	  var minTemp = 0;
-
-	  var numerand = currentTemp - minTemp;
-	  var denominator = maxTemp - minTemp;
-	  var result = numerand / denominator;
-
-	  // clip to [0, 1]
-	  result = result > 1 ? 1 : result;
-	  result = result < 0 ? 0 : result;
-
-	  return result;
-	};
-
-	// ensure color has sufficient contrast against text color
-	var contrast = function contrast(color) {
-	  var textColor = new _color2['default']('white');
-
-	  while (color.contrast(textColor) < 2) {
-	    color = color.darken(0.1);
-	  }
-	};
-
-	/*
-	 * Takes a temperature and returns an appropriate color
-	 * in hsl you can modify by hue, saturation and lightness, so
-	 * we calculate a color between 'blue' & 'red' by Linear Interpolation
-	 * ex. lerp(start, end, ratio)
-	 */
-	var weatherColor = function weatherColor(currentTemp) {
-	  if (isNaN(currentTemp)) {
-	    return 'white';
-	  }
-
-	  var start = _stylesCommonJs2['default'].blue;
-	  var end = _stylesCommonJs2['default'].red;
-	  var result = start.clone();
-
-	  var ratio = scale(currentTemp);
-
-	  var newHue = (0, _interpolation.lerp)(start.hue(), end.hue(), ratio);
-	  var newSaturation = (0, _interpolation.lerp)(start.saturation(), end.saturation(), ratio);
-	  var newLightness = (0, _interpolation.lerp)(start.lightness(), end.lightness(), ratio);
-
-	  result.hue(newHue);
-	  result.saturation(newSaturation);
-	  result.lightness(newLightness);
-	  contrast(result);
-	  // result.alpha(0.3)
-
-	  return result.hslaString();
-	};
-
-	exports['default'] = weatherColor;
-	module.exports = exports['default'];
-
-	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "weatherColor.js" + ": " + err.message); } }); } } })(); }
-
-/***/ },
-/* 226 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } (function () {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-
-	function _interopRequireDefault(obj) {
-	  return obj && obj.__esModule ? obj : { 'default': obj };
-	}
-
-	var _color = __webpack_require__(175);
-
-	var _color2 = _interopRequireDefault(_color);
-
-	var Common = {
-	  splashRed: new _color2['default']('#ff5136'),
-	  tempBlue: new _color2['default']('#7ea4b3'),
-	  borderColor: new _color2['default']('#C7E1EA'),
-	  altFontColor: new _color2['default']('#4C859A'),
-	  red: new _color2['default']('#ff5136'),
-	  blue: new _color2['default']('#7ea4b3')
-	};
-
-	exports['default'] = Common;
-	module.exports = exports['default'];
-
-	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "common.js" + ": " + err.message); } }); } } })(); }
-
-/***/ },
-/* 227 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/** Utility function for linear interpolation. */
-	module.exports.lerp = __webpack_require__(228)
-
-	/** Utility function for Hermite interpolation. */
-	module.exports.smoothstep = __webpack_require__(229)
-
-/***/ },
-/* 228 */
-/***/ function(module, exports, __webpack_require__) {
-
-	function lerp(v0, v1, t) {
-	    return v0*(1-t)+v1*t
-	}
-	module.exports = lerp
-
-/***/ },
-/* 229 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = function smoothstep (min, max, value) {
-	  var x = Math.max(0, Math.min(1, (value-min)/(max-min)));
-	  return x*x*(3 - 2*x);
-	};
-
-
-/***/ },
 /* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -29081,9 +29081,9 @@
 
 	var _radium2 = _interopRequireDefault(_radium);
 
-	var _reactRouter = __webpack_require__(181);
+	var _reactRouter = __webpack_require__(186);
 
-	var _stylesCommonJs = __webpack_require__(226);
+	var _stylesCommonJs = __webpack_require__(172);
 
 	var _stylesCommonJs2 = _interopRequireDefault(_stylesCommonJs);
 

@@ -2,6 +2,7 @@ import React from 'react'
 import Radium from 'radium'
 import Divider from '../divider/divider.js'
 import Color from 'color'
+import weatherColor from '../../weatherColor.js'
 
 var styles = {
   base: {
@@ -56,10 +57,11 @@ var styles = {
 
 class ForecastNow extends React.Component {
   render() {
-    let colorDark = new Color(this.props.color).darken(0.1).hslaString()
-    let colorLight = new Color(this.props.color).lighten(0.1).hslaString()
+    let mainColor = weatherColor(this.props.temp)
+    let colorDark = new Color(mainColor).darken(0.1).hslaString()
+    let colorLight = new Color(mainColor).lighten(0.1).hslaString()
 
-    styles.base.backgroundColor = this.props.color
+    styles.base.backgroundColor = mainColor
     styles.verticalDivider.color = colorDark
 
     styles.base.borderBottomColor = colorDark
@@ -100,7 +102,6 @@ class ForecastNow extends React.Component {
   }
 }
 ForecastNow.propTypes = {
-  color: React.PropTypes.string,
   temp: React.PropTypes.number
 }
 

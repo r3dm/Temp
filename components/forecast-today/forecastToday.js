@@ -21,7 +21,6 @@ class ForecastToday extends React.Component {
     return (
       <div style={styles.base} >
         <ForecastNow
-          color={ this.props.color }
           temp={ this.props.temp }
         />
 
@@ -41,7 +40,6 @@ class ForecastToday extends React.Component {
   }
 }
 ForecastToday.propTypes = {
-  color: React.PropTypes.string,
   temp: React.PropTypes.number
 }
 

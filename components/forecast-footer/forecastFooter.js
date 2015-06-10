@@ -1,6 +1,7 @@
 import React from 'react'
 import Radium from 'radium'
 import Color from 'color'
+import weatherColor from '../../weatherColor.js'
 
 var styles = {
   base: {
@@ -33,10 +34,11 @@ var styles = {
 
 class ForecastFooter extends React.Component {
   render() {
-    let colorDark = new Color(this.props.color).darken(0.1).hslaString()
-    let colorLight = new Color(this.props.color).lighten(0.2).hslaString()
+    let mainColor = weatherColor(this.props.temp)
+    let colorDark = new Color(mainColor).darken(0.1).hslaString()
+    let colorLight = new Color(mainColor).lighten(0.2).hslaString()
 
-    styles.base.backgroundColor = this.props.color
+    styles.base.backgroundColor = mainColor
     styles.base.borderTop = `2px solid ${colorLight}`
     styles.base.boxShadow = `0 -2px ${colorDark}`
 
@@ -70,6 +72,6 @@ class ForecastFooter extends React.Component {
     )
   }
 }
-ForecastFooter.propTypes = { color: React.PropTypes.string }
+ForecastFooter.propTypes = { temp: React.PropTypes.number }
 
 export default new Radium(ForecastFooter)

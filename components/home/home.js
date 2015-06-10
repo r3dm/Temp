@@ -19,19 +19,17 @@ class Home extends React.Component {
   render() {
     return (
       <div style={styles.base} >
-        <Header color={ this.props.color }
+        <Header temp={ this.props.temp }
         />
         <ForecastToday
-          color={ this.props.color }
           temp={ this.props.temp }
         />
-        <ForecastFooter color={ this.props.color } />
+        <ForecastFooter temp={ this.props.temp } />
       </div>
     )
   }
 }
 Home.propTypes = {
-  color: React.PropTypes.string,
   temp: React.PropTypes.number
 }
 
