@@ -9,7 +9,7 @@ var styles = {
     display: 'flex',
     flexShrink: 0,
     flexDirection: 'row',
-    borderTop: '2px solid ' + Common.borderColor.hslString(),
+    borderTop: `2px solid ${Common.borderColor.hslString()}`,
     zIndex: 1
   },
 

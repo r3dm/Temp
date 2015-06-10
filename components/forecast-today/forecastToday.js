@@ -56,7 +56,7 @@ var styles = {
 
   mainBars: {
     padding: '7px 0',
-    borderBottom: '2px solid ' + Common.altFontColor.hslString()
+    borderBottom: `2px solid ${Common.altFontColor.hslString()}`
   },
 
   mainBarsChild: {
@@ -69,8 +69,8 @@ var styles = {
   overflowDiv: {
     overflow: 'auto',
     height: '55vh',
-    borderTop: '2px solid border-color',
-    borderBottom: '2px solid alt-font-color'
+    borderTop: `2px solid ${Common.borderColor.hslaString()}`,
+    borderBottom: `3px solid ${Common.altFontColor.hslaString()}`
   }
 }
 

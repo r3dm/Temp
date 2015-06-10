@@ -21,7 +21,7 @@ var styles = {
 
   sunIcon: {
     fontSize: '7em',
-    animation: sunIconKeyframes + ' 5s ease 0s infinite'
+    animation: `${sunIconKeyframes} 5s ease 0s infinite`
   },
 
   splash: {
