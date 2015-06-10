@@ -1,62 +1,13 @@
 import React from 'react'
 import ForecastHourly from '../forecast-hourly/forecastHourly.js'
+import ForecastNow from '../forecast-now/forecastNow.js'
 import Radium from 'radium'
-import Color from 'color'
-import Divider from '../divider/divider.js'
+// import Color from 'color'
 
 var styles = {
   base: {
     flexGrow: 1,
     overflow: 'scroll'
-  },
-
-  forecastTodayWrapper: {
-    display: 'flex',
-    flexDirection: 'column',
-    flexGrow: 1,
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '65vh',
-    borderBottom: '2px solid',
-    zIndex: 0,
-    position: 'relative'
-  },
-
-  mainTempWrapper: {
-    fontSize: '7em',
-    maxWidth: '50%'
-  },
-
-  degrees: {
-    fontSize: '0.8em',
-    verticalAlign: 'top'
-  },
-
-  divider: {
-    height: '6em',
-    width: 0,
-    border: '1px solid'
-  },
-
-  forecastAndChance: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    maxWidth: '50%',
-    textAlign: 'center'
-  },
-
-  icon: {
-    fontSize: '3em'
-  },
-
-  forecastAndChanceChild: {
-    width: '20vw'
-  },
-
-  flexGrow: {
-    flexGrow: 1
   },
 
   overflowDiv: {
@@ -67,47 +18,12 @@ var styles = {
 
 class ForecastToday extends React.Component {
   render() {
-    let colorDark = new Color(this.props.color).darken(0.1).hslaString()
-    let colorLight = new Color(this.props.color).lighten(0.1).hslaString()
-
-    styles.base.backgroundColor = this.props.color
-    styles.divider.color = colorDark
-    styles.forecastTodayWrapper.borderBottomColor = colorDark
-    styles.forecastTodayWrapper.boxShadow = `0 2px ${colorLight}`
-
     return (
       <div style={styles.base} >
-        <div style={styles.forecastTodayWrapper} >
-          <div style={styles.flexGrow} ></div>
-
-          <div style={styles.mainTempWrapper} >
-            <span className="temperature">
-              { this.props.temp }
-            </span>
-            <span style={styles.degrees} >&deg;</span>
-          </div>
-
-          <div style={styles.forecastAndChance} >
-            <div style={styles.forecastAndChanceChild} >
-              <i className="wi wi-rain"
-                 style={styles.icon}></i>
-              <p>rainy</p>
-            </div>
-
-            <div style={styles.divider} ></div>
-
-            <div style={styles.forecastAndChanceChild} >
-              <i className="wi wi-sprinkles"
-                 style={styles.icon}></i>
-              <p>100%</p>
-            </div>
-          </div>
-
-          <div style={styles.flexGrow} ></div>
-
-          <Divider />
-        </div>
-
+        <ForecastNow
+          color={ this.props.color }
+          temp={ this.props.temp }
+        />
 
         <div style={styles.overflowDiv} >
           <ForecastHourly color="#4c869b" forecast="rain" temperature={65} time="3:00pm" />
