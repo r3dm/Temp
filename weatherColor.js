@@ -36,6 +36,10 @@ let contrast = function(color) {
  * ex. lerp(start, end, ratio)
  */
 let weatherColor = function(currentTemp) {
+  if(isNaN(currentTemp)) {
+    return 'white'
+  }
+
   var start = Common.blue
   var end = Common.red
   var result = start.clone()

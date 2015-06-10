@@ -24146,6 +24146,10 @@
 	 * ex. lerp(start, end, ratio)
 	 */
 	var weatherColor = function weatherColor(currentTemp) {
+	  if (isNaN(currentTemp)) {
+	    return 'white';
+	  }
+
 	  var start = _stylesCommonJs2['default'].blue;
 	  var end = _stylesCommonJs2['default'].red;
 	  var result = start.clone();
