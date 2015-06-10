@@ -24000,6 +24000,10 @@
 
 	var _radium2 = _interopRequireDefault(_radium);
 
+	var _weatherColorJs = __webpack_require__(171);
+
+	var _weatherColorJs2 = _interopRequireDefault(_weatherColorJs);
+
 	// import Color from 'color'
 
 	var styles = {
@@ -24026,9 +24030,24 @@
 	  _inherits(ForecastToday, _React$Component);
 
 	  _createClass(ForecastToday, [{
+	    key: 'componentDidMount',
+
+	    /*
+	     * set component height after initial render. Due to Flexbox there's no
+	     * way to know the parent's size before runtime
+	     */
+	    value: function componentDidMount() {
+	      var todayDivHeight = document.getElementById('todayDiv').clientHeight;
+	      var mainDividerHeight = document.getElementById('mainDivider').clientHeight;
+	      styles.overflowDiv.height = todayDivHeight - mainDividerHeight - 8;
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement(_forecastNowForecastNowJs2['default'], {
+	      return _react2['default'].createElement('div', {
+	        id: 'todayDiv',
+	        style: styles.base
+	      }, _react2['default'].createElement(_forecastNowForecastNowJs2['default'], {
 	        temp: this.props.temp
 	      }), _react2['default'].createElement('div', { style: styles.overflowDiv }, _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#4c869b', forecast: 'rain', temperature: 65, time: '3:00pm' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#5aa0ba', forecast: 'cloudy', temperature: 66, time: '4:00pm' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#5aa0ba', forecast: 'cloudy', temperature: 66, time: '5:00pm' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#77b3c9', forecast: 'day-cloudy', temperature: 67, time: '6:00pm' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#77b3c9', forecast: 'day-cloudy', temperature: 67, time: '7:00pm' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#94cade', forecast: 'day-sunny', temperature: 68, time: '8:00pm' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#94cade', forecast: 'day-sunny', temperature: 68, time: '9:00pm' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#b6e5f7', forecast: 'cloudy', temperature: 69, time: '10:00pm' }), _react2['default'].createElement(_forecastHourlyForecastHourlyJs2['default'], { color: '#b6e5f7', forecast: 'cloudy', temperature: 69, time: '11:00pm' })));
 	    }
@@ -24217,7 +24236,7 @@
 	    flexWrap: 'wrap',
 	    justifyContent: 'center',
 	    alignItems: 'center',
-	    height: '65vh',
+	    height: '65vh', // overridden at runtime
 	    borderBottom: '2px solid',
 	    zIndex: 0,
 	    position: 'relative'
@@ -24272,11 +24291,22 @@
 	  _inherits(ForecastNow, _React$Component);
 
 	  _createClass(ForecastNow, [{
+	    key: 'componentDidMount',
+
+	    /*
+	     * set component height after initial render. Due to Flexbox there's no
+	     * way to know the parent's size before runtime
+	     */
+	    value: function componentDidMount() {
+	      // ~ 8 px to account for footer-padding + this-padding
+	      styles.base.height = document.getElementById('todayDiv').clientHeight - 6;
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var mainColor = (0, _weatherColorJs2['default'])(this.props.temp);
-	      var colorDark = new _color2['default'](mainColor).darken(0.1).hslaString();
-	      var colorLight = new _color2['default'](mainColor).lighten(0.1).hslaString();
+	      var colorDark = new _color2['default'](mainColor).darken(0.2).hslaString();
+	      var colorLight = new _color2['default'](mainColor).lighten(0.2).hslaString();
 
 	      styles.base.backgroundColor = mainColor;
 	      styles.verticalDivider.color = colorDark;
@@ -24353,9 +24383,10 @@
 	 */
 	var styles = {
 	  base: {
-	    padding: '7px 0',
+	    padding: '7px 0 5px 0',
 	    width: '100%'
 	  },
+
 	  mainBarsChild: {
 	    width: '40px',
 	    paddingBottom: '3px',
@@ -24378,7 +24409,10 @@
 	  _createClass(Divider, [{
 	    key: 'render',
 	    value: function render() {
-	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.mainBarsChild }), _react2['default'].createElement('div', { style: styles.mainBarsChild }), _react2['default'].createElement('div', { style: styles.mainBarsChild }));
+	      return _react2['default'].createElement('div', {
+	        id: 'mainDivider',
+	        style: styles.base
+	      }, _react2['default'].createElement('div', { style: styles.mainBarsChild }), _react2['default'].createElement('div', { style: styles.mainBarsChild }), _react2['default'].createElement('div', { style: styles.mainBarsChild }));
 	    }
 	  }]);
 
@@ -24488,8 +24522,8 @@
 	    key: 'render',
 	    value: function render() {
 	      var mainColor = (0, _weatherColorJs2['default'])(this.props.temp);
-	      var colorDark = new _color2['default'](mainColor).darken(0.1).hslaString();
-	      var colorLight = new _color2['default'](mainColor).lighten(0.2).hslaString();
+	      var colorDark = new _color2['default'](mainColor).darken(0.2).hslaString();
+	      var colorLight = new _color2['default'](mainColor).lighten(0.3).hslaString();
 
 	      styles.base.backgroundColor = mainColor;
 	      styles.base.borderTop = '2px solid ' + colorLight;
