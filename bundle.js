@@ -23879,6 +23879,10 @@
 
 	var _weatherColorJs2 = _interopRequireDefault(_weatherColorJs);
 
+	var _color = __webpack_require__(172);
+
+	var _color2 = _interopRequireDefault(_color);
+
 	var styles = {
 	  base: {
 	    backgroundColor: _stylesCommonJs2['default'].tempBlue.hslString(),
@@ -23925,13 +23929,12 @@
 	  divider: {
 	    height: '6em',
 	    width: 0,
-	    color: _stylesCommonJs2['default'].altFontColor.hslString(),
 	    border: '1px solid'
 	  },
 
 	  mainBars: {
 	    padding: '7px 0',
-	    borderBottom: '2px solid ' + _stylesCommonJs2['default'].altFontColor.hslString()
+	    borderBottom: '2px solid'
 	  },
 
 	  mainBarsChild: {
@@ -23944,8 +23947,8 @@
 	  overflowDiv: {
 	    overflow: 'auto',
 	    height: '55vh',
-	    borderTop: '2px solid border-color',
-	    borderBottom: '2px solid alt-font-color'
+	    borderTop: '2px solid',
+	    borderBottom: '3px solid'
 	  }
 	};
 
@@ -23963,7 +23966,14 @@
 	  _createClass(ForecastToday, [{
 	    key: 'render',
 	    value: function render() {
-	      styles.base.backgroundColor = (0, _weatherColorJs2['default'])(this.props.temp);
+	      var mainColor = new _color2['default']((0, _weatherColorJs2['default'])(this.props.temp));
+	      var mainColorDark = mainColor.clone().darken(0.3);
+	      var mainColorLight = mainColor.clone().lighten(0.3);
+	      styles.base.backgroundColor = mainColor.hslaString();
+	      styles.divider.color = mainColorDark.hslaString();
+	      styles.mainBars.borderBottomColor = mainColorDark.hslaString();
+	      styles.overflowDiv.borderTopColor = mainColorLight.hslaString();
+	      styles.overflowDiv.borderBottomColor = mainColorDark.hslaString();
 
 	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.forecastTodayWrapper }, _react2['default'].createElement('div', { style: styles.mainTempWrapper }, _react2['default'].createElement('span', { className: 'temperature' }, this.props.temp), _react2['default'].createElement('span', { style: styles.degrees }, '°')), _react2['default'].createElement('div', { style: styles.forecastAndChance }, _react2['default'].createElement('div', { style: styles.forecastAndChanceChild }, _react2['default'].createElement('i', { className: 'wi wi-rain',
 	        style: styles.icon }), _react2['default'].createElement('p', null, 'rainy')), _react2['default'].createElement('div', { style: styles.divider }), _react2['default'].createElement('div', { style: styles.forecastAndChanceChild }, _react2['default'].createElement('i', { className: 'wi wi-sprinkles',
@@ -28896,7 +28906,7 @@
 
 	  sunIcon: {
 	    fontSize: '7em',
-	    animation: sunIconKeyframes + ' 5s ease 0s infinite'
+	    animation: '' + sunIconKeyframes + ' 5s ease 0s infinite'
 	  },
 
 	  splash: {

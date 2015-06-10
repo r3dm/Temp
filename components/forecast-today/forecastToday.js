@@ -3,6 +3,7 @@ import ForecastHourly from '../forecast-hourly/forecastHourly.js'
 import Radium from 'radium'
 import Common from '../../styles/common.js'
 import weatherColor from '../../weatherColor.js'
+import Color from 'color'
 
 var styles = {
   base: {
@@ -50,13 +51,12 @@ var styles = {
   divider: {
     height: '6em',
     width: 0,
-    color: Common.altFontColor.hslString(),
     border: '1px solid'
   },
 
   mainBars: {
     padding: '7px 0',
-    borderBottom: `2px solid ${Common.altFontColor.hslString()}`
+    borderBottom: '2px solid'
   },
 
   mainBarsChild: {
@@ -69,14 +69,21 @@ var styles = {
   overflowDiv: {
     overflow: 'auto',
     height: '55vh',
-    borderTop: `2px solid ${Common.borderColor.hslaString()}`,
-    borderBottom: `3px solid ${Common.altFontColor.hslaString()}`
+    borderTop: '2px solid',
+    borderBottom: '3px solid'
   }
 }
 
 class ForecastToday extends React.Component {
   render() {
-    styles.base.backgroundColor = weatherColor(this.props.temp)
+    var mainColor = new Color(weatherColor(this.props.temp))
+    var mainColorDark = mainColor.clone().darken(0.3)
+    var mainColorLight = mainColor.clone().lighten(0.3)
+    styles.base.backgroundColor = mainColor.hslaString()
+    styles.divider.color = mainColorDark.hslaString()
+    styles.mainBars.borderBottomColor = mainColorDark.hslaString()
+    styles.overflowDiv.borderTopColor = mainColorLight.hslaString()
+    styles.overflowDiv.borderBottomColor = mainColorDark.hslaString()
 
     return (
       <div style={styles.base} >
