@@ -1,6 +1,9 @@
 import request from 'superagent'
 const weatherUrl = 'http://api.openweathermap.org/data/2.5/weather'
 
+/*
+ * grabs weather from api
+ */
 let fetchWeather = function(callback) {
   request
     .get(weatherUrl)

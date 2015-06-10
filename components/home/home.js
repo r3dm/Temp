@@ -31,7 +31,7 @@ class Home extends React.Component {
   }
 }
 Home.propTypes = {
-  color: React.PropTypes.color,
+  color: React.PropTypes.string,
   temp: React.PropTypes.number
 }
 

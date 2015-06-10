@@ -1,6 +1,9 @@
 import React from 'react'
 import Radium from 'radium'
 
+/*
+ * main horizontal divider for app
+ */
 var styles = {
   base: {
     padding: '7px 0',
