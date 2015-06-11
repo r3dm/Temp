@@ -27263,11 +27263,13 @@
 	var styles = {
 	  base: {
 	    flexGrow: 1,
-	    overflow: 'scroll'
+	    overflowX: 'scroll',
+	    overflowY: 'hidden'
 	  },
 
 	  overflowDiv: {
-	    overflow: 'scroll',
+	    overflowX: 'scroll',
+	    overflowY: 'hidden',
 	    height: '55vh'
 	  }
 	};
