@@ -21,6 +21,7 @@ class Home extends React.Component {
       <div style={styles.base} >
         <Header
           cityName={ this.props.forecast.cityName }
+          country={ this.props.forecast.country }
           temp={ this.props.temp } />
         <ForecastToday
           currentConditions = { this.props.forecast.currentConditions }

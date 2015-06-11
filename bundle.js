@@ -89,6 +89,23 @@
 	      units: 'imperial'
 	    };
 	  },
+	  weatherCallback: function weatherCallback(results) {
+	    var weather = results[0].body;
+	    var fiveDayForecast = results[1].body;
+
+	    // weather api may return an array here, so we check
+	    var currentWeather = Array.isArray(weather.weather) ? weather.weather[0] : weather.weather;
+	    this.setState({
+	      weather: weather,
+	      fiveDayForecast: fiveDayForecast,
+	      temp: Math.round(weather.main.temp),
+	      cityName: weather.name,
+	      sunrise: weather.sys.sunrise,
+	      sunset: weather.sys.sunset,
+	      currentConditions: currentWeather.main,
+	      country: weather.sys.country
+	    });
+	  },
 	  componentDidMount: function componentDidMount() {
 	    var _this = this;
 
@@ -99,24 +116,9 @@
 	          lon: position.coords.longitude
 	        });
 
-	        (0, _utilsWeatherJs.fetchWeather)(_this.state.lat, _this.state.lon, _this.state.units).then(function (results) {
-	          var weather = results[0].body;
-	          var fiveDayForecast = results[1].body;
-
-	          // weather api may return an array here, so we check
-	          var currentWeather = Array.isArray(weather.weather) ? weather.weather[0] : weather.weather;
-	          _this.setState({
-	            weather: weather,
-	            fiveDayForecast: fiveDayForecast,
-	            temp: Math.round(weather.main.temp),
-	            cityName: weather.name,
-	            sunrise: weather.sys.sunrise,
-	            sunset: weather.sys.sunset,
-	            currentConditions: currentWeather.main
-	          });
-	        });
+	        (0, _utilsWeatherJs.fetchWeather)(_this.state.lat, _this.state.lon, _this.state.units).then(_this.weatherCallback);
 	      }, function (error) {
-	        console.log(error.code + ': ' + error.message);
+	        (0, _utilsWeatherJs.fetchWeather)(_this.state.lat, _this.state.lon, _this.state.units).then(_this.weatherCallback);
 	      });
 	    } else {
 	      console.log('no geolocation available');
@@ -27038,6 +27040,7 @@
 	    value: function render() {
 	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement(_headerJs2['default'], {
 	        cityName: this.props.forecast.cityName,
+	        country: this.props.forecast.country,
 	        temp: this.props.temp }), _react2['default'].createElement(_forecastTodayJs2['default'], {
 	        currentConditions: this.props.forecast.currentConditions,
 	        temp: this.props.temp }), _react2['default'].createElement(_forecastFooterJs2['default'], { temp: this.props.temp }));
@@ -27145,7 +27148,7 @@
 	      styles.base.backgroundColor = (0, _utilsWeatherColorJs.weatherColor)(this.props.temp);
 
 	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('i', { className: 'fa fa-gears',
-	        style: styles.settingsIcon }), _react2['default'].createElement('p', { style: styles.cityState }, this.props.cityName), _react2['default'].createElement('p', { style: styles.headerDate }, 'tuesday, june 26'));
+	        style: styles.settingsIcon }), _react2['default'].createElement('p', { style: styles.cityState }, this.props.cityName, ', ', this.props.country), _react2['default'].createElement('p', { style: styles.headerDate }, 'tuesday, june 26'));
 	    }
 	  }]);
 
@@ -27154,6 +27157,7 @@
 
 	Header.propTypes = {
 	  cityName: _react2['default'].PropTypes.string,
+	  country: _react2['default'].PropTypes.string,
 	  temp: _react2['default'].PropTypes.number
 	};
 

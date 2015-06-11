@@ -33,7 +33,9 @@ class Header extends React.Component {
       <div style={styles.base} >
         <i className="fa fa-gears"
            style={styles.settingsIcon} ></i>
-        <p style={styles.cityState} >{this.props.cityName}</p>
+        <p style={styles.cityState} >
+          {this.props.cityName}, {this.props.country}
+        </p>
         <p style={styles.headerDate} >tuesday, june 26</p>
       </div>
     )
@@ -41,6 +43,7 @@ class Header extends React.Component {
 }
 Header.propTypes = {
   cityName: React.PropTypes.string,
+  country: React.PropTypes.string,
   temp: React.PropTypes.number
 }
 

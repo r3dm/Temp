@@ -21,6 +21,25 @@ let App = React.createClass({
       units: 'imperial'
     }
   },
+  weatherCallback(results) {
+    var weather = results[0].body
+    var fiveDayForecast = results[1].body
+
+    // weather api may return an array here, so we check
+    var currentWeather = Array.isArray(weather.weather) ?
+                    weather.weather[0] :
+                    weather.weather
+    this.setState({
+      weather,
+      fiveDayForecast,
+      temp: Math.round(weather.main.temp),
+      cityName: weather.name,
+      sunrise: weather.sys.sunrise,
+      sunset: weather.sys.sunset,
+      currentConditions: currentWeather.main,
+      country: weather.sys.country
+    })
+  },
   componentDidMount() {
     if(navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -31,30 +50,14 @@ let App = React.createClass({
           });
 
           fetchWeather(this.state.lat, this.state.lon, this.state.units)
-            .then((results) => {
-              var weather = results[0].body
-              var fiveDayForecast = results[1].body
-
-              // weather api may return an array here, so we check
-              var currentWeather = Array.isArray(weather.weather) ?
-                              weather.weather[0] :
-                              weather.weather
-              this.setState({
-                weather,
-                fiveDayForecast,
-                temp: Math.round(weather.main.temp),
-                cityName: weather.name,
-                sunrise: weather.sys.sunrise,
-                sunset: weather.sys.sunset,
-                currentConditions: currentWeather.main
-              })
-            })
+            .then(this.weatherCallback)
         },
-        (error) => { console.log(error.code + ': ' + error.message) }
+        (error) => {
+          fetchWeather(this.state.lat, this.state.lon, this.state.units)
+            .then(this.weatherCallback)
+        }
       )
-    } else {
-      console.log('no geolocation available')
-    }
+    } else { console.log('no geolocation available') }
   },
   render() {
     return (
