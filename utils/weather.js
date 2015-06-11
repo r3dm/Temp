@@ -38,8 +38,9 @@ export function fetchWeather(lat, lon, units) {
  */
 export function mapWeather(str) {
   var lookup = {
-    'Rain': 'rain',
-    'Clouds': 'day-sunny'
+    'Clear': 'day-sunny',
+    'Clouds': 'day-sunny',
+    'Rain': 'rain'
   }
   return lookup[str]
 }
@@ -50,8 +51,9 @@ export function mapWeather(str) {
  */
 export function humanize(str) {
   var lookup = {
-    'Rain': 'Rainy',
-    'Clouds': 'Sunny'
+    'Clear': 'Clear',
+    'Clouds': 'Sunny',
+    'Rain': 'Rainy'
   }
   return lookup[str]
 }

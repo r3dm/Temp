@@ -16,31 +16,45 @@ let App = React.createClass({
   getInitialState() {
     return {
       temp: Number.NaN,
-      lat: 37.7587,
-      lon: -122.3951,
+      lat: 40.730610,
+      lon: -73.935242,
       units: 'imperial'
     }
   },
   componentDidMount() {
-    fetchWeather(this.state.lat, this.state.lon, this.state.units)
-      .then((results) => {
-        var weather = results[0].body
-        var fiveDayForecast = results[1].body
+    if(navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          this.setState({
+            lat: position.coords.latitude,
+            lon: position.coords.longitude
+          });
 
-        // weather api may return an array here, so we check
-        var currentWeather = Array.isArray(weather.weather) ?
-                        weather.weather[0] :
-                        weather.weather
-        this.setState({
-          weather,
-          fiveDayForecast,
-          temp: Math.round(weather.main.temp),
-          cityName: weather.name,
-          sunrise: weather.sys.sunrise,
-          sunset: weather.sys.sunset,
-          currentConditions: currentWeather.main
-        })
-      })
+          fetchWeather(this.state.lat, this.state.lon, this.state.units)
+            .then((results) => {
+              var weather = results[0].body
+              var fiveDayForecast = results[1].body
+
+              // weather api may return an array here, so we check
+              var currentWeather = Array.isArray(weather.weather) ?
+                              weather.weather[0] :
+                              weather.weather
+              this.setState({
+                weather,
+                fiveDayForecast,
+                temp: Math.round(weather.main.temp),
+                cityName: weather.name,
+                sunrise: weather.sys.sunrise,
+                sunset: weather.sys.sunset,
+                currentConditions: currentWeather.main
+              })
+            })
+        },
+        (error) => { console.log(error.code + ': ' + error.message) }
+      )
+    } else {
+      console.log('no geolocation available')
+    }
   },
   render() {
     return (

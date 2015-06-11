@@ -35,8 +35,13 @@ var styles = {
 class ForecastFooter extends React.Component {
   render() {
     let mainColor = weatherColor(this.props.temp)
-    let colorDark = new Color(mainColor).darken(0.2).hslaString()
-    let colorLight = new Color(mainColor).lighten(0.3).hslaString()
+    let colorDark = 'white'
+    let colorLight = 'white'
+
+    if(mainColor !== 'white') {
+      colorDark = new Color(mainColor).darken(0.2).hslaString()
+      colorLight = new Color(mainColor).lighten(0.3).hslaString()
+    }
 
     styles.base.backgroundColor = mainColor
     styles.base.borderTop = `2px solid ${colorLight}`

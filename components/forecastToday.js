@@ -17,16 +17,17 @@ var styles = {
 }
 
 class ForecastToday extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { overflowHeight: '55vh' }
+  }
+
   componentDidMount() {
     var todayDivHeight = document.getElementById('todayDiv').clientHeight
     var mainDividerHeight = document.getElementById('mainDivider').clientHeight
     this.setState({
-      overflowHeight: todayDivHeight - mainDividerHeight - 8
+      overflowHeight: todayDivHeight - mainDividerHeight - 30
     })
-  }
-
-  state: {
-    overflowHeight: '55vh'
   }
 
   render() {

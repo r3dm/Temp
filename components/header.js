@@ -33,12 +33,15 @@ class Header extends React.Component {
       <div style={styles.base} >
         <i className="fa fa-gears"
            style={styles.settingsIcon} ></i>
-        <p style={styles.cityState} >San Francisco, CA</p>
+        <p style={styles.cityState} >{this.props.cityName}</p>
         <p style={styles.headerDate} >tuesday, june 26</p>
       </div>
     )
   }
 }
-Header.propTypes = { temp: React.PropTypes.number }
+Header.propTypes = {
+  cityName: React.PropTypes.string,
+  temp: React.PropTypes.number
+}
 
 export default new Radium(Header)

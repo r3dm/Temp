@@ -70,9 +70,7 @@
 
 	// import Settings from './settings.js'
 
-	var _utilsWeatherJs = __webpack_require__(225);
-
-	var _utilsWeatherJs2 = _interopRequireDefault(_utilsWeatherJs);
+	var _utilsWeatherJs = __webpack_require__(224);
 
 	__webpack_require__(229);
 
@@ -84,17 +82,50 @@
 	  displayName: 'App',
 
 	  getInitialState: function getInitialState() {
-	    return { temp: Number.NaN };
+	    return {
+	      temp: Number.NaN,
+	      lat: 40.73061,
+	      lon: -73.935242,
+	      units: 'imperial'
+	    };
 	  },
 	  componentDidMount: function componentDidMount() {
 	    var _this = this;
 
-	    (0, _utilsWeatherJs2['default'])(function (result) {
-	      _this.setState({ temp: Math.round(result.body.main.temp) });
-	    });
+	    if (navigator.geolocation) {
+	      navigator.geolocation.getCurrentPosition(function (position) {
+	        _this.setState({
+	          lat: position.coords.latitude,
+	          lon: position.coords.longitude
+	        });
+
+	        (0, _utilsWeatherJs.fetchWeather)(_this.state.lat, _this.state.lon, _this.state.units).then(function (results) {
+	          var weather = results[0].body;
+	          var fiveDayForecast = results[1].body;
+
+	          // weather api may return an array here, so we check
+	          var currentWeather = Array.isArray(weather.weather) ? weather.weather[0] : weather.weather;
+	          _this.setState({
+	            weather: weather,
+	            fiveDayForecast: fiveDayForecast,
+	            temp: Math.round(weather.main.temp),
+	            cityName: weather.name,
+	            sunrise: weather.sys.sunrise,
+	            sunset: weather.sys.sunset,
+	            currentConditions: currentWeather.main
+	          });
+	        });
+	      }, function (error) {
+	        console.log(error.code + ': ' + error.message);
+	      });
+	    } else {
+	      console.log('no geolocation available');
+	    }
 	  },
 	  render: function render() {
-	    return _react2['default'].createElement(_reactRouter.RouteHandler, { temp: this.state.temp });
+	    return _react2['default'].createElement(_reactRouter.RouteHandler, {
+	      forecast: this.state,
+	      temp: this.state.temp });
 	  }
 	});
 
@@ -26976,7 +27007,7 @@
 
 	var _forecastTodayJs2 = _interopRequireDefault(_forecastTodayJs);
 
-	var _forecastFooterJs = __webpack_require__(224);
+	var _forecastFooterJs = __webpack_require__(228);
 
 	var _forecastFooterJs2 = _interopRequireDefault(_forecastFooterJs);
 
@@ -27005,7 +27036,11 @@
 	  _createClass(Home, [{
 	    key: 'render',
 	    value: function render() {
-	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement(_headerJs2['default'], { temp: this.props.temp }), _react2['default'].createElement(_forecastTodayJs2['default'], { temp: this.props.temp }), _react2['default'].createElement(_forecastFooterJs2['default'], { temp: this.props.temp }));
+	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement(_headerJs2['default'], {
+	        cityName: this.props.forecast.cityName,
+	        temp: this.props.temp }), _react2['default'].createElement(_forecastTodayJs2['default'], {
+	        currentConditions: this.props.forecast.currentConditions,
+	        temp: this.props.temp }), _react2['default'].createElement(_forecastFooterJs2['default'], { temp: this.props.temp }));
 	    }
 	  }]);
 
@@ -27013,6 +27048,7 @@
 	})(_react2['default'].Component);
 
 	Home.propTypes = {
+	  forecast: _react2['default'].PropTypes.object,
 	  temp: _react2['default'].PropTypes.number
 	};
 
@@ -27109,14 +27145,17 @@
 	      styles.base.backgroundColor = (0, _utilsWeatherColorJs.weatherColor)(this.props.temp);
 
 	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('i', { className: 'fa fa-gears',
-	        style: styles.settingsIcon }), _react2['default'].createElement('p', { style: styles.cityState }, 'San Francisco, CA'), _react2['default'].createElement('p', { style: styles.headerDate }, 'tuesday, june 26'));
+	        style: styles.settingsIcon }), _react2['default'].createElement('p', { style: styles.cityState }, this.props.cityName), _react2['default'].createElement('p', { style: styles.headerDate }, 'tuesday, june 26'));
 	    }
 	  }]);
 
 	  return Header;
 	})(_react2['default'].Component);
 
-	Header.propTypes = { temp: _react2['default'].PropTypes.number };
+	Header.propTypes = {
+	  cityName: _react2['default'].PropTypes.string,
+	  temp: _react2['default'].PropTypes.number
+	};
 
 	exports['default'] = new _radium2['default'](Header);
 	module.exports = exports['default'];
@@ -27144,6 +27183,26 @@
 	    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
 	  };
 	})();
+
+	var _get = function get(_x, _x2, _x3) {
+	  var _again = true;_function: while (_again) {
+	    var object = _x,
+	        property = _x2,
+	        receiver = _x3;desc = parent = getter = undefined;_again = false;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
+	      var parent = Object.getPrototypeOf(object);if (parent === null) {
+	        return undefined;
+	      } else {
+	        _x = parent;_x2 = property;_x3 = receiver;_again = true;continue _function;
+	      }
+	    } else if ('value' in desc) {
+	      return desc.value;
+	    } else {
+	      var getter = desc.get;if (getter === undefined) {
+	        return undefined;
+	      }return getter.call(receiver);
+	    }
+	  }
+	};
 
 	function _interopRequireDefault(obj) {
 	  return obj && obj.__esModule ? obj : { 'default': obj };
@@ -27192,12 +27251,11 @@
 	};
 
 	var ForecastToday = (function (_React$Component) {
-	  function ForecastToday() {
+	  function ForecastToday(props) {
 	    _classCallCheck(this, ForecastToday);
 
-	    if (_React$Component != null) {
-	      _React$Component.apply(this, arguments);
-	    }
+	    _get(Object.getPrototypeOf(ForecastToday.prototype), 'constructor', this).call(this, props);
+	    this.state = { overflowHeight: '55vh' };
 	  }
 
 	  _inherits(ForecastToday, _React$Component);
@@ -27208,7 +27266,7 @@
 	      var todayDivHeight = document.getElementById('todayDiv').clientHeight;
 	      var mainDividerHeight = document.getElementById('mainDivider').clientHeight;
 	      this.setState({
-	        overflowHeight: todayDivHeight - mainDividerHeight - 8
+	        overflowHeight: todayDivHeight - mainDividerHeight - 30
 	      });
 	    }
 	  }, {
@@ -27220,8 +27278,8 @@
 	        id: 'todayDiv',
 	        style: styles.base
 	      }, _react2['default'].createElement(_forecastNowJs2['default'], {
-	        temp: this.props.temp
-	      }), _react2['default'].createElement('div', { style: styles.overflowDiv }, _react2['default'].createElement(_forecastHourlyJs2['default'], { color: '#4c869b', forecast: 'rain', temperature: 65, time: '3:00pm' }), _react2['default'].createElement(_forecastHourlyJs2['default'], { color: '#5aa0ba', forecast: 'cloudy', temperature: 66, time: '4:00pm' }), _react2['default'].createElement(_forecastHourlyJs2['default'], { color: '#5aa0ba', forecast: 'cloudy', temperature: 66, time: '5:00pm' }), _react2['default'].createElement(_forecastHourlyJs2['default'], { color: '#77b3c9', forecast: 'day-cloudy', temperature: 67, time: '6:00pm' }), _react2['default'].createElement(_forecastHourlyJs2['default'], { color: '#77b3c9', forecast: 'day-cloudy', temperature: 67, time: '7:00pm' }), _react2['default'].createElement(_forecastHourlyJs2['default'], { color: '#94cade', forecast: 'day-sunny', temperature: 68, time: '8:00pm' }), _react2['default'].createElement(_forecastHourlyJs2['default'], { color: '#94cade', forecast: 'day-sunny', temperature: 68, time: '9:00pm' }), _react2['default'].createElement(_forecastHourlyJs2['default'], { color: '#b6e5f7', forecast: 'cloudy', temperature: 69, time: '10:00pm' }), _react2['default'].createElement(_forecastHourlyJs2['default'], { color: '#b6e5f7', forecast: 'cloudy', temperature: 69, time: '11:00pm' })));
+	        currentConditions: this.props.currentConditions,
+	        temp: this.props.temp }), _react2['default'].createElement('div', { style: styles.overflowDiv }, _react2['default'].createElement(_forecastHourlyJs2['default'], { color: '#4c869b', forecast: 'rain', temperature: 65, time: '3:00pm' }), _react2['default'].createElement(_forecastHourlyJs2['default'], { color: '#5aa0ba', forecast: 'cloudy', temperature: 66, time: '4:00pm' }), _react2['default'].createElement(_forecastHourlyJs2['default'], { color: '#5aa0ba', forecast: 'cloudy', temperature: 66, time: '5:00pm' }), _react2['default'].createElement(_forecastHourlyJs2['default'], { color: '#77b3c9', forecast: 'day-cloudy', temperature: 67, time: '6:00pm' }), _react2['default'].createElement(_forecastHourlyJs2['default'], { color: '#77b3c9', forecast: 'day-cloudy', temperature: 67, time: '7:00pm' }), _react2['default'].createElement(_forecastHourlyJs2['default'], { color: '#94cade', forecast: 'day-sunny', temperature: 68, time: '8:00pm' }), _react2['default'].createElement(_forecastHourlyJs2['default'], { color: '#94cade', forecast: 'day-sunny', temperature: 68, time: '9:00pm' }), _react2['default'].createElement(_forecastHourlyJs2['default'], { color: '#b6e5f7', forecast: 'cloudy', temperature: 69, time: '10:00pm' }), _react2['default'].createElement(_forecastHourlyJs2['default'], { color: '#b6e5f7', forecast: 'cloudy', temperature: 69, time: '11:00pm' })));
 	    }
 	  }]);
 
@@ -27229,6 +27287,7 @@
 	})(_react2['default'].Component);
 
 	ForecastToday.propTypes = {
+	  currentConditions: _react2['default'].PropTypes.string,
 	  temp: _react2['default'].PropTypes.number
 	};
 
@@ -27364,6 +27423,26 @@
 	  };
 	})();
 
+	var _get = function get(_x, _x2, _x3) {
+	  var _again = true;_function: while (_again) {
+	    var object = _x,
+	        property = _x2,
+	        receiver = _x3;desc = parent = getter = undefined;_again = false;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
+	      var parent = Object.getPrototypeOf(object);if (parent === null) {
+	        return undefined;
+	      } else {
+	        _x = parent;_x2 = property;_x3 = receiver;_again = true;continue _function;
+	      }
+	    } else if ('value' in desc) {
+	      return desc.value;
+	    } else {
+	      var getter = desc.get;if (getter === undefined) {
+	        return undefined;
+	      }return getter.call(receiver);
+	    }
+	  }
+	};
+
 	function _interopRequireDefault(obj) {
 	  return obj && obj.__esModule ? obj : { 'default': obj };
 	}
@@ -27398,11 +27477,12 @@
 
 	var _utilsWeatherColorJs = __webpack_require__(209);
 
+	var _utilsWeatherJs = __webpack_require__(224);
+
 	var styles = {
 	  base: {
 	    display: 'flex',
 	    flexDirection: 'column',
-	    flexGrow: 1,
 	    flexWrap: 'wrap',
 	    justifyContent: 'center',
 	    alignItems: 'center',
@@ -27449,12 +27529,11 @@
 	};
 
 	var ForecastNow = (function (_React$Component) {
-	  function ForecastNow() {
+	  function ForecastNow(props) {
 	    _classCallCheck(this, ForecastNow);
 
-	    if (_React$Component != null) {
-	      _React$Component.apply(this, arguments);
-	    }
+	    _get(Object.getPrototypeOf(ForecastNow.prototype), 'constructor', this).call(this, props);
+	    this.state = { height: '65vh' };
 	  }
 
 	  _inherits(ForecastNow, _React$Component);
@@ -27464,7 +27543,7 @@
 	    value: function componentDidMount() {
 	      // ~ 8 px to account for footer-padding + this-padding
 	      this.setState({
-	        height: document.getElementById('todayDiv').clientHeight - 6
+	        height: document.getElementById('todayDiv').clientHeight
 	      });
 	    }
 	  }, {
@@ -27472,8 +27551,13 @@
 	    value: function render() {
 	      styles.base.height = this.state.height;
 	      var mainColor = (0, _utilsWeatherColorJs.weatherColor)(this.props.temp);
-	      var colorDark = new _color2['default'](mainColor).darken(0.2).hslaString();
-	      var colorLight = new _color2['default'](mainColor).lighten(0.2).hslaString();
+	      var colorDark = 'white';
+	      var colorLight = 'white';
+
+	      if (mainColor !== 'white') {
+	        colorDark = new _color2['default'](mainColor).darken(0.2).hslaString();
+	        colorLight = new _color2['default'](mainColor).lighten(0.2).hslaString();
+	      }
 
 	      styles.base.backgroundColor = mainColor;
 	      styles.verticalDivider.color = colorDark;
@@ -27481,9 +27565,9 @@
 	      styles.base.borderBottomColor = colorDark;
 	      styles.base.boxShadow = '0 2px ' + colorLight;
 
-	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.flexGrow }), _react2['default'].createElement('div', { style: styles.mainTempWrapper }, _react2['default'].createElement('span', null, this.props.temp), _react2['default'].createElement('span', { style: styles.degrees }, '°')), _react2['default'].createElement('div', { style: styles.forecastAndChance }, _react2['default'].createElement('div', { style: styles.forecastAndChanceChild }, _react2['default'].createElement('i', { className: 'wi wi-rain',
-	        style: styles.icon }), _react2['default'].createElement('p', null, 'rainy')), _react2['default'].createElement('div', { style: styles.verticalDivider }), _react2['default'].createElement('div', { style: styles.forecastAndChanceChild }, _react2['default'].createElement('i', { className: 'wi wi-sprinkles',
-	        style: styles.icon }), _react2['default'].createElement('p', null, '100%'))), _react2['default'].createElement('div', { style: styles.flexGrow }), _react2['default'].createElement(_dividerJs2['default'], null));
+	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.flexGrow }), _react2['default'].createElement('div', { style: styles.mainTempWrapper }, _react2['default'].createElement('span', null, this.props.temp), _react2['default'].createElement('span', { style: styles.degrees }, '°')), _react2['default'].createElement('div', { style: styles.forecastAndChance }, _react2['default'].createElement('div', { style: styles.forecastAndChanceChild }, _react2['default'].createElement('i', { className: 'wi wi-' + (0, _utilsWeatherJs.mapWeather)(this.props.currentConditions),
+	        style: styles.icon }), _react2['default'].createElement('p', null, (0, _utilsWeatherJs.humanize)(this.props.currentConditions))), _react2['default'].createElement('div', { style: styles.verticalDivider }), _react2['default'].createElement('div', { style: styles.forecastAndChanceChild }, _react2['default'].createElement('i', { className: 'wi wi-sprinkles',
+	        style: styles.icon }), _react2['default'].createElement('p', null, '50%'))), _react2['default'].createElement('div', { style: styles.flexGrow }), _react2['default'].createElement(_dividerJs2['default'], null));
 	    }
 	  }]);
 
@@ -27602,169 +27686,81 @@
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
-
-	var _createClass = (function () {
-	  function defineProperties(target, props) {
-	    for (var i = 0; i < props.length; i++) {
-	      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-	    }
-	  }return function (Constructor, protoProps, staticProps) {
-	    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-	  };
-	})();
+	exports.fetchWeather = fetchWeather;
+	exports.mapWeather = mapWeather;
+	exports.humanize = humanize;
 
 	function _interopRequireDefault(obj) {
 	  return obj && obj.__esModule ? obj : { 'default': obj };
 	}
 
-	function _classCallCheck(instance, Constructor) {
-	  if (!(instance instanceof Constructor)) {
-	    throw new TypeError('Cannot call a class as a function');
-	  }
-	}
-
-	function _inherits(subClass, superClass) {
-	  if (typeof superClass !== 'function' && superClass !== null) {
-	    throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
-	  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) subClass.__proto__ = superClass;
-	}
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _radium = __webpack_require__(158);
-
-	var _radium2 = _interopRequireDefault(_radium);
-
-	var _color = __webpack_require__(213);
-
-	var _color2 = _interopRequireDefault(_color);
-
-	var _utilsWeatherColorJs = __webpack_require__(209);
-
-	var styles = {
-	  base: {
-	    color: 'white',
-	    display: 'flex',
-	    flexShrink: 0,
-	    flexDirection: 'row',
-	    zIndex: 1,
-	    position: 'relative'
-	  },
-
-	  oneDayForecast: {
-	    flexGrow: 1,
-	    textAlign: 'center'
-	  },
-
-	  dayName: {
-	    fontFamily: '"Comfortaa-Regular", sans-serif',
-	    margin: '2px 0 6px 0'
-	  },
-
-	  icon: {
-	    fontSize: '2em'
-	  },
-
-	  highLow: {
-	    margin: '5px 0'
-	  }
-	};
-
-	var ForecastFooter = (function (_React$Component) {
-	  function ForecastFooter() {
-	    _classCallCheck(this, ForecastFooter);
-
-	    if (_React$Component != null) {
-	      _React$Component.apply(this, arguments);
-	    }
-	  }
-
-	  _inherits(ForecastFooter, _React$Component);
-
-	  _createClass(ForecastFooter, [{
-	    key: 'render',
-	    value: function render() {
-	      var mainColor = (0, _utilsWeatherColorJs.weatherColor)(this.props.temp);
-	      var colorDark = new _color2['default'](mainColor).darken(0.2).hslaString();
-	      var colorLight = new _color2['default'](mainColor).lighten(0.3).hslaString();
-
-	      styles.base.backgroundColor = mainColor;
-	      styles.base.borderTop = '2px solid ' + colorLight;
-	      styles.base.boxShadow = '0 -2px ' + colorDark;
-
-	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.oneDayForecast }, _react2['default'].createElement('h3', { style: styles.dayName }, 'tue'), _react2['default'].createElement('i', { className: 'wi wi-rain',
-	        style: styles.icon }), _react2['default'].createElement('p', { style: styles.highLow }, '66/58')), _react2['default'].createElement('div', { style: styles.oneDayForecast }, _react2['default'].createElement('h3', { style: styles.dayName }, 'wed'), _react2['default'].createElement('i', { className: 'wi wi-cloudy',
-	        style: styles.icon }), _react2['default'].createElement('p', { style: styles.highLow }, '66/58')), _react2['default'].createElement('div', { style: styles.oneDayForecast }, _react2['default'].createElement('h3', { style: styles.dayName }, 'thu'), _react2['default'].createElement('i', { className: 'wi wi-day-cloudy',
-	        style: styles.icon }), _react2['default'].createElement('p', { style: styles.highLow }, '66/58')), _react2['default'].createElement('div', { style: styles.oneDayForecast }, _react2['default'].createElement('h3', { style: styles.dayName }, 'fri'), _react2['default'].createElement('i', { className: 'wi wi-day-sunny',
-	        style: styles.icon }), _react2['default'].createElement('p', { style: styles.highLow }, '66/58')));
-	    }
-	  }]);
-
-	  return ForecastFooter;
-	})(_react2['default'].Component);
-
-	ForecastFooter.propTypes = { temp: _react2['default'].PropTypes.number };
-
-	exports['default'] = new _radium2['default'](ForecastFooter);
-	module.exports = exports['default'];
-
-	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "forecastFooter.js" + ": " + err.message); } }); } } })(); }
-
-/***/ },
-/* 225 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } (function () {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-
-	function _interopRequireDefault(obj) {
-	  return obj && obj.__esModule ? obj : { 'default': obj };
-	}
-
-	var _superagent = __webpack_require__(226);
+	var _superagent = __webpack_require__(225);
 
 	var _superagent2 = _interopRequireDefault(_superagent);
 
-	var weatherUrl = 'http://api.openweathermap.org/data/2.5/weather';
+	var urlCurrent = 'http://api.openweathermap.org/data/2.5/weather';
+	var url5day = 'http://api.openweathermap.org/data/2.5/forecast';
 
 	/*
-	 * grabs weather from api
+	 * fetches weather from api. Returns a Promise object.
+	 * we initiate two ajax requests in parallel as an optimization
+	 * returns an array of json responses
 	 */
-	var fetchWeather = function fetchWeather(callback) {
-	  _superagent2['default'].get(weatherUrl).query({
-	    lat: 37.7587,
-	    lon: -122.3951,
-	    units: 'imperial'
-	  }).end(function (err, res) {
-	    if (err) {
-	      callback(err);
-	    }
-	    callback(res);
-	  });
-	};
 
-	exports['default'] = fetchWeather;
-	module.exports = exports['default'];
+	function fetchWeather(lat, lon, units) {
+	  return Promise.all([new Promise(function (resolve, reject) {
+	    _superagent2['default'].get(urlCurrent).query({ lat: lat, lon: lon, units: units }).end(function (err, res) {
+	      if (err) reject(err);
+	      resolve(res);
+	    });
+	  }), new Promise(function (resolve, reject) {
+	    _superagent2['default'].get(url5day).query({ lat: lat, lon: lon, units: units }).end(function (err, res) {
+	      if (err) reject(err);
+	      resolve(res);
+	    });
+	  })]);
+	}
+
+	/*
+	 * maps api weather description (Rain, Snow, Extreme etc.) to
+	 * weather-icons names
+	 */
+
+	function mapWeather(str) {
+	  var lookup = {
+	    'Clear': 'day-sunny',
+	    'Clouds': 'day-sunny',
+	    'Rain': 'rain'
+	  };
+	  return lookup[str];
+	}
+
+	/*
+	 * maps api weather description (Rain, Snow, Extreme etc.) to
+	 * human friendly names
+	 */
+
+	function humanize(str) {
+	  var lookup = {
+	    'Clear': 'Clear',
+	    'Clouds': 'Sunny',
+	    'Rain': 'Rainy'
+	  };
+	  return lookup[str];
+	}
 
 	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "weather.js" + ": " + err.message); } }); } } })(); }
 
 /***/ },
-/* 226 */
+/* 225 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Module dependencies.
 	 */
 
-	var Emitter = __webpack_require__(227);
-	var reduce = __webpack_require__(228);
+	var Emitter = __webpack_require__(226);
+	var reduce = __webpack_require__(227);
 
 	/**
 	 * Root reference for iframes.
@@ -28885,7 +28881,7 @@
 
 
 /***/ },
-/* 227 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -29055,7 +29051,7 @@
 
 
 /***/ },
-/* 228 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -29082,6 +29078,132 @@
 	  
 	  return curr;
 	};
+
+/***/ },
+/* 228 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } (function () {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () {
+	  function defineProperties(target, props) {
+	    for (var i = 0; i < props.length; i++) {
+	      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+	    }
+	  }return function (Constructor, protoProps, staticProps) {
+	    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+	  };
+	})();
+
+	function _interopRequireDefault(obj) {
+	  return obj && obj.__esModule ? obj : { 'default': obj };
+	}
+
+	function _classCallCheck(instance, Constructor) {
+	  if (!(instance instanceof Constructor)) {
+	    throw new TypeError('Cannot call a class as a function');
+	  }
+	}
+
+	function _inherits(subClass, superClass) {
+	  if (typeof superClass !== 'function' && superClass !== null) {
+	    throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+	  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) subClass.__proto__ = superClass;
+	}
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _radium = __webpack_require__(158);
+
+	var _radium2 = _interopRequireDefault(_radium);
+
+	var _color = __webpack_require__(213);
+
+	var _color2 = _interopRequireDefault(_color);
+
+	var _utilsWeatherColorJs = __webpack_require__(209);
+
+	var styles = {
+	  base: {
+	    color: 'white',
+	    display: 'flex',
+	    flexShrink: 0,
+	    flexDirection: 'row',
+	    zIndex: 1,
+	    position: 'relative'
+	  },
+
+	  oneDayForecast: {
+	    flexGrow: 1,
+	    textAlign: 'center'
+	  },
+
+	  dayName: {
+	    fontFamily: '"Comfortaa-Regular", sans-serif',
+	    margin: '2px 0 6px 0'
+	  },
+
+	  icon: {
+	    fontSize: '2em'
+	  },
+
+	  highLow: {
+	    margin: '5px 0'
+	  }
+	};
+
+	var ForecastFooter = (function (_React$Component) {
+	  function ForecastFooter() {
+	    _classCallCheck(this, ForecastFooter);
+
+	    if (_React$Component != null) {
+	      _React$Component.apply(this, arguments);
+	    }
+	  }
+
+	  _inherits(ForecastFooter, _React$Component);
+
+	  _createClass(ForecastFooter, [{
+	    key: 'render',
+	    value: function render() {
+	      var mainColor = (0, _utilsWeatherColorJs.weatherColor)(this.props.temp);
+	      var colorDark = 'white';
+	      var colorLight = 'white';
+
+	      if (mainColor !== 'white') {
+	        colorDark = new _color2['default'](mainColor).darken(0.2).hslaString();
+	        colorLight = new _color2['default'](mainColor).lighten(0.3).hslaString();
+	      }
+
+	      styles.base.backgroundColor = mainColor;
+	      styles.base.borderTop = '2px solid ' + colorLight;
+	      styles.base.boxShadow = '0 -2px ' + colorDark;
+
+	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.oneDayForecast }, _react2['default'].createElement('h3', { style: styles.dayName }, 'tue'), _react2['default'].createElement('i', { className: 'wi wi-rain',
+	        style: styles.icon }), _react2['default'].createElement('p', { style: styles.highLow }, '66/58')), _react2['default'].createElement('div', { style: styles.oneDayForecast }, _react2['default'].createElement('h3', { style: styles.dayName }, 'wed'), _react2['default'].createElement('i', { className: 'wi wi-cloudy',
+	        style: styles.icon }), _react2['default'].createElement('p', { style: styles.highLow }, '66/58')), _react2['default'].createElement('div', { style: styles.oneDayForecast }, _react2['default'].createElement('h3', { style: styles.dayName }, 'thu'), _react2['default'].createElement('i', { className: 'wi wi-day-cloudy',
+	        style: styles.icon }), _react2['default'].createElement('p', { style: styles.highLow }, '66/58')), _react2['default'].createElement('div', { style: styles.oneDayForecast }, _react2['default'].createElement('h3', { style: styles.dayName }, 'fri'), _react2['default'].createElement('i', { className: 'wi wi-day-sunny',
+	        style: styles.icon }), _react2['default'].createElement('p', { style: styles.highLow }, '66/58')));
+	    }
+	  }]);
+
+	  return ForecastFooter;
+	})(_react2['default'].Component);
+
+	ForecastFooter.propTypes = { temp: _react2['default'].PropTypes.number };
+
+	exports['default'] = new _radium2['default'](ForecastFooter);
+	module.exports = exports['default'];
+
+	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "forecastFooter.js" + ": " + err.message); } }); } } })(); }
 
 /***/ },
 /* 229 */

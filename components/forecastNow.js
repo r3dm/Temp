@@ -9,7 +9,6 @@ var styles = {
   base: {
     display: 'flex',
     flexDirection: 'column',
-    flexGrow: 1,
     flexWrap: 'wrap',
     justifyContent: 'center',
     alignItems: 'center',
@@ -56,22 +55,28 @@ var styles = {
 }
 
 class ForecastNow extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { height: '65vh' }
+  }
+
   componentDidMount() {
     // ~ 8 px to account for footer-padding + this-padding
     this.setState({
-      height: document.getElementById('todayDiv').clientHeight - 6
+      height: document.getElementById('todayDiv').clientHeight
     })
-  }
-
-  state: {
-    height: '65vh'
   }
 
   render() {
     styles.base.height = this.state.height
     let mainColor = weatherColor(this.props.temp)
-    let colorDark = new Color(mainColor).darken(0.2).hslaString()
-    let colorLight = new Color(mainColor).lighten(0.2).hslaString()
+    let colorDark = 'white'
+    let colorLight = 'white'
+
+    if(mainColor !== 'white') {
+      colorDark = new Color(mainColor).darken(0.2).hslaString()
+      colorLight = new Color(mainColor).lighten(0.2).hslaString()
+    }
 
     styles.base.backgroundColor = mainColor
     styles.verticalDivider.color = colorDark
