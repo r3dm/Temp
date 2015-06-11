@@ -13,11 +13,14 @@ import { fetchWeather } from './utils/weather.js'
  * screen. This way when the user visits home we likely already have the info
  */
 let App = React.createClass({
+  originalLat: 40.730610,
+  originalLon: -73.935242,
+
   getInitialState() {
     return {
       temp: Number.NaN,
-      lat: 40.730610,
-      lon: -73.935242,
+      lat: this.originalLat,
+      lon: this.originalLon,
       units: 'imperial'
     }
   },
@@ -44,6 +47,7 @@ let App = React.createClass({
     if(navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
+          console.log('geolocation success')
           this.setState({
             lat: position.coords.latitude,
             lon: position.coords.longitude
@@ -53,9 +57,11 @@ let App = React.createClass({
             .then(this.weatherCallback)
         },
         (error) => {
+          console.log('geolocation error')
           fetchWeather(this.state.lat, this.state.lon, this.state.units)
             .then(this.weatherCallback)
-        }
+        },
+        { timeout: 5000 }
       )
     } else { console.log('no geolocation available') }
   },

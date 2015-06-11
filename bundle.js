@@ -81,11 +81,14 @@
 	var App = _react2['default'].createClass({
 	  displayName: 'App',
 
+	  originalLat: 40.73061,
+	  originalLon: -73.935242,
+
 	  getInitialState: function getInitialState() {
 	    return {
 	      temp: Number.NaN,
-	      lat: 40.73061,
-	      lon: -73.935242,
+	      lat: this.originalLat,
+	      lon: this.originalLon,
 	      units: 'imperial'
 	    };
 	  },
@@ -111,6 +114,7 @@
 
 	    if (navigator.geolocation) {
 	      navigator.geolocation.getCurrentPosition(function (position) {
+	        console.log('geolocation success');
 	        _this.setState({
 	          lat: position.coords.latitude,
 	          lon: position.coords.longitude
@@ -118,8 +122,9 @@
 
 	        (0, _utilsWeatherJs.fetchWeather)(_this.state.lat, _this.state.lon, _this.state.units).then(_this.weatherCallback);
 	      }, function (error) {
+	        console.log('geolocation error');
 	        (0, _utilsWeatherJs.fetchWeather)(_this.state.lat, _this.state.lon, _this.state.units).then(_this.weatherCallback);
-	      });
+	      }, { timeout: 5000 });
 	    } else {
 	      console.log('no geolocation available');
 	    }
