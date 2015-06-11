@@ -9,8 +9,7 @@ var styles = {
     display: 'flex',
     flexShrink: 0,
     flexDirection: 'row',
-    zIndex: 1,
-    position: 'relative'
+    zIndex: 1
   },
 
   oneDayForecast: {

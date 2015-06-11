@@ -32,7 +32,7 @@ let App = React.createClass({
     var currentWeather = Array.isArray(weather.weather) ?
                     weather.weather[0] :
                     weather.weather
-    this.setState({
+    return {
       weather,
       fiveDayForecast,
       temp: Math.round(weather.main.temp),
@@ -41,29 +41,46 @@ let App = React.createClass({
       sunset: weather.sys.sunset,
       currentConditions: currentWeather.main,
       country: weather.sys.country
-    })
+    }
   },
   componentDidMount() {
     if(navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          console.log('geolocation success')
-          this.setState({
-            lat: position.coords.latitude,
-            lon: position.coords.longitude
-          });
+      var promise = new Promise((resolve, reject) => {
+        console.log('browser supports geolocation, waiting for user')
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            console.log('browser gps given', position)
+            var result = fetchWeather(position.coords.latitude,
+                                      position.coords.longitude,
+                                      this.state.units)
+                            .then(this.weatherCallback)
+            result.lat = position.coords.latitude
+            result.lon = position.coords.longitude
+            console.log('return value', result)
 
-          fetchWeather(this.state.lat, this.state.lon, this.state.units)
+            resolve(result)
+          },
+          (error) => {
+            resolve(
+              fetchWeather(this.state.lat, this.state.lon, this.state.units)
+                .then(this.weatherCallback)
+            )
+          }
+        )
+        window.setTimeout(() => {
+          console.log('timeout')
+          resolve(
+            fetchWeather(this.state.lat, this.state.lon, this.state.units)
             .then(this.weatherCallback)
-        },
-        (error) => {
-          console.log('geolocation error')
-          fetchWeather(this.state.lat, this.state.lon, this.state.units)
-            .then(this.weatherCallback)
-        },
-        { timeout: 5000 }
-      )
-    } else { console.log('no geolocation available') }
+          )
+        }, 8000)
+      })
+      promise.then((result) => {
+          this.setState(result)
+      })
+    } else {
+      console.log('no geolocation available')
+    }
   },
   render() {
     return (
@@ -84,5 +101,6 @@ let routes = (
 )
 
 Router.run(routes, function (Handler) {
+  React.initializeTouchEvents(true)
   React.render(<Handler/>, document.getElementById('content'))
 })

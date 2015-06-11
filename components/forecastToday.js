@@ -11,7 +11,7 @@ var styles = {
   },
 
   overflowDiv: {
-    overflow: 'auto',
+    overflow: 'scroll',
     height: '55vh'
   }
 }

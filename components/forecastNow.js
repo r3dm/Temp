@@ -13,7 +13,6 @@ var styles = {
     justifyContent: 'center',
     alignItems: 'center',
     borderBottom: '2px solid',
-    zIndex: 0,
     position: 'relative'
   },
 

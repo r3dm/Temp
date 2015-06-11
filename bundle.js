@@ -98,7 +98,7 @@
 
 	    // weather api may return an array here, so we check
 	    var currentWeather = Array.isArray(weather.weather) ? weather.weather[0] : weather.weather;
-	    this.setState({
+	    return {
 	      weather: weather,
 	      fiveDayForecast: fiveDayForecast,
 	      temp: Math.round(weather.main.temp),
@@ -107,24 +107,33 @@
 	      sunset: weather.sys.sunset,
 	      currentConditions: currentWeather.main,
 	      country: weather.sys.country
-	    });
+	    };
 	  },
 	  componentDidMount: function componentDidMount() {
 	    var _this = this;
 
 	    if (navigator.geolocation) {
-	      navigator.geolocation.getCurrentPosition(function (position) {
-	        console.log('geolocation success');
-	        _this.setState({
-	          lat: position.coords.latitude,
-	          lon: position.coords.longitude
-	        });
+	      var promise = new Promise(function (resolve, reject) {
+	        console.log('browser supports geolocation, waiting for user');
+	        navigator.geolocation.getCurrentPosition(function (position) {
+	          console.log('browser gps given', position);
+	          var result = (0, _utilsWeatherJs.fetchWeather)(position.coords.latitude, position.coords.longitude, _this.state.units).then(_this.weatherCallback);
+	          result.lat = position.coords.latitude;
+	          result.lon = position.coords.longitude;
+	          console.log('return value', result);
 
-	        (0, _utilsWeatherJs.fetchWeather)(_this.state.lat, _this.state.lon, _this.state.units).then(_this.weatherCallback);
-	      }, function (error) {
-	        console.log('geolocation error');
-	        (0, _utilsWeatherJs.fetchWeather)(_this.state.lat, _this.state.lon, _this.state.units).then(_this.weatherCallback);
-	      }, { timeout: 5000 });
+	          resolve(result);
+	        }, function (error) {
+	          resolve((0, _utilsWeatherJs.fetchWeather)(_this.state.lat, _this.state.lon, _this.state.units).then(_this.weatherCallback));
+	        });
+	        window.setTimeout(function () {
+	          console.log('timeout');
+	          resolve((0, _utilsWeatherJs.fetchWeather)(_this.state.lat, _this.state.lon, _this.state.units).then(_this.weatherCallback));
+	        }, 8000);
+	      });
+	      promise.then(function (result) {
+	        _this.setState(result);
+	      });
 	    } else {
 	      console.log('no geolocation available');
 	    }
@@ -141,6 +150,7 @@
 	  path: '/home' }));
 
 	_reactRouter2['default'].run(routes, function (Handler) {
+	  _react2['default'].initializeTouchEvents(true);
 	  _react2['default'].render(_react2['default'].createElement(Handler, null), document.getElementById('content'));
 	});
 
@@ -220,6 +230,9 @@
 	    var _this = this;
 
 	    return _react2['default'].createElement('div', { onClick: function onClick() {
+	        return _this.transitionTo('home');
+	      },
+	      onTouchEnd: function onTouchEnd() {
 	        return _this.transitionTo('home');
 	      },
 	      style: styles.base }, _react2['default'].createElement('i', { className: 'wi wi-day-sunny',
@@ -27254,7 +27267,7 @@
 	  },
 
 	  overflowDiv: {
-	    overflow: 'auto',
+	    overflow: 'scroll',
 	    height: '55vh'
 	  }
 	};
@@ -27496,7 +27509,6 @@
 	    justifyContent: 'center',
 	    alignItems: 'center',
 	    borderBottom: '2px solid',
-	    zIndex: 0,
 	    position: 'relative'
 	  },
 
@@ -29146,8 +29158,7 @@
 	    display: 'flex',
 	    flexShrink: 0,
 	    flexDirection: 'row',
-	    zIndex: 1,
-	    position: 'relative'
+	    zIndex: 1
 	  },
 
 	  oneDayForecast: {
