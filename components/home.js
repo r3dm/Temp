@@ -25,6 +25,7 @@ class Home extends React.Component {
           temp={ this.props.temp } />
         <ForecastToday
           currentConditions = { this.props.forecast.currentConditions }
+          forecasts = { this.props.forecast.fiveDayForecast }
           temp={ this.props.temp } />
         <ForecastFooter temp={ this.props.temp } />
       </div>

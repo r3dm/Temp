@@ -2,18 +2,18 @@ import React from 'react'
 import ForecastHourly from './forecastHourly.js'
 import ForecastNow from './forecastNow.js'
 import Radium from 'radium'
-// import Color from 'color'
+import Color from 'color'
 
 var styles = {
   base: {
     flexGrow: 1,
-    overflowX: 'scroll',
-    overflowY: 'hidden'
+    overflowY: 'scroll',
+    overflowX: 'hidden'
   },
 
   overflowDiv: {
-    overflowX: 'scroll',
-    overflowY: 'hidden',
+    overflowY: 'scroll',
+    overflowX: 'hidden',
     height: '55vh'
   }
 }
@@ -34,6 +34,10 @@ class ForecastToday extends React.Component {
 
   render() {
     styles.overflowDiv.height = this.state.overflowHeight
+    var forecasts = this.props.forecasts
+    if(forecasts && forecasts.length > 8) {
+      forecasts = forecasts.slice(1, 9)
+    }
 
     return (
       <div
@@ -45,15 +49,14 @@ class ForecastToday extends React.Component {
           temp = { this.props.temp } />
 
         <div style={styles.overflowDiv} >
-          <ForecastHourly color="#4c869b" forecast="rain" temperature={65} time="3:00pm" />
-          <ForecastHourly color="#5aa0ba" forecast="cloudy" temperature={66} time="4:00pm" />
-          <ForecastHourly color="#5aa0ba" forecast="cloudy" temperature={66} time="5:00pm" />
-          <ForecastHourly color="#77b3c9" forecast="day-cloudy" temperature={67} time="6:00pm" />
-          <ForecastHourly color="#77b3c9" forecast="day-cloudy" temperature={67} time="7:00pm" />
-          <ForecastHourly color="#94cade" forecast="day-sunny" temperature={68} time="8:00pm" />
-          <ForecastHourly color="#94cade" forecast="day-sunny" temperature={68} time="9:00pm" />
-          <ForecastHourly color="#b6e5f7" forecast="cloudy" temperature={69} time="10:00pm" />
-          <ForecastHourly color="#b6e5f7" forecast="cloudy" temperature={69} time="11:00pm" />
+          {forecasts.map((f) => {
+            return (
+              <ForecastHourly
+                temp={f.main.temp}
+                time={f.dt_txt}
+                weather={f.weather[0].main} />
+            )
+          })}
         </div>
       </div>
     )
@@ -61,6 +64,7 @@ class ForecastToday extends React.Component {
 }
 ForecastToday.propTypes = {
   currentConditions: React.PropTypes.string,
+  forecasts: React.PropTypes.array,
   temp: React.PropTypes.number
 }
 

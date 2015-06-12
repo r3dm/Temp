@@ -118,6 +118,7 @@ class ForecastNow extends React.Component {
   }
 }
 ForecastNow.propTypes = {
+  currentConditions: React.PropTypes.string,
   temp: React.PropTypes.number
 }
 

@@ -21,12 +21,13 @@ let App = React.createClass({
       temp: Number.NaN,
       lat: this.originalLat,
       lon: this.originalLon,
-      units: 'imperial'
+      units: 'imperial',
+      fiveDayForecast: []
     }
   },
   weatherCallback(results) {
     var weather = results[0].body
-    var fiveDayForecast = results[1].body
+    var fiveDayForecast = results[1].body.list
 
     // weather api may return an array here, so we check
     var currentWeather = Array.isArray(weather.weather) ?

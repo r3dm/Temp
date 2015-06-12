@@ -15,6 +15,7 @@
     "color": "^0.8.0",
     "conversion.js": "0.0.5",
     "interpolation": "^1.0.0",
+    "moment": "^2.10.3",
     "radium": "^0.13.0",
     "react": "^0.13.3",
     "react-router": "^0.13.3",
