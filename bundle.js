@@ -27166,9 +27166,13 @@
 	    key: 'render',
 	    value: function render() {
 	      styles.base.backgroundColor = (0, _utilsWeatherColorJs.weatherColor)(this.props.temp);
+	      var cityState = this.props.cityName + ', ' + this.props.country;
+	      if (cityState.length > 22) {
+	        cityState = cityState.slice(0, 22) + ' ...';
+	      }
 
 	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('i', { className: 'fa fa-gears',
-	        style: styles.settingsIcon }), _react2['default'].createElement('p', { style: styles.cityState }, this.props.cityName, ', ', this.props.country), _react2['default'].createElement('p', { style: styles.headerDate }, 'tuesday, june 26'));
+	        style: styles.settingsIcon }), _react2['default'].createElement('p', { style: styles.cityState }, cityState), _react2['default'].createElement('p', { style: styles.headerDate }, 'tuesday, june 26'));
 	    }
 	  }]);
 
@@ -27308,11 +27312,11 @@
 
 	      return _react2['default'].createElement('div', {
 	        id: 'todayDiv',
-	        style: styles.base
-	      }, _react2['default'].createElement(_forecastNowJs2['default'], {
+	        style: styles.base }, _react2['default'].createElement(_forecastNowJs2['default'], {
 	        currentConditions: this.props.currentConditions,
-	        temp: this.props.temp }), _react2['default'].createElement('div', { style: styles.overflowDiv }, forecasts.map(function (f) {
+	        temp: this.props.temp }), _react2['default'].createElement('div', { style: styles.overflowDiv }, forecasts.map(function (f, index) {
 	        return _react2['default'].createElement(_forecastHourlyJs2['default'], {
+	          key: index,
 	          temp: f.main.temp,
 	          time: f.dt_txt,
 	          weather: f.weather[0].main });

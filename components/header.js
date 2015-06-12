@@ -28,13 +28,17 @@ var styles = {
 class Header extends React.Component {
   render() {
     styles.base.backgroundColor = weatherColor(this.props.temp)
+    var cityState = this.props.cityName + ', ' + this.props.country
+    if(cityState.length > 22) {
+      cityState = cityState.slice(0, 22) + ' ...'
+    }
 
     return (
       <div style={styles.base} >
         <i className="fa fa-gears"
            style={styles.settingsIcon} ></i>
         <p style={styles.cityState} >
-          {this.props.cityName}, {this.props.country}
+          { cityState }
         </p>
         <p style={styles.headerDate} >tuesday, june 26</p>
       </div>

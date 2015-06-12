@@ -42,16 +42,17 @@ class ForecastToday extends React.Component {
     return (
       <div
         id="todayDiv"
-        style={styles.base}
-      >
+        style={styles.base} >
+
         <ForecastNow
           currentConditions = { this.props.currentConditions }
           temp = { this.props.temp } />
 
         <div style={styles.overflowDiv} >
-          {forecasts.map((f) => {
+          {forecasts.map((f, index) => {
             return (
               <ForecastHourly
+                key={index}
                 temp={f.main.temp}
                 time={f.dt_txt}
                 weather={f.weather[0].main} />
