@@ -1,10 +1,22 @@
 import React from 'react'
+import Radium from 'radium'
+import { Navigation } from 'react-router'
 
 let Settings = React.createClass({
-  displayName: 'Settings',
+  mixins: [Navigation],
+
   render: function () {
-    return <h2>Settings</h2>
+    return (
+      <div>
+        <h2>
+          Settings
+        </h2>
+        <div onClick={() => this.transitionTo('home')}>
+          Go Back
+        </div>
+      </div>
+    )
   }
 })
 
-export default Settings
+export default new Radium(Settings)

@@ -5,7 +5,7 @@ import Router from 'react-router'
 import { Route, DefaultRoute, RouteHandler } from 'react-router'
 import Home from './components/home.js'
 import Splash from './components/splash.js'
-// import Settings from './settings.js'
+import Settings from './components/settings.js'
 import { fetchWeather } from './utils/weather.js'
 
 /*
@@ -98,6 +98,9 @@ let routes = (
     <Route handler={Home}
            name="home"
            path="/home" />
+    <Route handler={Settings}
+           name="settings"
+           path="/settings" />
   </Route>
 )
 

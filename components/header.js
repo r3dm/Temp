@@ -1,11 +1,17 @@
 import React from 'react'
 import Radium from 'radium'
+import { Navigation } from 'react-router'
 import { weatherColor } from '../utils/weatherColor.js'
 
 var styles = {
   base: {
-    padding: '10px 10px',
-    flexShrink: '0'
+    padding: '7px 0px 7px 7px',
+    flexShrink: '0',
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  cityTimeWrapper: {
+    flexGrow: 1
   },
 
   cityState: {
@@ -20,12 +26,14 @@ var styles = {
   },
 
   settingsIcon: {
-    float: 'right',
-    fontSize: '2em'
+    fontSize: '2em',
+    padding: '10px 10px'
   }
 }
 
-class Header extends React.Component {
+let Header = React.createClass({
+  mixins: [Navigation],
+
   render() {
     styles.base.backgroundColor = weatherColor(this.props.temp)
     var cityState = this.props.cityName + ', ' + this.props.country
@@ -35,16 +43,19 @@ class Header extends React.Component {
 
     return (
       <div style={styles.base} >
+        <div style={styles.cityTimeWrapper}>
+          <p style={styles.cityState} >
+            { cityState }
+          </p>
+          <p style={styles.headerDate} >tuesday, june 26</p>
+        </div>
         <i className="fa fa-gears"
-           style={styles.settingsIcon} ></i>
-        <p style={styles.cityState} >
-          { cityState }
-        </p>
-        <p style={styles.headerDate} >tuesday, june 26</p>
+           style={styles.settingsIcon}
+           onClick={() => this.transitionTo('settings')}></i>
       </div>
     )
   }
-}
+})
 Header.propTypes = {
   cityName: React.PropTypes.string,
   country: React.PropTypes.string,
