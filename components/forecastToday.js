@@ -2,7 +2,6 @@ import React from 'react'
 import ForecastHourly from './forecastHourly.js'
 import ForecastNow from './forecastNow.js'
 import Radium from 'radium'
-import Color from 'color'
 
 var styles = {
   base: {

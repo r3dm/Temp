@@ -24733,8 +24733,8 @@
 
 	    styles.base.backgroundColor = (0, _utilsWeatherColorJs.weatherColor)(this.props.temp);
 	    var cityState = this.props.cityName + ', ' + this.props.country;
-	    if (cityState.length > 22) {
-	      cityState = cityState.slice(0, 22) + ' ...';
+	    if (this.props.cityName && this.props.cityName.length > 18) {
+	      cityState = cityState.slice(0, 18) + ' ...';
 	    }
 
 	    return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.cityTimeWrapper }, _react2['default'].createElement('p', { style: styles.cityState }, cityState), _react2['default'].createElement('p', { style: styles.headerDate }, 'tuesday, june 26')), _react2['default'].createElement('i', { className: 'fa fa-gears',
@@ -27156,10 +27156,6 @@
 	var _radium = __webpack_require__(197);
 
 	var _radium2 = _interopRequireDefault(_radium);
-
-	var _color = __webpack_require__(214);
-
-	var _color2 = _interopRequireDefault(_color);
 
 	var styles = {
 	  base: {
@@ -40454,6 +40450,39 @@
 
 	var _reactRouter = __webpack_require__(1);
 
+	var _color = __webpack_require__(214);
+
+	var _color2 = _interopRequireDefault(_color);
+
+	var _utilsWeatherColorJs = __webpack_require__(210);
+
+	var styles = {
+	  base: {
+	    height: '100%',
+	    color: 'white',
+	    fontFamily: '"Comfortaa-Regular", sans-serif',
+	    display: 'flex',
+	    flexDirection: 'column',
+	    flexWrap: 'nowrap'
+	  },
+	  navigation: {
+	    display: 'flex',
+	    flexDirection: 'row'
+	  },
+	  backIcon: {
+	    fontSize: '3em',
+	    padding: '5px 15px',
+	    position: 'fixed'
+	  },
+	  header: {
+	    flexGrow: 1,
+	    textAlign: 'center',
+	    margin: 0,
+	    fontSize: '2em',
+	    padding: '10px 0'
+	  }
+	};
+
 	var Settings = _react2['default'].createClass({
 	  displayName: 'Settings',
 
@@ -40462,11 +40491,20 @@
 	  render: function render() {
 	    var _this = this;
 
-	    return _react2['default'].createElement('div', null, _react2['default'].createElement('h2', null, 'Settings'), _react2['default'].createElement('div', { onClick: function onClick() {
+	    var mainColor = (0, _utilsWeatherColorJs.weatherColor)(this.props.temp);
+	    styles.base.backgroundColor = mainColor;
+
+	    return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('i', { className: 'fa fa-angle-double-left',
+	      style: styles.backIcon,
+	      onClick: function onClick() {
 	        return _this.transitionTo('home');
-	      } }, 'Go Back'));
+	      } }), _react2['default'].createElement('div', { style: styles.navigation }, _react2['default'].createElement('p', { style: styles.header }, 'Settings')));
 	  }
 	});
+	Settings.propTypes = {
+	  forecast: _react2['default'].PropTypes.object,
+	  temp: _react2['default'].PropTypes.number
+	};
 
 	exports['default'] = new _radium2['default'](Settings);
 	module.exports = exports['default'];
