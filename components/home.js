@@ -20,21 +20,20 @@ class Home extends React.Component {
     return (
       <div style={styles.base} >
         <Header
-          cityName={ this.props.forecast.cityName }
-          country={ this.props.forecast.country }
-          temp={ this.props.temp } />
+          cityName={ this.props.state.cityName }
+          country={ this.props.state.country }
+          temp={ this.props.state.temp } />
         <ForecastToday
-          currentConditions = { this.props.forecast.currentConditions }
-          forecasts = { this.props.forecast.fiveDayForecast }
-          temp={ this.props.temp } />
-        <ForecastFooter temp={ this.props.temp } />
+          currentConditions = { this.props.state.currentConditions }
+          forecasts = { this.props.state.fiveDayForecast }
+          temp={ this.props.state.temp } />
+        <ForecastFooter temp={ this.props.state.temp } />
       </div>
     )
   }
 }
 Home.propTypes = {
-  forecast: React.PropTypes.object,
-  temp: React.PropTypes.number
+  state: React.PropTypes.object
 }
 
 export default new Radium(Home)

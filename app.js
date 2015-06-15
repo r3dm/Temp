@@ -18,6 +18,8 @@ let App = React.createClass({
 
   getInitialState() {
     return {
+      cityName: 'somewhere',
+      country: 'USA',
       temp: Number.NaN,
       lat: this.originalLat,
       lon: this.originalLon,
@@ -86,8 +88,7 @@ let App = React.createClass({
   render() {
     return (
       <RouteHandler
-        forecast = { this.state }
-        temp = { this.state.temp } />
+        state = { this.state } />
     )
   }
 })

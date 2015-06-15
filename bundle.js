@@ -88,6 +88,8 @@
 
 	  getInitialState: function getInitialState() {
 	    return {
+	      cityName: 'somewhere',
+	      country: 'USA',
 	      temp: Number.NaN,
 	      lat: this.originalLat,
 	      lon: this.originalLon,
@@ -143,8 +145,7 @@
 	  },
 	  render: function render() {
 	    return _react2['default'].createElement(_reactRouter.RouteHandler, {
-	      forecast: this.state,
-	      temp: this.state.temp });
+	      state: this.state });
 	  }
 	});
 
@@ -23731,12 +23732,12 @@
 	    key: 'render',
 	    value: function render() {
 	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement(_headerJs2['default'], {
-	        cityName: this.props.forecast.cityName,
-	        country: this.props.forecast.country,
-	        temp: this.props.temp }), _react2['default'].createElement(_forecastTodayJs2['default'], {
-	        currentConditions: this.props.forecast.currentConditions,
-	        forecasts: this.props.forecast.fiveDayForecast,
-	        temp: this.props.temp }), _react2['default'].createElement(_forecastFooterJs2['default'], { temp: this.props.temp }));
+	        cityName: this.props.state.cityName,
+	        country: this.props.state.country,
+	        temp: this.props.state.temp }), _react2['default'].createElement(_forecastTodayJs2['default'], {
+	        currentConditions: this.props.state.currentConditions,
+	        forecasts: this.props.state.fiveDayForecast,
+	        temp: this.props.state.temp }), _react2['default'].createElement(_forecastFooterJs2['default'], { temp: this.props.state.temp }));
 	    }
 	  }]);
 
@@ -23744,8 +23745,7 @@
 	})(_react2['default'].Component);
 
 	Home.propTypes = {
-	  forecast: _react2['default'].PropTypes.object,
-	  temp: _react2['default'].PropTypes.number
+	  state: _react2['default'].PropTypes.object
 	};
 
 	exports['default'] = new _radium2['default'](Home);
@@ -24733,7 +24733,7 @@
 
 	    styles.base.backgroundColor = (0, _utilsWeatherColorJs.weatherColor)(this.props.temp);
 	    var cityState = this.props.cityName + ', ' + this.props.country;
-	    if (this.props.cityName && this.props.cityName.length > 18) {
+	    if (cityState.length > 20) {
 	      cityState = cityState.slice(0, 18) + ' ...';
 	    }
 
@@ -40480,30 +40480,68 @@
 	    margin: 0,
 	    fontSize: '2em',
 	    padding: '10px 0'
+	  },
+	  body: {
+	    display: 'flex',
+	    flexDirection: 'column',
+	    padding: '10px'
+	  },
+	  option: {
+	    display: 'flex',
+	    flexDirection: 'row',
+	    alignItems: 'center',
+	    justifyContent: 'space-between'
+	  },
+	  label: {
+	    fontSize: '2em',
+	    padding: '10px 10px 10px 50px'
+	  },
+	  radio: {
+	    display: 'flex',
+	    alignItems: 'center',
+	    width: '2em',
+	    height: '2em',
+	    margin: '0 20px 0 0',
+	    padding: 0,
+	    borderRadius: '1em',
+	    backgroundColor: 'white'
+	  },
+	  check: {
+	    width: '1em',
+	    height: '1em',
+	    margin: '0 auto',
+	    padding: 0,
+	    borderRadius: '1em',
+	    backgroundColor: 'grey'
 	  }
 	};
 
 	var Settings = _react2['default'].createClass({
 	  displayName: 'Settings',
 
+	  getInitialState: function getInitialState() {
+	    return {
+	      units: ''
+	    };
+	  },
+
 	  mixins: [_reactRouter.Navigation],
 
 	  render: function render() {
 	    var _this = this;
 
-	    var mainColor = (0, _utilsWeatherColorJs.weatherColor)(this.props.temp);
+	    var mainColor = (0, _utilsWeatherColorJs.weatherColor)(this.props.state.temp);
 	    styles.base.backgroundColor = mainColor;
 
 	    return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('i', { className: 'fa fa-angle-double-left',
 	      style: styles.backIcon,
 	      onClick: function onClick() {
 	        return _this.transitionTo('home');
-	      } }), _react2['default'].createElement('div', { style: styles.navigation }, _react2['default'].createElement('p', { style: styles.header }, 'Settings')));
+	      } }), _react2['default'].createElement('div', { style: styles.navigation }, _react2['default'].createElement('p', { style: styles.header }, 'Settings')), _react2['default'].createElement('div', { style: styles.body }, _react2['default'].createElement('div', { style: styles.option }, _react2['default'].createElement('div', { style: styles.label }, 'Celsius'), _react2['default'].createElement('div', { style: styles.radio }, _react2['default'].createElement('div', { style: styles.check }))), _react2['default'].createElement('div', { style: styles.option }, _react2['default'].createElement('span', { style: styles.label }, 'Farenheit'), _react2['default'].createElement('div', { style: styles.radio }, _react2['default'].createElement('div', { style: styles.check })))));
 	  }
 	});
 	Settings.propTypes = {
-	  forecast: _react2['default'].PropTypes.object,
-	  temp: _react2['default'].PropTypes.number
+	  state: _react2['default'].PropTypes.object
 	};
 
 	exports['default'] = new _radium2['default'](Settings);
