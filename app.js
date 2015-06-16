@@ -85,10 +85,14 @@ let App = React.createClass({
       console.log('no geolocation available')
     }
   },
+  saveSettings: function(newState) {
+    this.setState(newState)
+  },
   render() {
     return (
       <RouteHandler
-        state = { this.state } />
+        state = { this.state }
+        syncFunc={ this.saveSettings } />
     )
   }
 })

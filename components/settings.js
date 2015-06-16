@@ -67,46 +67,63 @@ var styles = {
 let Settings = React.createClass({
   getInitialState: function() {
     return {
-      units: ''
+      units: this.props.state.units
     }
   },
 
   mixins: [Navigation],
 
+  chooseUnits: function(units) {
+    this.setState({units: units})
+  },
+  transitionSync: function() {
+    this.props.syncFunc(this.state)
+    this.transitionTo('home')
+  },
+
   render: function() {
     let mainColor = weatherColor(this.props.state.temp)
     styles.base.backgroundColor = mainColor
 
+    var check = <div style={styles.check} ></div>
     return (
       <div style={styles.base} >
+
         <i className="fa fa-angle-double-left"
            style={styles.backIcon}
-           onClick={() => this.transitionTo('home')}></i>
+           onClick={() => this.transitionSync()}></i>
         <div style={styles.navigation} >
           <p style={styles.header}>
             Settings
           </p>
         </div>
+
         <div style={styles.body} >
           <div style={styles.option} >
             <div style={styles.label}>Celsius</div>
-            <div style={styles.radio} >
-              <div style={styles.check} ></div>
+            <div
+              onClick={() => this.chooseUnits('metric')}
+              style={styles.radio} >
+              { this.state.units === 'metric' ? check : '' }
             </div>
           </div>
           <div style={styles.option} >
             <span style={styles.label}>Farenheit</span>
-            <div style={styles.radio} >
-              <div style={styles.check} ></div>
+            <div
+              onClick={() => this.chooseUnits('imperial')}
+              style={styles.radio} >
+              { this.state.units === 'imperial' ? check : '' }
             </div>
           </div>
         </div>
+
       </div>
     )
   }
 })
 Settings.propTypes = {
-  state: React.PropTypes.object
+  state: React.PropTypes.object,
+  syncFunc: React.PropTypes.func
 }
 
 export default new Radium(Settings)

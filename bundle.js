@@ -143,9 +143,13 @@
 	      console.log('no geolocation available');
 	    }
 	  },
+	  saveSettings: function saveSettings(newState) {
+	    this.setState(newState);
+	  },
 	  render: function render() {
 	    return _react2['default'].createElement(_reactRouter.RouteHandler, {
-	      state: this.state });
+	      state: this.state,
+	      syncFunc: this.saveSettings });
 	  }
 	});
 
@@ -40521,11 +40525,19 @@
 
 	  getInitialState: function getInitialState() {
 	    return {
-	      units: ''
+	      units: this.props.state.units
 	    };
 	  },
 
 	  mixins: [_reactRouter.Navigation],
+
+	  chooseUnits: function chooseUnits(units) {
+	    this.setState({ units: units });
+	  },
+	  transitionSync: function transitionSync() {
+	    this.props.syncFunc(this.state);
+	    this.transitionTo('home');
+	  },
 
 	  render: function render() {
 	    var _this = this;
@@ -40533,15 +40545,25 @@
 	    var mainColor = (0, _utilsWeatherColorJs.weatherColor)(this.props.state.temp);
 	    styles.base.backgroundColor = mainColor;
 
+	    var check = _react2['default'].createElement('div', { style: styles.check });
 	    return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('i', { className: 'fa fa-angle-double-left',
 	      style: styles.backIcon,
 	      onClick: function onClick() {
-	        return _this.transitionTo('home');
-	      } }), _react2['default'].createElement('div', { style: styles.navigation }, _react2['default'].createElement('p', { style: styles.header }, 'Settings')), _react2['default'].createElement('div', { style: styles.body }, _react2['default'].createElement('div', { style: styles.option }, _react2['default'].createElement('div', { style: styles.label }, 'Celsius'), _react2['default'].createElement('div', { style: styles.radio }, _react2['default'].createElement('div', { style: styles.check }))), _react2['default'].createElement('div', { style: styles.option }, _react2['default'].createElement('span', { style: styles.label }, 'Farenheit'), _react2['default'].createElement('div', { style: styles.radio }, _react2['default'].createElement('div', { style: styles.check })))));
+	        return _this.transitionSync();
+	      } }), _react2['default'].createElement('div', { style: styles.navigation }, _react2['default'].createElement('p', { style: styles.header }, 'Settings')), _react2['default'].createElement('div', { style: styles.body }, _react2['default'].createElement('div', { style: styles.option }, _react2['default'].createElement('div', { style: styles.label }, 'Celsius'), _react2['default'].createElement('div', {
+	      onClick: function onClick() {
+	        return _this.chooseUnits('metric');
+	      },
+	      style: styles.radio }, this.state.units === 'metric' ? check : '')), _react2['default'].createElement('div', { style: styles.option }, _react2['default'].createElement('span', { style: styles.label }, 'Farenheit'), _react2['default'].createElement('div', {
+	      onClick: function onClick() {
+	        return _this.chooseUnits('imperial');
+	      },
+	      style: styles.radio }, this.state.units === 'imperial' ? check : ''))));
 	  }
 	});
 	Settings.propTypes = {
-	  state: _react2['default'].PropTypes.object
+	  state: _react2['default'].PropTypes.object,
+	  syncFunc: _react2['default'].PropTypes.func
 	};
 
 	exports['default'] = new _radium2['default'](Settings);
