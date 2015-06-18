@@ -3,6 +3,7 @@ import Radium from 'radium'
 import { Navigation } from 'react-router'
 import Color from 'color'
 import { weatherColor } from '../utils/weatherColor.js'
+import convertTemp from '../utils/convertTemp.js'
 
 var styles = {
   base: {
@@ -67,14 +68,24 @@ var styles = {
 let Settings = React.createClass({
   getInitialState: function() {
     return {
-      units: this.props.state.units
+      units: this.props.state.units,
+      temp: this.props.state.temp
     }
   },
-
   mixins: [Navigation],
 
-  chooseUnits: function(units) {
-    this.setState({units: units})
+  componentWillReceiveProps: function(nextProps) {
+    this.setState({
+      units: nextProps.state.units,
+      temp: nextProps.state.temp
+    });
+  },
+
+  handleChange: function(event) {
+    this.setState({
+      units: event.target.value,
+      temp: convertTemp.convertUnits(this.state.temp, event.target.value)
+    })
   },
   transitionSync: function() {
     this.props.syncFunc(this.state)
@@ -82,7 +93,7 @@ let Settings = React.createClass({
   },
 
   render: function() {
-    let mainColor = weatherColor(this.props.state.temp)
+    let mainColor = weatherColor(this.state.temp, this.state.units)
     styles.base.backgroundColor = mainColor
 
     var check = <div style={styles.check} ></div>
@@ -99,22 +110,39 @@ let Settings = React.createClass({
         </div>
 
         <div style={styles.body} >
-          <div style={styles.option} >
-            <span style={styles.label}>Celsius</span>
-            <div
-              onClick={() => this.chooseUnits('metric')}
-              style={styles.radio} >
-              { this.state.units === 'metric' ? check : null }
-            </div>
-          </div>
-          <div style={styles.option} >
-            <span style={styles.label}>Fahrenheit</span>
-            <div
-              onClick={() => this.chooseUnits('imperial')}
-              style={styles.radio} >
-              { this.state.units === 'imperial' ? check : null }
-            </div>
-          </div>
+          <label>
+            <input
+              type="radio"
+              name="unitsSelect"
+              checked={this.state.units === 'metric'}
+              onChange={this.handleChange}
+              style={styles.input}
+              value="metric" />
+
+            <i style={[
+              styles.icon,
+              this.state.units === 'metric' && styles.checkedLabel
+            ]} />
+
+            <span>Celsius</span>
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="unitsSelect"
+              checked={this.state.units === 'imperial'}
+              onChange={this.handleChange}
+              style={styles.input}
+              value="imperial" />
+
+            <i style={[
+              styles.icon,
+              this.state.units === 'imperial' && styles.checkedLabel
+            ]} />
+
+            <span>Fahrenheit</span>
+          </label>
+
         </div>
 
       </div>
