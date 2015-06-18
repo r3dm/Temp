@@ -56,11 +56,11 @@ class ForecastToday extends React.Component {
                                         f.main.temp
             return (
               <ForecastHourly
-                key={index}
-                temp={temp}
-                time={f.dt_txt}
-                units={ this.props.units }
-                weather={f.weather[0].main} />
+                    key={index}
+                    temp={temp}
+                    time={f.dt_txt}
+                    units={ this.props.units }
+                    weather={f.weather[0].main} />
             )
           })}
         </div>

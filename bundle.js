@@ -97,7 +97,7 @@
 	      lon: this.originalLon,
 	      units: 'imperial',
 	      hourlyForecast: [{ dt_txt: (0, _moment2['default'])().add(1, 'h').format(dtFmtStr), weather: [{ main: 'sunny' }], main: { temp: 89 } }, { dt_txt: (0, _moment2['default'])().add(4, 'h').format(dtFmtStr), weather: [{ main: 'sunny' }], main: { temp: 99 } }, { dt_txt: (0, _moment2['default'])().add(7, 'h').format(dtFmtStr), weather: [{ main: 'sunny' }], main: { temp: 89 } }, { dt_txt: (0, _moment2['default'])().add(10, 'h').format(dtFmtStr), weather: [{ main: 'sunny' }], main: { temp: 79 } }, { dt_txt: (0, _moment2['default'])().add(13, 'h').format(dtFmtStr), weather: [{ main: 'sunny' }], main: { temp: 69 } }, { dt_txt: (0, _moment2['default'])().add(16, 'h').format(dtFmtStr), weather: [{ main: 'sunny' }], main: { temp: 59 } }, { dt_txt: (0, _moment2['default'])().add(19, 'h').format(dtFmtStr), weather: [{ main: 'sunny' }], main: { temp: 69 } }, { dt_txt: (0, _moment2['default'])().add(22, 'h').format(dtFmtStr), weather: [{ main: 'sunny' }], main: { temp: 79 } }, { dt_txt: (0, _moment2['default'])().add(25, 'h').format(dtFmtStr), weather: [{ main: 'sunny' }], main: { temp: 89 } }],
-	      fiveDayForecast: [{ high: 72, low: 48, main: 'sunny' }, { high: 72, low: 49, main: 'sunny' }, { high: 77, low: 48, main: 'sunny' }, { high: 78, low: 49, main: 'sunny' }, { high: 76, low: 48, main: 'sunny' }]
+	      fiveDayForecast: [{ dt_txt: (0, _moment2['default'])().add(1, 'd').format(dtFmtStr), high: 72, low: 48, main: 'sunny' }, { dt_txt: (0, _moment2['default'])().add(2, 'd').format(dtFmtStr), high: 72, low: 49, main: 'sunny' }, { dt_txt: (0, _moment2['default'])().add(3, 'd').format(dtFmtStr), high: 77, low: 48, main: 'sunny' }, { dt_txt: (0, _moment2['default'])().add(4, 'd').format(dtFmtStr), high: 78, low: 49, main: 'sunny' }, { dt_txt: (0, _moment2['default'])().add(5, 'd').format(dtFmtStr), high: 76, low: 48, main: 'sunny' }]
 	    };
 	  },
 	  componentDidMount: function componentDidMount() {
@@ -40547,6 +40547,10 @@
 
 	var _forecastFiveDayJs2 = _interopRequireDefault(_forecastFiveDayJs);
 
+	var _utilsConvertTempJs = __webpack_require__(11);
+
+	var _utilsConvertTempJs2 = _interopRequireDefault(_utilsConvertTempJs);
+
 	var _utilsWeatherColorJs = __webpack_require__(2);
 
 	var styles = {
@@ -40590,10 +40594,12 @@
 
 	      var forecasts = this.props.forecasts.slice(0, 4);
 	      return _react2['default'].createElement('div', { style: styles.base }, forecasts.map(function (f, index) {
+	        var high = _this.props.units === 'metric' ? _utilsConvertTempJs2['default'].toCelsius(f.high) : f.high;
 	        return _react2['default'].createElement(_forecastFiveDayJs2['default'], {
+	          high: high,
 	          key: index,
-	          high: f.high,
 	          low: f.low,
+	          time: f.dt_txt,
 	          units: _this.props.units });
 	      }));
 	    }
@@ -40663,6 +40669,10 @@
 
 	var _color2 = _interopRequireDefault(_color);
 
+	var _moment = __webpack_require__(221);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
 	var _utilsWeatherColorJs = __webpack_require__(2);
 
 	var styles = {
@@ -40709,8 +40719,9 @@
 	      styles.base.backgroundColor = mainColor;
 	      styles.base.borderTop = '2px solid ' + colorLight;
 	      styles.base.boxShadow = '0 -2px ' + colorDark;
+	      var timeObj = (0, _moment2['default'])(this.props.time, 'YYYY-MM-DD HH:mm:ss');
 
-	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('h3', { style: styles.dayName }, 'tue'), _react2['default'].createElement('i', { className: 'wi wi-rain',
+	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('h3', { style: styles.dayName }, timeObj.format('ddd')), _react2['default'].createElement('i', { className: 'wi wi-rain',
 	        style: styles.icon }), _react2['default'].createElement('p', { style: styles.highLow }, this.props.high, '/', this.props.low));
 	    }
 	  }]);
@@ -40719,7 +40730,10 @@
 	})(_react2['default'].Component);
 
 	ForecastFiveDay.propTypes = {
+	  high: _react2['default'].PropTypes.number,
+	  low: _react2['default'].PropTypes.number,
 	  temp: _react2['default'].PropTypes.number,
+	  time: _react2['default'].PropTypes.string,
 	  units: _react2['default'].PropTypes.string
 	};
 

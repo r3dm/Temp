@@ -35,11 +35,11 @@ let App = React.createClass({
         { dt_txt: moment().add(25, 'h').format(dtFmtStr), weather: [{main: 'sunny'}], main: {temp: 89} }
       ],
       fiveDayForecast: [
-        { high: 72, low: 48, main: 'sunny'},
-        { high: 72, low: 49, main: 'sunny'},
-        { high: 77, low: 48, main: 'sunny'},
-        { high: 78, low: 49, main: 'sunny'},
-        { high: 76, low: 48, main: 'sunny'}
+        { dt_txt: moment().add( 1, 'd').format(dtFmtStr), high: 72, low: 48, main: 'sunny'},
+        { dt_txt: moment().add( 2, 'd').format(dtFmtStr), high: 72, low: 49, main: 'sunny'},
+        { dt_txt: moment().add( 3, 'd').format(dtFmtStr), high: 77, low: 48, main: 'sunny'},
+        { dt_txt: moment().add( 4, 'd').format(dtFmtStr), high: 78, low: 49, main: 'sunny'},
+        { dt_txt: moment().add( 5, 'd').format(dtFmtStr), high: 76, low: 48, main: 'sunny'}
       ]
     }
   },

@@ -2,6 +2,7 @@ import React from 'react'
 import Radium from 'radium'
 import Color from 'color'
 import ForecastFiveDay from './forecastFiveDay.js'
+import convertTemp from '../utils/convertTemp.js'
 import { weatherColor } from '../utils/weatherColor.js'
 
 var styles = {
@@ -33,11 +34,17 @@ class ForecastFooter extends React.Component {
     return (
       <div style={styles.base} >
         { forecasts.map((f, index) => {
-          return <ForecastFiveDay
-            key={index}
-            high={f.high}
-            low={f.low}
-            units={this.props.units} />
+          let high = this.props.units === 'metric' ?
+                                      convertTemp.toCelsius(f.high) :
+                                      f.high
+          return (
+            <ForecastFiveDay
+                  high={high}
+                  key={index}
+                  low={f.low}
+                  time={f.dt_txt}
+                  units={this.props.units} />
+          )
         })}
       </div>
     )
