@@ -17,7 +17,7 @@ let App = React.createClass({
     return {
       cityName: 'somewhere',
       country: 'USA',
-      temp: Number.NaN,
+      temp: 69,
       lat: this.originalLat,
       lon: this.originalLon,
       units: 'imperial',
@@ -25,43 +25,43 @@ let App = React.createClass({
     }
   },
   componentDidMount() {
-    if(navigator.geolocation) {
-      var promise = new Promise((resolve) => {
-        console.log('browser supports geolocation, waiting for user')
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            console.log('browser gps given', position)
-            var result = fetchWeather(position.coords.latitude,
-                                      position.coords.longitude,
-                                      this.state.units)
-                            .then(this.weatherCallback)
-            result.lat = position.coords.latitude
-            result.lon = position.coords.longitude
-            console.log('return value', result)
+    // if(navigator.geolocation) {
+    //   var promise = new Promise((resolve) => {
+    //     console.log('browser supports geolocation, waiting for user')
+    //     navigator.geolocation.getCurrentPosition(
+    //       (position) => {
+    //         console.log('browser gps given', position)
+    //         var result = fetchWeather(position.coords.latitude,
+    //                                   position.coords.longitude,
+    //                                   this.state.units)
+    //                         .then(this.weatherCallback)
+    //         result.lat = position.coords.latitude
+    //         result.lon = position.coords.longitude
+    //         console.log('return value', result)
 
-            resolve(result)
-          },
-          () => { // error
-            resolve(
-              fetchWeather(this.state.lat, this.state.lon, this.state.units)
-                .then(this.weatherCallback)
-            )
-          }
-        )
-        window.setTimeout(() => {
-          console.log('timeout')
-          resolve(
-            fetchWeather(this.state.lat, this.state.lon, this.state.units)
-            .then(this.weatherCallback)
-          )
-        }, 8000)
-      })
-      promise.then((result) => {
-          this.setState(result)
-      })
-    } else {
-      console.log('no geolocation available')
-    }
+    //         resolve(result)
+    //       },
+    //       () => { // error
+    //         resolve(
+    //           fetchWeather(this.state.lat, this.state.lon, this.state.units)
+    //             .then(this.weatherCallback)
+    //         )
+    //       }
+    //     )
+    //     window.setTimeout(() => {
+    //       console.log('timeout')
+    //       resolve(
+    //         fetchWeather(this.state.lat, this.state.lon, this.state.units)
+    //         .then(this.weatherCallback)
+    //       )
+    //     }, 8000)
+    //   })
+    //   promise.then((result) => {
+    //       this.setState(result)
+    //   })
+    // } else {
+    //   console.log('no geolocation available')
+    // }
   },
   originalLat: 40.730610,
   originalLon: -73.935242,

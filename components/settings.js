@@ -3,6 +3,7 @@ import Radium from 'radium'
 import { Navigation } from 'react-router'
 import { weatherColor } from '../utils/weatherColor.js'
 import convertTemp from '../utils/convertTemp.js'
+import Color from 'color'
 
 var styles = {
   base: {
@@ -62,7 +63,7 @@ var styles = {
   check: {
     width: '1em',
     height: '1em',
-    backgroundColor: 'grey',
+    backgroundColor: 'white',
     borderRadius: '1em'
   }
 }
@@ -100,7 +101,12 @@ let Settings = React.createClass({
 
   render: function() {
     let mainColor = weatherColor(this.state.temp, this.state.units)
+    let shadow = 'white'
+    if(mainColor !== 'white') {
+      shadow = new Color(mainColor).darken(0.3).hslaString()
+    }
     styles.base.backgroundColor = mainColor
+    styles.radio.backgroundImage = `radial-gradient(circle, ${mainColor} 10%, ${shadow} 80%)`
 
     var check = <div style={styles.check} ></div>
     return (

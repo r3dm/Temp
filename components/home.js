@@ -30,6 +30,7 @@ class Home extends React.Component {
           temp={ this.props.state.temp }
           units={ this.props.state.units } />
         <ForecastFooter
+          forecasts = { this.props.state.fiveDayForecast }
           temp={ this.props.state.temp }
           units={ this.props.state.units } />
       </div>

@@ -1,20 +1,27 @@
 import React from 'react'
 import Radium from 'radium'
 import Color from 'color'
-import ForecastFiveDay from './forecastFiveDay.js'
 import { weatherColor } from '../utils/weatherColor.js'
 
 var styles = {
   base: {
-    color: 'white',
-    display: 'flex',
-    flexShrink: 0,
-    flexDirection: 'row',
-    zIndex: 1
+    flexGrow: 1,
+    textAlign: 'center'
+  },
+
+  dayName: {
+    fontFamily: '"Comfortaa-Regular", sans-serif',
+    margin: '2px 0 6px 0'
+  },
+  icon: {
+    fontSize: '2em'
+  },
+  highLow: {
+    margin: '5px 0'
   }
 }
 
-class ForecastFooter extends React.Component {
+class ForecastFiveDay extends React.Component {
   render() {
     let mainColor = weatherColor(this.props.temp, this.props.units)
     let colorDark = 'white'
@@ -31,19 +38,17 @@ class ForecastFooter extends React.Component {
 
     return (
       <div style={styles.base} >
-        { // iterate over 16-day forecasts 
-          <ForecastFiveDay
-            temp={45}
-            units={'imperial'} />
-        }
+        <h3 style={styles.dayName} >tue</h3>
+        <i className="wi wi-rain"
+           style={styles.icon}></i>
+        <p style={styles.highLow} >66/58</p>
       </div>
     )
   }
 }
-ForecastFooter.propTypes = {
-  forecasts: React.PropTypes.array,
+ForecastFiveDay.propTypes = {
   temp: React.PropTypes.number,
   units: React.PropTypes.string
 }
 
-export default new Radium(ForecastFooter)
+export default new Radium(ForecastFiveDay)
