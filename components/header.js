@@ -35,7 +35,7 @@ let Header = React.createClass({
   mixins: [Navigation],
 
   render() {
-    styles.base.backgroundColor = weatherColor(this.props.temp)
+    styles.base.backgroundColor = weatherColor(this.props.temp, this.props.units)
     var cityState = this.props.cityName + ', ' + this.props.country
     if(cityState.length > 20) {
       cityState = cityState.slice(0, 18) + ' ...'
@@ -59,7 +59,8 @@ let Header = React.createClass({
 Header.propTypes = {
   cityName: React.PropTypes.string,
   country: React.PropTypes.string,
-  temp: React.PropTypes.number
+  temp: React.PropTypes.number,
+  units: React.PropTypes.string
 }
 
 export default new Radium(Header)

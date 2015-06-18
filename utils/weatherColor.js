@@ -1,5 +1,6 @@
 import {lerp} from 'interpolation'
 import Color from 'color'
+import convert from 'conversion.js'
 
 export const splashRed = new Color('#ff5136')
 const start = new Color('#7ea4b3')
@@ -37,7 +38,10 @@ let contrast = function(color) {
  * we calculate a color between 'blue' & 'red' by Linear Interpolation
  * ex. lerp(start, end, ratio)
  */
-export function weatherColor(currentTemp) {
+export function weatherColor(currentTemp, units) {
+  if(units === 'metric') {
+    currentTemp = convert(currentTemp, 'celsius').toFahrenheit()
+  }
   if(isNaN(currentTemp)) {
     return 'white'
   }

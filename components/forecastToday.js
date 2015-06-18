@@ -44,8 +44,9 @@ class ForecastToday extends React.Component {
         style={styles.base} >
 
         <ForecastNow
-          currentConditions = { this.props.currentConditions }
-          temp = { this.props.temp } />
+          currentConditions={ this.props.currentConditions }
+          temp={ this.props.temp }
+          units={ this.props.units } />
 
         <div style={styles.overflowDiv} >
           {forecasts.map((f, index) => {
@@ -54,6 +55,7 @@ class ForecastToday extends React.Component {
                 key={index}
                 temp={f.main.temp}
                 time={f.dt_txt}
+                units={ this.props.units }
                 weather={f.weather[0].main} />
             )
           })}
@@ -65,7 +67,8 @@ class ForecastToday extends React.Component {
 ForecastToday.propTypes = {
   currentConditions: React.PropTypes.string,
   forecasts: React.PropTypes.array,
-  temp: React.PropTypes.number
+  temp: React.PropTypes.number,
+  units: React.PropTypes.string
 }
 
 export default new Radium(ForecastToday)

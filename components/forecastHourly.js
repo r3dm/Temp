@@ -31,7 +31,7 @@ var styles = {
 
 class ForecastHourly extends React.Component {
   render() {
-    styles.base.backgroundColor = weatherColor(this.props.temp)
+    styles.base.backgroundColor = weatherColor(this.props.temp, this.props.units)
     var timeObj = new Moment(this.props.time + ' +0000', "YYYY-MM-DD HH:mm:ss Z")
 
     return (
@@ -51,6 +51,7 @@ class ForecastHourly extends React.Component {
 ForecastHourly.propTypes = {
   temp: React.PropTypes.number,
   time: React.PropTypes.string,
+  units: React.PropTypes.string,
   weather: React.PropTypes.string
 }
 

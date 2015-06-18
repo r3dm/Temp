@@ -22,12 +22,16 @@ class Home extends React.Component {
         <Header
           cityName={ this.props.state.cityName }
           country={ this.props.state.country }
-          temp={ this.props.state.temp } />
+          temp={ this.props.state.temp }
+          units={ this.props.state.units } />
         <ForecastToday
           currentConditions = { this.props.state.currentConditions }
           forecasts = { this.props.state.fiveDayForecast }
-          temp={ this.props.state.temp } />
-        <ForecastFooter temp={ this.props.state.temp } />
+          temp={ this.props.state.temp }
+          units={ this.props.state.units } />
+        <ForecastFooter
+          temp={ this.props.state.temp }
+          units={ this.props.state.units } />
       </div>
     )
   }

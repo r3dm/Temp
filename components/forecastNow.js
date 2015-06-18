@@ -68,7 +68,7 @@ class ForecastNow extends React.Component {
 
   render() {
     styles.base.height = this.state.height
-    let mainColor = weatherColor(this.props.temp)
+    let mainColor = weatherColor(this.props.temp, this.props.units)
     let colorDark = 'white'
     let colorLight = 'white'
 
@@ -119,7 +119,8 @@ class ForecastNow extends React.Component {
 }
 ForecastNow.propTypes = {
   currentConditions: React.PropTypes.string,
-  temp: React.PropTypes.number
+  temp: React.PropTypes.number,
+  units: React.PropTypes.string
 }
 
 export default new Radium(ForecastNow)

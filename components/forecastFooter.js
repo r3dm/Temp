@@ -33,7 +33,7 @@ var styles = {
 
 class ForecastFooter extends React.Component {
   render() {
-    let mainColor = weatherColor(this.props.temp)
+    let mainColor = weatherColor(this.props.temp, this.props.units)
     let colorDark = 'white'
     let colorLight = 'white'
 
@@ -76,6 +76,9 @@ class ForecastFooter extends React.Component {
     )
   }
 }
-ForecastFooter.propTypes = { temp: React.PropTypes.number }
+ForecastFooter.propTypes = {
+  temp: React.PropTypes.number,
+  units: React.PropTypes.string
+}
 
 export default new Radium(ForecastFooter)

@@ -100,19 +100,19 @@ let Settings = React.createClass({
 
         <div style={styles.body} >
           <div style={styles.option} >
-            <div style={styles.label}>Celsius</div>
+            <span style={styles.label}>Celsius</span>
             <div
               onClick={() => this.chooseUnits('metric')}
               style={styles.radio} >
-              { this.state.units === 'metric' ? check : '' }
+              { this.state.units === 'metric' ? check : null }
             </div>
           </div>
           <div style={styles.option} >
-            <span style={styles.label}>Farenheit</span>
+            <span style={styles.label}>Fahrenheit</span>
             <div
               onClick={() => this.chooseUnits('imperial')}
               style={styles.radio} >
-              { this.state.units === 'imperial' ? check : '' }
+              { this.state.units === 'imperial' ? check : null }
             </div>
           </div>
         </div>
