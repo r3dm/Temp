@@ -14,13 +14,18 @@ var styles = {
     alignItems: 'center',
     minHeight: '90px'
   },
-
-  divStyle: {
+  timeStyle: {
     fontSize: '1.5em',
+    flexBasis: '20vw',
     flexGrow: 1,
     textAlign: 'center'
   },
-
+  tempStyle: {
+    fontSize: '1.5em',
+    flexBasis: '10vw',
+    flexGrow: 1,
+    textAlign: 'center'
+  },
   iStyle: {
     fontSize: '3em',
     flexGrow: 1,
@@ -35,12 +40,12 @@ class ForecastHourly extends React.Component {
 
     return (
       <div style={styles.base} >
-        <div style={styles.divStyle} >
+        <div style={styles.timeStyle} >
           {timeObj.format('h:mm a')}
         </div>
         <i className={`wi wi-${ mapWeather(this.props.weather)}`}
            style={styles.iStyle}></i>
-        <div style={styles.divStyle} >
+        <div style={styles.tempStyle} >
           { Math.round(this.props.temp) }&deg;
         </div>
       </div>
