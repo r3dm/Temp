@@ -13,9 +13,6 @@ import { fetchWeather } from './utils/weather.js'
  * screen. This way when the user visits home we likely already have the info
  */
 let App = React.createClass({
-  originalLat: 40.730610,
-  originalLon: -73.935242,
-
   getInitialState() {
     return {
       cityName: 'somewhere',
@@ -27,28 +24,9 @@ let App = React.createClass({
       fiveDayForecast: []
     }
   },
-  weatherCallback(results) {
-    var weather = results[0].body
-    var fiveDayForecast = results[1].body.list
-
-    // weather api may return an array here, so we check
-    var currentWeather = Array.isArray(weather.weather) ?
-                    weather.weather[0] :
-                    weather.weather
-    return {
-      weather,
-      fiveDayForecast,
-      temp: Math.round(weather.main.temp),
-      cityName: weather.name,
-      sunrise: weather.sys.sunrise,
-      sunset: weather.sys.sunset,
-      currentConditions: currentWeather.main,
-      country: weather.sys.country
-    }
-  },
   componentDidMount() {
     if(navigator.geolocation) {
-      var promise = new Promise((resolve, reject) => {
+      var promise = new Promise((resolve) => {
         console.log('browser supports geolocation, waiting for user')
         navigator.geolocation.getCurrentPosition(
           (position) => {
@@ -63,7 +41,7 @@ let App = React.createClass({
 
             resolve(result)
           },
-          (error) => {
+          () => { // error
             resolve(
               fetchWeather(this.state.lat, this.state.lon, this.state.units)
                 .then(this.weatherCallback)
@@ -83,6 +61,27 @@ let App = React.createClass({
       })
     } else {
       console.log('no geolocation available')
+    }
+  },
+  originalLat: 40.730610,
+  originalLon: -73.935242,
+  weatherCallback(results) {
+    var weather = results[0].body
+    var fiveDayForecast = results[1].body.list
+
+    // weather api may return an array here, so we check
+    var currentWeather = Array.isArray(weather.weather) ?
+                    weather.weather[0] :
+                    weather.weather
+    return {
+      weather,
+      fiveDayForecast,
+      temp: Math.round(weather.main.temp),
+      cityName: weather.name,
+      sunrise: weather.sys.sunrise,
+      sunset: weather.sys.sunset,
+      currentConditions: currentWeather.main,
+      country: weather.sys.country
     }
   },
   saveSettings: function(newState) {

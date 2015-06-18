@@ -32,6 +32,12 @@ var styles = {
 }
 
 let Header = React.createClass({
+  propTypes: {
+    cityName: React.PropTypes.string,
+    country: React.PropTypes.string,
+    temp: React.PropTypes.number,
+    units: React.PropTypes.string
+  },
   mixins: [Navigation],
 
   render() {
@@ -49,18 +55,13 @@ let Header = React.createClass({
           </p>
           <p style={styles.headerDate} >tuesday, june 26</p>
         </div>
-        <i className="fa fa-gears"
-           style={styles.settingsIcon}
-           onClick={() => this.transitionTo('settings')}></i>
+        <i
+          className="fa fa-gears"
+          onClick={() => this.transitionTo('settings')}
+          style={styles.settingsIcon}></i>
       </div>
     )
   }
 })
-Header.propTypes = {
-  cityName: React.PropTypes.string,
-  country: React.PropTypes.string,
-  temp: React.PropTypes.number,
-  units: React.PropTypes.string
-}
 
 export default new Radium(Header)

@@ -54,16 +54,16 @@ var styles = {
 }
 
 class ForecastNow extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = { height: '65vh' }
-  }
-
   componentDidMount() {
     // ~ 8 px to account for footer-padding + this-padding
     this.setState({
       height: document.getElementById('todayDiv').clientHeight
     })
+  }
+
+  constructor(props) {
+    super(props)
+    this.state = { height: '65vh' }
   }
 
   render() {

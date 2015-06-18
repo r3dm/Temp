@@ -14,8 +14,9 @@ export function fetchWeather(lat, lon, units) {
         .get(urlCurrent)
         .query({ lat, lon, units })
         .end(function(err, res) {
-          if(err)
+          if(err) {
             reject(err)
+          }
           resolve(res)
         })
     }),
@@ -24,8 +25,9 @@ export function fetchWeather(lat, lon, units) {
         .get(url5day)
         .query({ lat, lon, units })
         .end(function(err, res) {
-          if(err)
+          if(err) {
             reject(err)
+          }
           resolve(res)
         })
     })

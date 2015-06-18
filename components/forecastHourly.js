@@ -1,6 +1,5 @@
 import React from 'react'
 import Radium from 'radium'
-import Color from 'color'
 import { weatherColor } from '../utils/weatherColor.js'
 import Moment from 'moment'
 import { mapWeather } from '../utils/weather.js'
@@ -32,7 +31,7 @@ var styles = {
 class ForecastHourly extends React.Component {
   render() {
     styles.base.backgroundColor = weatherColor(this.props.temp, this.props.units)
-    var timeObj = new Moment(this.props.time + ' +0000', "YYYY-MM-DD HH:mm:ss Z")
+    var timeObj = new Moment(this.props.time + ' +0000', 'YYYY-MM-DD HH:mm:ss Z')
 
     return (
       <div style={styles.base} >

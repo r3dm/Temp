@@ -2,6 +2,7 @@ import React from 'react'
 import ForecastHourly from './forecastHourly.js'
 import ForecastNow from './forecastNow.js'
 import Radium from 'radium'
+import convertTemp from '../utils/convertTemp.js'
 
 var styles = {
   base: {
@@ -18,17 +19,17 @@ var styles = {
 }
 
 class ForecastToday extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = { overflowHeight: '55vh' }
-  }
-
   componentDidMount() {
     var todayDivHeight = document.getElementById('todayDiv').clientHeight
     var mainDividerHeight = document.getElementById('mainDivider').clientHeight
     this.setState({
       overflowHeight: todayDivHeight - mainDividerHeight - 30
     })
+  }
+
+  constructor(props) {
+    super(props)
+    this.state = { overflowHeight: '55vh' }
   }
 
   render() {
@@ -40,7 +41,7 @@ class ForecastToday extends React.Component {
 
     return (
       <div
-        id="todayDiv"
+        id='todayDiv'
         style={styles.base} >
 
         <ForecastNow
@@ -50,10 +51,13 @@ class ForecastToday extends React.Component {
 
         <div style={styles.overflowDiv} >
           {forecasts.map((f, index) => {
+            let temp = this.props.units === 'metric' ?
+                                        convertTemp.toCelsius(f.main.temp) :
+                                        f.main.temp
             return (
               <ForecastHourly
                 key={index}
-                temp={f.main.temp}
+                temp={temp}
                 time={f.dt_txt}
                 units={ this.props.units }
                 weather={f.weather[0].main} />

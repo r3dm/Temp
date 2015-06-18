@@ -1,7 +1,6 @@
 import React from 'react'
 import Radium from 'radium'
 import { Navigation } from 'react-router'
-import Color from 'color'
 import { weatherColor } from '../utils/weatherColor.js'
 import convertTemp from '../utils/convertTemp.js'
 
@@ -69,19 +68,23 @@ var styles = {
 }
 
 let Settings = React.createClass({
+  propTypes: {
+    state: React.PropTypes.object,
+    syncFunc: React.PropTypes.func
+  },
+  mixins: [Navigation],
   getInitialState: function() {
     return {
       units: this.props.state.units,
       temp: this.props.state.temp
     }
   },
-  mixins: [Navigation],
 
   componentWillReceiveProps: function(nextProps) {
     this.setState({
       units: nextProps.state.units,
       temp: nextProps.state.temp
-    });
+    })
   },
 
   handleChange: function(event) {
@@ -103,9 +106,10 @@ let Settings = React.createClass({
     return (
       <div style={styles.base} >
 
-        <i className="fa fa-angle-double-left"
-           style={styles.backIcon}
-           onClick={() => this.transitionSync()}></i>
+        <i
+          className="fa fa-angle-double-left"
+          onClick={() => this.transitionSync()}
+          style={styles.backIcon}></i>
         <div style={styles.navigation} >
           <p style={styles.header}>
             Settings
@@ -115,30 +119,30 @@ let Settings = React.createClass({
         <div style={styles.body} >
           <label style={styles.label}>
             <input
-              type="radio"
-              name="unitsSelect"
               checked={this.state.units === 'metric'}
+              name="unitsSelect"
               onChange={this.handleChange}
               style={styles.input}
+              type="radio"
               value="metric" />
 
             <span style={styles.optionText}>Celsius</span>
             <div style={ styles.radio }>
-              <div style={ this.state.units === 'metric' ? styles.check : null }></div>
+              { this.state.units === 'metric' ? check : null }
             </div>
           </label>
           <label style={styles.label}>
             <input
-              type="radio"
-              name="unitsSelect"
               checked={this.state.units === 'imperial'}
+              name="unitsSelect"
               onChange={this.handleChange}
               style={styles.input}
+              type="radio"
               value="imperial" />
 
             <span style={styles.optionText}>Fahrenheit</span>
             <div style={ styles.radio }>
-              <div style={ this.state.units === 'imperial' ? styles.check : null }></div>
+              { this.state.units === 'imperial' ? check : null }
             </div>
           </label>
 
@@ -148,9 +152,5 @@ let Settings = React.createClass({
     )
   }
 })
-Settings.propTypes = {
-  state: React.PropTypes.object,
-  syncFunc: React.PropTypes.func
-}
 
 export default new Radium(Settings)

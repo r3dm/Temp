@@ -83,9 +83,6 @@
 	var App = _react2['default'].createClass({
 	  displayName: 'App',
 
-	  originalLat: 40.73061,
-	  originalLon: -73.935242,
-
 	  getInitialState: function getInitialState() {
 	    return {
 	      cityName: 'somewhere',
@@ -97,6 +94,38 @@
 	      fiveDayForecast: []
 	    };
 	  },
+	  componentDidMount: function componentDidMount() {
+	    var _this = this;
+
+	    if (navigator.geolocation) {
+	      var promise = new Promise(function (resolve) {
+	        console.log('browser supports geolocation, waiting for user');
+	        navigator.geolocation.getCurrentPosition(function (position) {
+	          console.log('browser gps given', position);
+	          var result = (0, _utilsWeatherJs.fetchWeather)(position.coords.latitude, position.coords.longitude, _this.state.units).then(_this.weatherCallback);
+	          result.lat = position.coords.latitude;
+	          result.lon = position.coords.longitude;
+	          console.log('return value', result);
+
+	          resolve(result);
+	        }, function () {
+	          // error
+	          resolve((0, _utilsWeatherJs.fetchWeather)(_this.state.lat, _this.state.lon, _this.state.units).then(_this.weatherCallback));
+	        });
+	        window.setTimeout(function () {
+	          console.log('timeout');
+	          resolve((0, _utilsWeatherJs.fetchWeather)(_this.state.lat, _this.state.lon, _this.state.units).then(_this.weatherCallback));
+	        }, 8000);
+	      });
+	      promise.then(function (result) {
+	        _this.setState(result);
+	      });
+	    } else {
+	      console.log('no geolocation available');
+	    }
+	  },
+	  originalLat: 40.73061,
+	  originalLon: -73.935242,
 	  weatherCallback: function weatherCallback(results) {
 	    var weather = results[0].body;
 	    var fiveDayForecast = results[1].body.list;
@@ -113,35 +142,6 @@
 	      currentConditions: currentWeather.main,
 	      country: weather.sys.country
 	    };
-	  },
-	  componentDidMount: function componentDidMount() {
-	    var _this = this;
-
-	    if (navigator.geolocation) {
-	      var promise = new Promise(function (resolve, reject) {
-	        console.log('browser supports geolocation, waiting for user');
-	        navigator.geolocation.getCurrentPosition(function (position) {
-	          console.log('browser gps given', position);
-	          var result = (0, _utilsWeatherJs.fetchWeather)(position.coords.latitude, position.coords.longitude, _this.state.units).then(_this.weatherCallback);
-	          result.lat = position.coords.latitude;
-	          result.lon = position.coords.longitude;
-	          console.log('return value', result);
-
-	          resolve(result);
-	        }, function (error) {
-	          resolve((0, _utilsWeatherJs.fetchWeather)(_this.state.lat, _this.state.lon, _this.state.units).then(_this.weatherCallback));
-	        });
-	        window.setTimeout(function () {
-	          console.log('timeout');
-	          resolve((0, _utilsWeatherJs.fetchWeather)(_this.state.lat, _this.state.lon, _this.state.units).then(_this.weatherCallback));
-	        }, 8000);
-	      });
-	      promise.then(function (result) {
-	        _this.setState(result);
-	      });
-	    } else {
-	      console.log('no geolocation available');
-	    }
 	  },
 	  saveSettings: function saveSettings(newState) {
 	    this.setState(newState);
@@ -24734,6 +24734,12 @@
 	var Header = _react2['default'].createClass({
 	  displayName: 'Header',
 
+	  propTypes: {
+	    cityName: _react2['default'].PropTypes.string,
+	    country: _react2['default'].PropTypes.string,
+	    temp: _react2['default'].PropTypes.number,
+	    units: _react2['default'].PropTypes.string
+	  },
 	  mixins: [_reactRouter.Navigation],
 
 	  render: function render() {
@@ -24745,19 +24751,14 @@
 	      cityState = cityState.slice(0, 18) + ' ...';
 	    }
 
-	    return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.cityTimeWrapper }, _react2['default'].createElement('p', { style: styles.cityState }, cityState), _react2['default'].createElement('p', { style: styles.headerDate }, 'tuesday, june 26')), _react2['default'].createElement('i', { className: 'fa fa-gears',
-	      style: styles.settingsIcon,
+	    return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.cityTimeWrapper }, _react2['default'].createElement('p', { style: styles.cityState }, cityState), _react2['default'].createElement('p', { style: styles.headerDate }, 'tuesday, june 26')), _react2['default'].createElement('i', {
+	      className: 'fa fa-gears',
 	      onClick: function onClick() {
 	        return _this.transitionTo('settings');
-	      } }));
+	      },
+	      style: styles.settingsIcon }));
 	  }
 	});
-	Header.propTypes = {
-	  cityName: _react2['default'].PropTypes.string,
-	  country: _react2['default'].PropTypes.string,
-	  temp: _react2['default'].PropTypes.number,
-	  units: _react2['default'].PropTypes.string
-	};
 
 	exports['default'] = new _radium2['default'](Header);
 	module.exports = exports['default'];
@@ -27241,6 +27242,10 @@
 
 	var _radium2 = _interopRequireDefault(_radium);
 
+	var _utilsConvertTempJs = __webpack_require__(219);
+
+	var _utilsConvertTempJs2 = _interopRequireDefault(_utilsConvertTempJs);
+
 	var styles = {
 	  base: {
 	    flexGrow: 1,
@@ -27291,9 +27296,10 @@
 	        currentConditions: this.props.currentConditions,
 	        temp: this.props.temp,
 	        units: this.props.units }), _react2['default'].createElement('div', { style: styles.overflowDiv }, forecasts.map(function (f, index) {
+	        var temp = _this.props.units === 'metric' ? _utilsConvertTempJs2['default'].toCelsius(f.main.temp) : f.main.temp;
 	        return _react2['default'].createElement(_forecastHourlyJs2['default'], {
 	          key: index,
-	          temp: f.main.temp,
+	          temp: temp,
 	          time: f.dt_txt,
 	          units: _this.props.units,
 	          weather: f.weather[0].main });
@@ -27361,10 +27367,6 @@
 	var _radium = __webpack_require__(197);
 
 	var _radium2 = _interopRequireDefault(_radium);
-
-	var _color = __webpack_require__(214);
-
-	var _color2 = _interopRequireDefault(_color);
 
 	var _utilsWeatherColorJs = __webpack_require__(210);
 
@@ -38657,12 +38659,16 @@
 	function fetchWeather(lat, lon, units) {
 	  return Promise.all([new Promise(function (resolve, reject) {
 	    _superagent2['default'].get(urlCurrent).query({ lat: lat, lon: lon, units: units }).end(function (err, res) {
-	      if (err) reject(err);
+	      if (err) {
+	        reject(err);
+	      }
 	      resolve(res);
 	    });
 	  }), new Promise(function (resolve, reject) {
 	    _superagent2['default'].get(url5day).query({ lat: lat, lon: lon, units: units }).end(function (err, res) {
-	      if (err) reject(err);
+	      if (err) {
+	        reject(err);
+	      }
 	      resolve(res);
 	    });
 	  })]);
@@ -40544,10 +40550,6 @@
 
 	var _reactRouter = __webpack_require__(1);
 
-	var _color = __webpack_require__(214);
-
-	var _color2 = _interopRequireDefault(_color);
-
 	var _utilsWeatherColorJs = __webpack_require__(210);
 
 	var _utilsConvertTempJs = __webpack_require__(219);
@@ -40620,13 +40622,17 @@
 	var Settings = _react2['default'].createClass({
 	  displayName: 'Settings',
 
+	  propTypes: {
+	    state: _react2['default'].PropTypes.object,
+	    syncFunc: _react2['default'].PropTypes.func
+	  },
+	  mixins: [_reactRouter.Navigation],
 	  getInitialState: function getInitialState() {
 	    return {
 	      units: this.props.state.units,
 	      temp: this.props.state.temp
 	    };
 	  },
-	  mixins: [_reactRouter.Navigation],
 
 	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
 	    this.setState({
@@ -40653,29 +40659,26 @@
 	    styles.base.backgroundColor = mainColor;
 
 	    var check = _react2['default'].createElement('div', { style: styles.check });
-	    return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('i', { className: 'fa fa-angle-double-left',
-	      style: styles.backIcon,
+	    return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('i', {
+	      className: 'fa fa-angle-double-left',
 	      onClick: function onClick() {
 	        return _this.transitionSync();
-	      } }), _react2['default'].createElement('div', { style: styles.navigation }, _react2['default'].createElement('p', { style: styles.header }, 'Settings')), _react2['default'].createElement('div', { style: styles.body }, _react2['default'].createElement('label', { style: styles.label }, _react2['default'].createElement('input', {
-	      type: 'radio',
-	      name: 'unitsSelect',
+	      },
+	      style: styles.backIcon }), _react2['default'].createElement('div', { style: styles.navigation }, _react2['default'].createElement('p', { style: styles.header }, 'Settings')), _react2['default'].createElement('div', { style: styles.body }, _react2['default'].createElement('label', { style: styles.label }, _react2['default'].createElement('input', {
 	      checked: this.state.units === 'metric',
-	      onChange: this.handleChange,
-	      style: styles.input,
-	      value: 'metric' }), _react2['default'].createElement('span', { style: styles.optionText }, 'Celsius'), _react2['default'].createElement('div', { style: styles.radio }, _react2['default'].createElement('div', { style: this.state.units === 'metric' ? styles.check : null }))), _react2['default'].createElement('label', { style: styles.label }, _react2['default'].createElement('input', {
-	      type: 'radio',
 	      name: 'unitsSelect',
-	      checked: this.state.units === 'imperial',
 	      onChange: this.handleChange,
 	      style: styles.input,
-	      value: 'imperial' }), _react2['default'].createElement('span', { style: styles.optionText }, 'Fahrenheit'), _react2['default'].createElement('div', { style: styles.radio }, _react2['default'].createElement('div', { style: this.state.units === 'imperial' ? styles.check : null })))));
+	      type: 'radio',
+	      value: 'metric' }), _react2['default'].createElement('span', { style: styles.optionText }, 'Celsius'), _react2['default'].createElement('div', { style: styles.radio }, this.state.units === 'metric' ? check : null)), _react2['default'].createElement('label', { style: styles.label }, _react2['default'].createElement('input', {
+	      checked: this.state.units === 'imperial',
+	      name: 'unitsSelect',
+	      onChange: this.handleChange,
+	      style: styles.input,
+	      type: 'radio',
+	      value: 'imperial' }), _react2['default'].createElement('span', { style: styles.optionText }, 'Fahrenheit'), _react2['default'].createElement('div', { style: styles.radio }, this.state.units === 'imperial' ? check : null))));
 	  }
 	});
-	Settings.propTypes = {
-	  state: _react2['default'].PropTypes.object,
-	  syncFunc: _react2['default'].PropTypes.func
-	};
 
 	exports['default'] = new _radium2['default'](Settings);
 	module.exports = exports['default'];

@@ -1,10 +1,10 @@
 class ConvertTemp {
   toFahrenheit(num) {
-    return Math.round((num*(9/5))+32)
+    return Math.round((num * (9 / 5)) + 32)
   }
 
   toCelsius(num) {
-    return Math.round((num-32)*(5/9))
+    return Math.round((num - 32) * (5 / 9))
   }
 
   /* converts given number to target units
@@ -21,4 +21,4 @@ class ConvertTemp {
   }
 }
 
-export default new ConvertTemp
+export default new ConvertTemp()
