@@ -23,7 +23,7 @@ var styles = {
 
 class ForecastFiveDay extends React.Component {
   render() {
-    let mainColor = weatherColor(this.props.temp, this.props.units)
+    let mainColor = weatherColor(this.props.high, this.props.units)
     let colorDark = 'white'
     let colorLight = 'white'
 
@@ -41,7 +41,9 @@ class ForecastFiveDay extends React.Component {
         <h3 style={styles.dayName} >tue</h3>
         <i className="wi wi-rain"
            style={styles.icon}></i>
-        <p style={styles.highLow} >66/58</p>
+        <p style={styles.highLow} >
+          {this.props.high}/{this.props.low}
+        </p>
       </div>
     )
   }

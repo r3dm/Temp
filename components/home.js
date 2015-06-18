@@ -26,7 +26,7 @@ class Home extends React.Component {
           units={ this.props.state.units } />
         <ForecastToday
           currentConditions = { this.props.state.currentConditions }
-          forecasts = { this.props.state.fiveDayForecast }
+          forecasts = { this.props.state.hourlyForecast }
           temp={ this.props.state.temp }
           units={ this.props.state.units } />
         <ForecastFooter

@@ -29,13 +29,16 @@ class ForecastFooter extends React.Component {
     styles.base.borderTop = `2px solid ${colorLight}`
     styles.base.boxShadow = `0 -2px ${colorDark}`
 
+    let forecasts = this.props.forecasts.slice(0, 4)
     return (
       <div style={styles.base} >
-        { // iterate over 16-day forecasts 
-          <ForecastFiveDay
-            temp={45}
-            units={'imperial'} />
-        }
+        { forecasts.map((f, index) => {
+          return <ForecastFiveDay
+            key={index}
+            high={f.high}
+            low={f.low}
+            units={this.props.units} />
+        })}
       </div>
     )
   }
