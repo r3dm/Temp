@@ -1,5 +1,6 @@
 import React from 'react'
 import Radium from 'radium'
+import moment from 'moment'
 import { Navigation } from 'react-router'
 import { weatherColor } from '../utils/weatherColor.js'
 
@@ -53,7 +54,9 @@ let Header = React.createClass({
           <p style={styles.cityState} >
             { cityState }
           </p>
-          <p style={styles.headerDate} >tuesday, june 26</p>
+          <p style={styles.headerDate} >
+            { moment().format('dddd, MMMM D') }
+          </p>
         </div>
         <i
           className="fa fa-gears"
