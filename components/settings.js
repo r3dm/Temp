@@ -32,36 +32,39 @@ var styles = {
   },
   body: {
     display: 'flex',
+    fontFamily: '"Comfortaa-Light", sans-serif',
     flexDirection: 'column',
     padding: '10px'
   },
-  option: {
+  label: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between'
   },
-  label: {
+  optionText: {
     fontSize: '2em',
-    padding: '10px 10px 10px 50px'
+    padding: '10px 10px 10px 15vw'
+  },
+  input: {
+    display: 'none'
   },
   radio: {
     display: 'flex',
-    alignItems: 'center',
+    flexDirection: 'column',
     width: '2em',
     height: '2em',
-    margin: '0 20px 0 0',
-    padding: 0,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: '1em',
-    backgroundColor: 'white'
+    marginRight: '10vw'
   },
   check: {
     width: '1em',
     height: '1em',
-    margin: '0 auto',
-    padding: 0,
-    borderRadius: '1em',
-    backgroundColor: 'grey'
+    backgroundColor: 'grey',
+    borderRadius: '1em'
   }
 }
 
@@ -110,7 +113,7 @@ let Settings = React.createClass({
         </div>
 
         <div style={styles.body} >
-          <label>
+          <label style={styles.label}>
             <input
               type="radio"
               name="unitsSelect"
@@ -119,14 +122,12 @@ let Settings = React.createClass({
               style={styles.input}
               value="metric" />
 
-            <i style={[
-              styles.icon,
-              this.state.units === 'metric' && styles.checkedLabel
-            ]} />
-
-            <span>Celsius</span>
+            <span style={styles.optionText}>Celsius</span>
+            <div style={ styles.radio }>
+              <div style={ this.state.units === 'metric' ? styles.check : null }></div>
+            </div>
           </label>
-          <label>
+          <label style={styles.label}>
             <input
               type="radio"
               name="unitsSelect"
@@ -135,12 +136,10 @@ let Settings = React.createClass({
               style={styles.input}
               value="imperial" />
 
-            <i style={[
-              styles.icon,
-              this.state.units === 'imperial' && styles.checkedLabel
-            ]} />
-
-            <span>Fahrenheit</span>
+            <span style={styles.optionText}>Fahrenheit</span>
+            <div style={ styles.radio }>
+              <div style={ this.state.units === 'imperial' ? styles.check : null }></div>
+            </div>
           </label>
 
         </div>

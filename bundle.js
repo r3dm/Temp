@@ -40581,36 +40581,39 @@
 	  },
 	  body: {
 	    display: 'flex',
+	    fontFamily: '"Comfortaa-Light", sans-serif',
 	    flexDirection: 'column',
 	    padding: '10px'
 	  },
-	  option: {
+	  label: {
 	    display: 'flex',
 	    flexDirection: 'row',
 	    alignItems: 'center',
 	    justifyContent: 'space-between'
 	  },
-	  label: {
+	  optionText: {
 	    fontSize: '2em',
-	    padding: '10px 10px 10px 50px'
+	    padding: '10px 10px 10px 15vw'
+	  },
+	  input: {
+	    display: 'none'
 	  },
 	  radio: {
 	    display: 'flex',
-	    alignItems: 'center',
+	    flexDirection: 'column',
 	    width: '2em',
 	    height: '2em',
-	    margin: '0 20px 0 0',
-	    padding: 0,
+	    backgroundColor: 'white',
+	    justifyContent: 'center',
+	    alignItems: 'center',
 	    borderRadius: '1em',
-	    backgroundColor: 'white'
+	    marginRight: '10vw'
 	  },
 	  check: {
 	    width: '1em',
 	    height: '1em',
-	    margin: '0 auto',
-	    padding: 0,
-	    borderRadius: '1em',
-	    backgroundColor: 'grey'
+	    backgroundColor: 'grey',
+	    borderRadius: '1em'
 	  }
 	};
 
@@ -40654,19 +40657,19 @@
 	      style: styles.backIcon,
 	      onClick: function onClick() {
 	        return _this.transitionSync();
-	      } }), _react2['default'].createElement('div', { style: styles.navigation }, _react2['default'].createElement('p', { style: styles.header }, 'Settings')), _react2['default'].createElement('div', { style: styles.body }, _react2['default'].createElement('label', null, _react2['default'].createElement('input', {
+	      } }), _react2['default'].createElement('div', { style: styles.navigation }, _react2['default'].createElement('p', { style: styles.header }, 'Settings')), _react2['default'].createElement('div', { style: styles.body }, _react2['default'].createElement('label', { style: styles.label }, _react2['default'].createElement('input', {
 	      type: 'radio',
 	      name: 'unitsSelect',
 	      checked: this.state.units === 'metric',
 	      onChange: this.handleChange,
 	      style: styles.input,
-	      value: 'metric' }), _react2['default'].createElement('i', { style: [styles.icon, this.state.units === 'metric' && styles.checkedLabel] }), _react2['default'].createElement('span', null, 'Celsius')), _react2['default'].createElement('label', null, _react2['default'].createElement('input', {
+	      value: 'metric' }), _react2['default'].createElement('span', { style: styles.optionText }, 'Celsius'), _react2['default'].createElement('div', { style: styles.radio }, _react2['default'].createElement('div', { style: this.state.units === 'metric' ? styles.check : null }))), _react2['default'].createElement('label', { style: styles.label }, _react2['default'].createElement('input', {
 	      type: 'radio',
 	      name: 'unitsSelect',
 	      checked: this.state.units === 'imperial',
 	      onChange: this.handleChange,
 	      style: styles.input,
-	      value: 'imperial' }), _react2['default'].createElement('i', { style: [styles.icon, this.state.units === 'imperial' && styles.checkedLabel] }), _react2['default'].createElement('span', null, 'Fahrenheit'))));
+	      value: 'imperial' }), _react2['default'].createElement('span', { style: styles.optionText }, 'Fahrenheit'), _react2['default'].createElement('div', { style: styles.radio }, _react2['default'].createElement('div', { style: this.state.units === 'imperial' ? styles.check : null })))));
 	  }
 	});
 	Settings.propTypes = {
