@@ -48,6 +48,7 @@ class Home extends React.Component {
                                   Math.round(f.temp.min)
             return (
               <ForecastFiveDay
+                conditions={f.weather[0].main}
                 high={high}
                 key={index}
                 low={low}

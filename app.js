@@ -10,8 +10,6 @@ import { fetchWeather } from './utils/weather.js'
 import moment from 'moment'
 
 const dtFmtStr = 'YYYY-MM-DD HH:00:00'
-const originalLat = 40.730610
-const originalLon = -73.935242
 /*
  * we let state reside in App so async weather can be fetched on the splash
  * screen. This way when the user visits home we likely already have the info
@@ -21,27 +19,28 @@ let App = React.createClass({
     return {
       cityName: 'somewhere',
       country: 'USA',
+      currentConditions: 'Clear',
       temp: 89,
-      lat: originalLat,
-      lon: originalLon,
+      lat: NaN,
+      lon: NaN,
       units: 'imperial',
       hourlyForecast: [
-        { dt_txt: moment().add( 1, 'h').format(dtFmtStr), weather: [{main: 'sunny'}], main: {temp: 89} },
-        { dt_txt: moment().add( 4, 'h').format(dtFmtStr), weather: [{main: 'sunny'}], main: {temp: 99} },
-        { dt_txt: moment().add( 7, 'h').format(dtFmtStr), weather: [{main: 'sunny'}], main: {temp: 89} },
-        { dt_txt: moment().add(10, 'h').format(dtFmtStr), weather: [{main: 'sunny'}], main: {temp: 79} },
-        { dt_txt: moment().add(13, 'h').format(dtFmtStr), weather: [{main: 'sunny'}], main: {temp: 69} },
-        { dt_txt: moment().add(16, 'h').format(dtFmtStr), weather: [{main: 'sunny'}], main: {temp: 59} },
-        { dt_txt: moment().add(19, 'h').format(dtFmtStr), weather: [{main: 'sunny'}], main: {temp: 69} },
-        { dt_txt: moment().add(22, 'h').format(dtFmtStr), weather: [{main: 'sunny'}], main: {temp: 79} },
-        { dt_txt: moment().add(25, 'h').format(dtFmtStr), weather: [{main: 'sunny'}], main: {temp: 89} }
+        { dt_txt: moment().add( 1, 'h').format(dtFmtStr), weather: [{main: 'Clear'}], main: {temp: 89} },
+        { dt_txt: moment().add( 4, 'h').format(dtFmtStr), weather: [{main: 'Clear'}], main: {temp: 99} },
+        { dt_txt: moment().add( 7, 'h').format(dtFmtStr), weather: [{main: 'Clear'}], main: {temp: 89} },
+        { dt_txt: moment().add(10, 'h').format(dtFmtStr), weather: [{main: 'Clear'}], main: {temp: 79} },
+        { dt_txt: moment().add(13, 'h').format(dtFmtStr), weather: [{main: 'Clear'}], main: {temp: 69} },
+        { dt_txt: moment().add(16, 'h').format(dtFmtStr), weather: [{main: 'Clear'}], main: {temp: 59} },
+        { dt_txt: moment().add(19, 'h').format(dtFmtStr), weather: [{main: 'Clear'}], main: {temp: 69} },
+        { dt_txt: moment().add(22, 'h').format(dtFmtStr), weather: [{main: 'Clear'}], main: {temp: 79} },
+        { dt_txt: moment().add(25, 'h').format(dtFmtStr), weather: [{main: 'Clear'}], main: {temp: 89} }
       ],
       fiveDayForecast: [
-        { dt: parseInt(moment().add( 0, 'd').format('X')), temp: { max: 92, min: 65 }, main: 'sunny'},
-        { dt: parseInt(moment().add( 1, 'd').format('X')), temp: { max: 83, min: 65 }, main: 'sunny'},
-        { dt: parseInt(moment().add( 2, 'd').format('X')), temp: { max: 92, min: 69 }, main: 'sunny'},
-        { dt: parseInt(moment().add( 3, 'd').format('X')), temp: { max: 89, min: 70 }, main: 'sunny'},
-        { dt: parseInt(moment().add( 4, 'd').format('X')), temp: { max: 89, min: 65 }, main: 'sunny'}
+        { dt: parseInt(moment().add( 0, 'd').format('X')), temp: { max: 92, min: 65 }, weather: [{main: 'Clear'}]},
+        { dt: parseInt(moment().add( 1, 'd').format('X')), temp: { max: 83, min: 65 }, weather: [{main: 'Clear'}]},
+        { dt: parseInt(moment().add( 2, 'd').format('X')), temp: { max: 92, min: 69 }, weather: [{main: 'Clear'}]},
+        { dt: parseInt(moment().add( 3, 'd').format('X')), temp: { max: 89, min: 70 }, weather: [{main: 'Clear'}]},
+        { dt: parseInt(moment().add( 4, 'd').format('X')), temp: { max: 89, min: 65 }, weather: [{main: 'Clear'}]}
       ]
     }
   },
@@ -55,7 +54,7 @@ let App = React.createClass({
             var result = fetchWeather(position.coords.latitude,
                                       position.coords.longitude,
                                       this.state.units)
-                            .then(this.weatherCallback)
+                            .then(this.weatherCallback, this.fetchWeatherError)
             result.lat = position.coords.latitude
             result.lon = position.coords.longitude
             console.log('return value', result)
@@ -65,7 +64,7 @@ let App = React.createClass({
           () => { // error
             resolve(
               fetchWeather(this.state.lat, this.state.lon, this.state.units)
-                .then(this.weatherCallback)
+                .then(this.weatherCallback, this.fetchWeatherError)
             )
           }
         )
@@ -73,12 +72,12 @@ let App = React.createClass({
           console.log('timeout')
           resolve(
             fetchWeather(this.state.lat, this.state.lon, this.state.units)
-            .then(this.weatherCallback)
+            .then(this.weatherCallback, this.fetchWeatherError)
           )
         }, 8000)
       })
       promise.then((result) => {
-          this.setState(result)
+        this.setState(result)
       })
     } else {
       console.log('no geolocation available')
@@ -87,7 +86,6 @@ let App = React.createClass({
   weatherCallback(results) {
     var weather = results[0].body
     var hourlyForecast = results[1].body.list
-    // var fiveDayForecast = Array.prototype.slice.call(results[2].body.list, 1, 5)
     var fiveDayForecast = results[2].body.list
 
     // weather api may return an array here, so we check
@@ -105,6 +103,9 @@ let App = React.createClass({
       currentConditions: currentWeather.main,
       country: weather.sys.country
     }
+  },
+  fetchWeatherError(reason) {
+    console.log(reason)
   },
   saveSettings: function(newState) {
     this.setState(newState)

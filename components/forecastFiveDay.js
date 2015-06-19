@@ -3,6 +3,7 @@ import Radium from 'radium'
 import Color from 'color'
 import moment from 'moment'
 import { weatherColor } from '../utils/weatherColor.js'
+import { mapWeather } from '../utils/weather.js'
 
 var styles = {
   base: {
@@ -44,8 +45,9 @@ class ForecastFiveDay extends React.Component {
         <h3 style={styles.dayName} >
           { timeObj.format('ddd') }
         </h3>
-        <i className="wi wi-rain"
-           style={styles.icon}></i>
+        <i
+          className={`wi wi-${ mapWeather(this.props.conditions)}`}
+          style={styles.icon}></i>
         <p style={styles.highLow} >
           {this.props.high}/{this.props.low}
         </p>
@@ -54,6 +56,7 @@ class ForecastFiveDay extends React.Component {
   }
 }
 ForecastFiveDay.propTypes = {
+  conditions: React.PropTypes.string,
   high: React.PropTypes.number,
   low: React.PropTypes.number,
   temp: React.PropTypes.number,

@@ -11,41 +11,45 @@ const cnt = 5
  * returns an array of json responses
  */
 export function fetchWeather(lat, lon, units) {
-  return Promise.all([
-    new Promise((resolve, reject) => {
-      request
-        .get(urlCurrent)
-        .query({ lat, lon, units })
-        .end(function(err, res) {
-          if(err) {
-            reject(err)
-          }
-          resolve(res)
-        })
-    }),
-    new Promise((resolve, reject) => {
-      request
-        .get(urlHourly)
-        .query({ lat, lon, units })
-        .end(function(err, res) {
-          if(err) {
-            reject(err)
-          }
-          resolve(res)
-        })
-    }),
-    new Promise((resolve, reject) => {
-      request
-        .get(urlDaily)
-        .query({ lat, lon, units, cnt, mode })
-        .end(function(err, res) {
-          if(err) {
-            reject(err)
-          }
-          resolve(res)
-        })
-    })
-  ])
+  if (isNaN(lat)) {
+    return Promise.reject('error: dont hit api with NaN')
+  } else {
+    return Promise.all([
+      new Promise((resolve, reject) => {
+        request
+          .get(urlCurrent)
+          .query({ lat, lon, units })
+          .end(function(err, res) {
+            if(err) {
+              reject(err)
+            }
+            resolve(res)
+          })
+      }),
+      new Promise((resolve, reject) => {
+        request
+          .get(urlHourly)
+          .query({ lat, lon, units })
+          .end(function(err, res) {
+            if(err) {
+              reject(err)
+            }
+            resolve(res)
+          })
+      }),
+      new Promise((resolve, reject) => {
+        request
+          .get(urlDaily)
+          .query({ lat, lon, units, cnt, mode })
+          .end(function(err, res) {
+            if(err) {
+              reject(err)
+            }
+            resolve(res)
+          })
+      })
+    ])
+  }
 }
 
 /*

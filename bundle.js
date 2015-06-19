@@ -81,8 +81,6 @@
 	__webpack_require__(317);
 
 	var dtFmtStr = 'YYYY-MM-DD HH:00:00';
-	var originalLat = 40.73061;
-	var originalLon = -73.935242;
 	/*
 	 * we let state reside in App so async weather can be fetched on the splash
 	 * screen. This way when the user visits home we likely already have the info
@@ -94,12 +92,13 @@
 	    return {
 	      cityName: 'somewhere',
 	      country: 'USA',
+	      currentConditions: 'Clear',
 	      temp: 89,
-	      lat: originalLat,
-	      lon: originalLon,
+	      lat: NaN,
+	      lon: NaN,
 	      units: 'imperial',
-	      hourlyForecast: [{ dt_txt: (0, _moment2['default'])().add(1, 'h').format(dtFmtStr), weather: [{ main: 'sunny' }], main: { temp: 89 } }, { dt_txt: (0, _moment2['default'])().add(4, 'h').format(dtFmtStr), weather: [{ main: 'sunny' }], main: { temp: 99 } }, { dt_txt: (0, _moment2['default'])().add(7, 'h').format(dtFmtStr), weather: [{ main: 'sunny' }], main: { temp: 89 } }, { dt_txt: (0, _moment2['default'])().add(10, 'h').format(dtFmtStr), weather: [{ main: 'sunny' }], main: { temp: 79 } }, { dt_txt: (0, _moment2['default'])().add(13, 'h').format(dtFmtStr), weather: [{ main: 'sunny' }], main: { temp: 69 } }, { dt_txt: (0, _moment2['default'])().add(16, 'h').format(dtFmtStr), weather: [{ main: 'sunny' }], main: { temp: 59 } }, { dt_txt: (0, _moment2['default'])().add(19, 'h').format(dtFmtStr), weather: [{ main: 'sunny' }], main: { temp: 69 } }, { dt_txt: (0, _moment2['default'])().add(22, 'h').format(dtFmtStr), weather: [{ main: 'sunny' }], main: { temp: 79 } }, { dt_txt: (0, _moment2['default'])().add(25, 'h').format(dtFmtStr), weather: [{ main: 'sunny' }], main: { temp: 89 } }],
-	      fiveDayForecast: [{ dt: parseInt((0, _moment2['default'])().add(0, 'd').format('X')), temp: { max: 92, min: 65 }, main: 'sunny' }, { dt: parseInt((0, _moment2['default'])().add(1, 'd').format('X')), temp: { max: 83, min: 65 }, main: 'sunny' }, { dt: parseInt((0, _moment2['default'])().add(2, 'd').format('X')), temp: { max: 92, min: 69 }, main: 'sunny' }, { dt: parseInt((0, _moment2['default'])().add(3, 'd').format('X')), temp: { max: 89, min: 70 }, main: 'sunny' }, { dt: parseInt((0, _moment2['default'])().add(4, 'd').format('X')), temp: { max: 89, min: 65 }, main: 'sunny' }]
+	      hourlyForecast: [{ dt_txt: (0, _moment2['default'])().add(1, 'h').format(dtFmtStr), weather: [{ main: 'Clear' }], main: { temp: 89 } }, { dt_txt: (0, _moment2['default'])().add(4, 'h').format(dtFmtStr), weather: [{ main: 'Clear' }], main: { temp: 99 } }, { dt_txt: (0, _moment2['default'])().add(7, 'h').format(dtFmtStr), weather: [{ main: 'Clear' }], main: { temp: 89 } }, { dt_txt: (0, _moment2['default'])().add(10, 'h').format(dtFmtStr), weather: [{ main: 'Clear' }], main: { temp: 79 } }, { dt_txt: (0, _moment2['default'])().add(13, 'h').format(dtFmtStr), weather: [{ main: 'Clear' }], main: { temp: 69 } }, { dt_txt: (0, _moment2['default'])().add(16, 'h').format(dtFmtStr), weather: [{ main: 'Clear' }], main: { temp: 59 } }, { dt_txt: (0, _moment2['default'])().add(19, 'h').format(dtFmtStr), weather: [{ main: 'Clear' }], main: { temp: 69 } }, { dt_txt: (0, _moment2['default'])().add(22, 'h').format(dtFmtStr), weather: [{ main: 'Clear' }], main: { temp: 79 } }, { dt_txt: (0, _moment2['default'])().add(25, 'h').format(dtFmtStr), weather: [{ main: 'Clear' }], main: { temp: 89 } }],
+	      fiveDayForecast: [{ dt: parseInt((0, _moment2['default'])().add(0, 'd').format('X')), temp: { max: 92, min: 65 }, weather: [{ main: 'Clear' }] }, { dt: parseInt((0, _moment2['default'])().add(1, 'd').format('X')), temp: { max: 83, min: 65 }, weather: [{ main: 'Clear' }] }, { dt: parseInt((0, _moment2['default'])().add(2, 'd').format('X')), temp: { max: 92, min: 69 }, weather: [{ main: 'Clear' }] }, { dt: parseInt((0, _moment2['default'])().add(3, 'd').format('X')), temp: { max: 89, min: 70 }, weather: [{ main: 'Clear' }] }, { dt: parseInt((0, _moment2['default'])().add(4, 'd').format('X')), temp: { max: 89, min: 65 }, weather: [{ main: 'Clear' }] }]
 	    };
 	  },
 	  componentDidMount: function componentDidMount() {
@@ -110,7 +109,7 @@
 	        console.log('browser supports geolocation, waiting for user');
 	        navigator.geolocation.getCurrentPosition(function (position) {
 	          console.log('browser gps given', position);
-	          var result = (0, _utilsWeatherJs.fetchWeather)(position.coords.latitude, position.coords.longitude, _this.state.units).then(_this.weatherCallback);
+	          var result = (0, _utilsWeatherJs.fetchWeather)(position.coords.latitude, position.coords.longitude, _this.state.units).then(_this.weatherCallback, _this.fetchWeatherError);
 	          result.lat = position.coords.latitude;
 	          result.lon = position.coords.longitude;
 	          console.log('return value', result);
@@ -118,11 +117,11 @@
 	          resolve(result);
 	        }, function () {
 	          // error
-	          resolve((0, _utilsWeatherJs.fetchWeather)(_this.state.lat, _this.state.lon, _this.state.units).then(_this.weatherCallback));
+	          resolve((0, _utilsWeatherJs.fetchWeather)(_this.state.lat, _this.state.lon, _this.state.units).then(_this.weatherCallback, _this.fetchWeatherError));
 	        });
 	        window.setTimeout(function () {
 	          console.log('timeout');
-	          resolve((0, _utilsWeatherJs.fetchWeather)(_this.state.lat, _this.state.lon, _this.state.units).then(_this.weatherCallback));
+	          resolve((0, _utilsWeatherJs.fetchWeather)(_this.state.lat, _this.state.lon, _this.state.units).then(_this.weatherCallback, _this.fetchWeatherError));
 	        }, 8000);
 	      });
 	      promise.then(function (result) {
@@ -135,7 +134,6 @@
 	  weatherCallback: function weatherCallback(results) {
 	    var weather = results[0].body;
 	    var hourlyForecast = results[1].body.list;
-	    // var fiveDayForecast = Array.prototype.slice.call(results[2].body.list, 1, 5)
 	    var fiveDayForecast = results[2].body.list;
 
 	    // weather api may return an array here, so we check
@@ -151,6 +149,9 @@
 	      currentConditions: currentWeather.main,
 	      country: weather.sys.country
 	    };
+	  },
+	  fetchWeatherError: function fetchWeatherError(reason) {
+	    console.log(reason);
 	  },
 	  saveSettings: function saveSettings(newState) {
 	    this.setState(newState);
@@ -27257,6 +27258,7 @@
 	        var high = _this.props.state.units === 'metric' ? _utilsConvertTempJs2['default'].toCelsius(f.temp.max) : Math.round(f.temp.max);
 	        var low = _this.props.state.units === 'metric' ? _utilsConvertTempJs2['default'].toCelsius(f.temp.min) : Math.round(f.temp.min);
 	        return _react2['default'].createElement(_forecastFiveDayJs2['default'], {
+	          conditions: f.weather[0].main,
 	          high: high,
 	          key: index,
 	          low: low,
@@ -38775,28 +38777,32 @@
 	 */
 
 	function fetchWeather(lat, lon, units) {
-	  return Promise.all([new Promise(function (resolve, reject) {
-	    _superagent2['default'].get(urlCurrent).query({ lat: lat, lon: lon, units: units }).end(function (err, res) {
-	      if (err) {
-	        reject(err);
-	      }
-	      resolve(res);
-	    });
-	  }), new Promise(function (resolve, reject) {
-	    _superagent2['default'].get(urlHourly).query({ lat: lat, lon: lon, units: units }).end(function (err, res) {
-	      if (err) {
-	        reject(err);
-	      }
-	      resolve(res);
-	    });
-	  }), new Promise(function (resolve, reject) {
-	    _superagent2['default'].get(urlDaily).query({ lat: lat, lon: lon, units: units, cnt: cnt, mode: mode }).end(function (err, res) {
-	      if (err) {
-	        reject(err);
-	      }
-	      resolve(res);
-	    });
-	  })]);
+	  if (isNaN(lat)) {
+	    return Promise.reject('error: dont hit api with NaN');
+	  } else {
+	    return Promise.all([new Promise(function (resolve, reject) {
+	      _superagent2['default'].get(urlCurrent).query({ lat: lat, lon: lon, units: units }).end(function (err, res) {
+	        if (err) {
+	          reject(err);
+	        }
+	        resolve(res);
+	      });
+	    }), new Promise(function (resolve, reject) {
+	      _superagent2['default'].get(urlHourly).query({ lat: lat, lon: lon, units: units }).end(function (err, res) {
+	        if (err) {
+	          reject(err);
+	        }
+	        resolve(res);
+	      });
+	    }), new Promise(function (resolve, reject) {
+	      _superagent2['default'].get(urlDaily).query({ lat: lat, lon: lon, units: units, cnt: cnt, mode: mode }).end(function (err, res) {
+	        if (err) {
+	          reject(err);
+	        }
+	        resolve(res);
+	      });
+	    })]);
+	  }
 	}
 
 	/*
@@ -40582,6 +40588,8 @@
 
 	var _utilsWeatherColorJs = __webpack_require__(2);
 
+	var _utilsWeatherJs = __webpack_require__(308);
+
 	var styles = {
 	  base: {
 	    flexGrow: 1,
@@ -40629,7 +40637,8 @@
 	      styles.base.boxShadow = '0 -2px ' + colorDark;
 	      var timeObj = (0, _moment2['default'])(this.props.time, 'X');
 
-	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('h3', { style: styles.dayName }, timeObj.format('ddd')), _react2['default'].createElement('i', { className: 'wi wi-rain',
+	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('h3', { style: styles.dayName }, timeObj.format('ddd')), _react2['default'].createElement('i', {
+	        className: 'wi wi-' + (0, _utilsWeatherJs.mapWeather)(this.props.conditions),
 	        style: styles.icon }), _react2['default'].createElement('p', { style: styles.highLow }, this.props.high, '/', this.props.low));
 	    }
 	  }]);
@@ -40638,6 +40647,7 @@
 	})(_react2['default'].Component);
 
 	ForecastFiveDay.propTypes = {
+	  conditions: _react2['default'].PropTypes.string,
 	  high: _react2['default'].PropTypes.number,
 	  low: _react2['default'].PropTypes.number,
 	  temp: _react2['default'].PropTypes.number,
