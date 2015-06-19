@@ -2,7 +2,8 @@ import React from 'react'
 import Radium from 'radium'
 import Header from './header.js'
 import ForecastToday from './forecastToday.js'
-import ForecastFooter from './forecastFooter.js'
+import ForecastFiveDay from './forecastFiveDay.js'
+import convertTemp from '../utils/convertTemp.js'
 
 var styles = {
   base: {
@@ -12,11 +13,19 @@ var styles = {
     display: 'flex',
     flexDirection: 'column',
     flexWrap: 'nowrap'
+  },
+  footer: {
+    color: 'white',
+    display: 'flex',
+    flexShrink: 0,
+    flexDirection: 'row',
+    zIndex: 1
   }
 }
 
 class Home extends React.Component {
   render() {
+    let fiveDayForecast = this.props.state.fiveDayForecast.slice(0, 4)
     return (
       <div style={styles.base} >
         <Header
@@ -29,10 +38,21 @@ class Home extends React.Component {
           forecasts = { this.props.state.hourlyForecast }
           temp={ this.props.state.temp }
           units={ this.props.state.units } />
-        <ForecastFooter
-          forecasts = { this.props.state.fiveDayForecast }
-          temp={ this.props.state.temp }
-          units={ this.props.state.units } />
+        <div style={styles.footer} >
+          { fiveDayForecast.map((f, index) => {
+            let high = this.props.state.units === 'metric' ?
+                                  convertTemp.toCelsius(f.high) :
+                                  f.high
+            return (
+              <ForecastFiveDay
+                  high={high}
+                  key={index}
+                  low={f.low}
+                  time={f.dt_txt}
+                  units={this.props.state.units} />
+            )
+          })}
+        </div>
       </div>
     )
   }
