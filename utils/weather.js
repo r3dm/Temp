@@ -1,6 +1,9 @@
 import request from 'superagent'
 const urlCurrent = 'http://api.openweathermap.org/data/2.5/weather'
-const url5day = 'http://api.openweathermap.org/data/2.5/forecast'
+const urlHourly = 'http://api.openweathermap.org/data/2.5/forecast'
+const urlDaily = 'http://api.openweathermap.org/data/2.5/forecast/daily'
+const mode = 'json'
+const cnt = 5
 
 /*
  * fetches weather from api. Returns a Promise object.
@@ -22,8 +25,19 @@ export function fetchWeather(lat, lon, units) {
     }),
     new Promise((resolve, reject) => {
       request
-        .get(url5day)
+        .get(urlHourly)
         .query({ lat, lon, units })
+        .end(function(err, res) {
+          if(err) {
+            reject(err)
+          }
+          resolve(res)
+        })
+    }),
+    new Promise((resolve, reject) => {
+      request
+        .get(urlDaily)
+        .query({ lat, lon, units, cnt, mode })
         .end(function(err, res) {
           if(err) {
             reject(err)

@@ -81,6 +81,8 @@
 	__webpack_require__(317);
 
 	var dtFmtStr = 'YYYY-MM-DD HH:00:00';
+	var originalLat = 40.73061;
+	var originalLon = -73.935242;
 	/*
 	 * we let state reside in App so async weather can be fetched on the splash
 	 * screen. This way when the user visits home we likely already have the info
@@ -93,11 +95,11 @@
 	      cityName: 'somewhere',
 	      country: 'USA',
 	      temp: 89,
-	      lat: this.originalLat,
-	      lon: this.originalLon,
+	      lat: originalLat,
+	      lon: originalLon,
 	      units: 'imperial',
 	      hourlyForecast: [{ dt_txt: (0, _moment2['default'])().add(1, 'h').format(dtFmtStr), weather: [{ main: 'sunny' }], main: { temp: 89 } }, { dt_txt: (0, _moment2['default'])().add(4, 'h').format(dtFmtStr), weather: [{ main: 'sunny' }], main: { temp: 99 } }, { dt_txt: (0, _moment2['default'])().add(7, 'h').format(dtFmtStr), weather: [{ main: 'sunny' }], main: { temp: 89 } }, { dt_txt: (0, _moment2['default'])().add(10, 'h').format(dtFmtStr), weather: [{ main: 'sunny' }], main: { temp: 79 } }, { dt_txt: (0, _moment2['default'])().add(13, 'h').format(dtFmtStr), weather: [{ main: 'sunny' }], main: { temp: 69 } }, { dt_txt: (0, _moment2['default'])().add(16, 'h').format(dtFmtStr), weather: [{ main: 'sunny' }], main: { temp: 59 } }, { dt_txt: (0, _moment2['default'])().add(19, 'h').format(dtFmtStr), weather: [{ main: 'sunny' }], main: { temp: 69 } }, { dt_txt: (0, _moment2['default'])().add(22, 'h').format(dtFmtStr), weather: [{ main: 'sunny' }], main: { temp: 79 } }, { dt_txt: (0, _moment2['default'])().add(25, 'h').format(dtFmtStr), weather: [{ main: 'sunny' }], main: { temp: 89 } }],
-	      fiveDayForecast: [{ dt_txt: (0, _moment2['default'])().add(1, 'd').format(dtFmtStr), high: 72, low: 48, main: 'sunny' }, { dt_txt: (0, _moment2['default'])().add(2, 'd').format(dtFmtStr), high: 72, low: 49, main: 'sunny' }, { dt_txt: (0, _moment2['default'])().add(3, 'd').format(dtFmtStr), high: 77, low: 48, main: 'sunny' }, { dt_txt: (0, _moment2['default'])().add(4, 'd').format(dtFmtStr), high: 78, low: 49, main: 'sunny' }, { dt_txt: (0, _moment2['default'])().add(5, 'd').format(dtFmtStr), high: 76, low: 48, main: 'sunny' }]
+	      fiveDayForecast: [{ dt: parseInt((0, _moment2['default'])().add(0, 'd').format('X')), temp: { max: 92, min: 65 }, main: 'sunny' }, { dt: parseInt((0, _moment2['default'])().add(1, 'd').format('X')), temp: { max: 83, min: 65 }, main: 'sunny' }, { dt: parseInt((0, _moment2['default'])().add(2, 'd').format('X')), temp: { max: 92, min: 69 }, main: 'sunny' }, { dt: parseInt((0, _moment2['default'])().add(3, 'd').format('X')), temp: { max: 89, min: 70 }, main: 'sunny' }, { dt: parseInt((0, _moment2['default'])().add(4, 'd').format('X')), temp: { max: 89, min: 65 }, main: 'sunny' }]
 	    };
 	  },
 	  componentDidMount: function componentDidMount() {
@@ -130,17 +132,18 @@
 	      console.log('no geolocation available');
 	    }
 	  },
-	  originalLat: 40.73061,
-	  originalLon: -73.935242,
 	  weatherCallback: function weatherCallback(results) {
 	    var weather = results[0].body;
 	    var hourlyForecast = results[1].body.list;
+	    // var fiveDayForecast = Array.prototype.slice.call(results[2].body.list, 1, 5)
+	    var fiveDayForecast = results[2].body.list;
 
 	    // weather api may return an array here, so we check
 	    var currentWeather = Array.isArray(weather.weather) ? weather.weather[0] : weather.weather;
 	    return {
 	      weather: weather,
 	      hourlyForecast: hourlyForecast,
+	      fiveDayForecast: fiveDayForecast,
 	      temp: Math.round(weather.main.temp),
 	      cityName: weather.name,
 	      sunrise: weather.sys.sunrise,
@@ -27241,7 +27244,7 @@
 	    value: function render() {
 	      var _this = this;
 
-	      var fiveDayForecast = this.props.state.fiveDayForecast.slice(0, 4);
+	      var fiveDayForecast = this.props.state.fiveDayForecast.slice(1, 5);
 	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement(_headerJs2['default'], {
 	        cityName: this.props.state.cityName,
 	        country: this.props.state.country,
@@ -27251,12 +27254,13 @@
 	        forecasts: this.props.state.hourlyForecast,
 	        temp: this.props.state.temp,
 	        units: this.props.state.units }), _react2['default'].createElement('div', { style: styles.footer }, fiveDayForecast.map(function (f, index) {
-	        var high = _this.props.state.units === 'metric' ? _utilsConvertTempJs2['default'].toCelsius(f.high) : f.high;
+	        var high = _this.props.state.units === 'metric' ? _utilsConvertTempJs2['default'].toCelsius(f.temp.max) : Math.round(f.temp.max);
+	        var low = _this.props.state.units === 'metric' ? _utilsConvertTempJs2['default'].toCelsius(f.temp.min) : Math.round(f.temp.min);
 	        return _react2['default'].createElement(_forecastFiveDayJs2['default'], {
 	          high: high,
 	          key: index,
-	          low: f.low,
-	          time: f.dt_txt,
+	          low: low,
+	          time: f.dt,
 	          units: _this.props.state.units });
 	      })));
 	    }
@@ -38759,7 +38763,10 @@
 	var _superagent2 = _interopRequireDefault(_superagent);
 
 	var urlCurrent = 'http://api.openweathermap.org/data/2.5/weather';
-	var url5day = 'http://api.openweathermap.org/data/2.5/forecast';
+	var urlHourly = 'http://api.openweathermap.org/data/2.5/forecast';
+	var urlDaily = 'http://api.openweathermap.org/data/2.5/forecast/daily';
+	var mode = 'json';
+	var cnt = 5;
 
 	/*
 	 * fetches weather from api. Returns a Promise object.
@@ -38776,7 +38783,14 @@
 	      resolve(res);
 	    });
 	  }), new Promise(function (resolve, reject) {
-	    _superagent2['default'].get(url5day).query({ lat: lat, lon: lon, units: units }).end(function (err, res) {
+	    _superagent2['default'].get(urlHourly).query({ lat: lat, lon: lon, units: units }).end(function (err, res) {
+	      if (err) {
+	        reject(err);
+	      }
+	      resolve(res);
+	    });
+	  }), new Promise(function (resolve, reject) {
+	    _superagent2['default'].get(urlDaily).query({ lat: lat, lon: lon, units: units, cnt: cnt, mode: mode }).end(function (err, res) {
 	      if (err) {
 	        reject(err);
 	      }
@@ -40600,7 +40614,8 @@
 	  _createClass(ForecastFiveDay, [{
 	    key: 'render',
 	    value: function render() {
-	      var mainColor = (0, _utilsWeatherColorJs.weatherColor)(this.props.high, this.props.units);
+	      var avg = (this.props.high + this.props.low) / 2;
+	      var mainColor = (0, _utilsWeatherColorJs.weatherColor)(avg, this.props.units);
 	      var colorDark = 'white';
 	      var colorLight = 'white';
 
@@ -40612,7 +40627,7 @@
 	      styles.base.backgroundColor = mainColor;
 	      styles.base.borderTop = '2px solid ' + colorLight;
 	      styles.base.boxShadow = '0 -2px ' + colorDark;
-	      var timeObj = (0, _moment2['default'])(this.props.time, 'YYYY-MM-DD HH:mm:ss');
+	      var timeObj = (0, _moment2['default'])(this.props.time, 'X');
 
 	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('h3', { style: styles.dayName }, timeObj.format('ddd')), _react2['default'].createElement('i', { className: 'wi wi-rain',
 	        style: styles.icon }), _react2['default'].createElement('p', { style: styles.highLow }, this.props.high, '/', this.props.low));
@@ -40626,7 +40641,7 @@
 	  high: _react2['default'].PropTypes.number,
 	  low: _react2['default'].PropTypes.number,
 	  temp: _react2['default'].PropTypes.number,
-	  time: _react2['default'].PropTypes.string,
+	  time: _react2['default'].PropTypes.number,
 	  units: _react2['default'].PropTypes.string
 	};
 

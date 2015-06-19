@@ -25,7 +25,7 @@ var styles = {
 
 class Home extends React.Component {
   render() {
-    let fiveDayForecast = this.props.state.fiveDayForecast.slice(0, 4)
+    let fiveDayForecast = this.props.state.fiveDayForecast.slice(1, 5)
     return (
       <div style={styles.base} >
         <Header
@@ -41,15 +41,18 @@ class Home extends React.Component {
         <div style={styles.footer} >
           { fiveDayForecast.map((f, index) => {
             let high = this.props.state.units === 'metric' ?
-                                  convertTemp.toCelsius(f.high) :
-                                  f.high
+                                  convertTemp.toCelsius(f.temp.max) :
+                                  Math.round(f.temp.max)
+            let low = this.props.state.units === 'metric' ?
+                                  convertTemp.toCelsius(f.temp.min) :
+                                  Math.round(f.temp.min)
             return (
               <ForecastFiveDay
-                  high={high}
-                  key={index}
-                  low={f.low}
-                  time={f.dt_txt}
-                  units={this.props.state.units} />
+                high={high}
+                key={index}
+                low={low}
+                time={f.dt}
+                units={this.props.state.units} />
             )
           })}
         </div>

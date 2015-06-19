@@ -24,7 +24,8 @@ var styles = {
 
 class ForecastFiveDay extends React.Component {
   render() {
-    let mainColor = weatherColor(this.props.high, this.props.units)
+    let avg = (this.props.high + this.props.low) / 2
+    let mainColor = weatherColor(avg, this.props.units)
     let colorDark = 'white'
     let colorLight = 'white'
 
@@ -36,7 +37,7 @@ class ForecastFiveDay extends React.Component {
     styles.base.backgroundColor = mainColor
     styles.base.borderTop = `2px solid ${colorLight}`
     styles.base.boxShadow = `0 -2px ${colorDark}`
-    var timeObj = moment(this.props.time, 'YYYY-MM-DD HH:mm:ss')
+    var timeObj = moment(this.props.time, 'X')
 
     return (
       <div style={styles.base} >
@@ -56,7 +57,7 @@ ForecastFiveDay.propTypes = {
   high: React.PropTypes.number,
   low: React.PropTypes.number,
   temp: React.PropTypes.number,
-  time: React.PropTypes.string,
+  time: React.PropTypes.number,
   units: React.PropTypes.string
 }
 
