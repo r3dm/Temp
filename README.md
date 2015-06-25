@@ -21,6 +21,15 @@ To build project
 
 then upload project to hosting provider
 
+## updating site
+If you'd like to update the only version merge master onto the gh-pages branch.
+Run
+
+    npm run build
+
+and push the branch to github. This flow prevents re-build clutter from
+appearing in the diffs.
+
 ## License
 
 MIT
