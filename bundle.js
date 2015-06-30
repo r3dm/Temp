@@ -40689,7 +40689,13 @@
 	var _utilsWeatherColorJs = __webpack_require__(2);
 
 	var sunIconKeyframes = _radium2['default'].keyframes({
-	  '100%': { transform: 'rotate(360deg)' }
+	  '0%': {
+	    opacity: 0
+	  },
+	  '100%': {
+	    opacity: 1,
+	    transform: 'rotate(360deg)'
+	  }
 	});
 	var styles = {
 	  base: {
@@ -40706,7 +40712,7 @@
 
 	  sunIcon: {
 	    fontSize: '7em',
-	    animation: '' + sunIconKeyframes + ' 5s ease 0s infinite'
+	    animation: '' + sunIconKeyframes + ' 5s ease 0s'
 	  },
 
 	  splash: {
