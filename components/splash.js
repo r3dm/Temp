@@ -5,11 +5,13 @@ import { splashRed } from '../utils/weatherColor.js'
 
 var sunIconKeyframes = Radium.keyframes({
   '0%': {
-    opacity: 0
+    opacity: 0,
+    transform: 'rotate(-1turn) translateY(100%)',
+    transformOrigin: '50% 75%'
   },
   '100%': {
     opacity: 1,
-    transform: 'rotate(360deg)'
+    transform: 'none'
   }
 })
 var styles = {
