@@ -4,7 +4,15 @@ import { Navigation } from 'react-router'
 import { splashRed } from '../utils/weatherColor.js'
 
 var sunIconKeyframes = Radium.keyframes({
-  '100%': { transform: 'rotate(360deg)'}
+  '0%': {
+    opacity: 0,
+    transform: 'rotate(-1turn) translateY(100%)',
+    transformOrigin: '50% 75%'
+  },
+  '100%': {
+    opacity: 1,
+    transform: 'none'
+  }
 })
 var styles = {
   base: {
@@ -21,7 +29,7 @@ var styles = {
 
   sunIcon: {
     fontSize: '7em',
-    animation: `${sunIconKeyframes} 5s ease 0s infinite`
+    animation: `${sunIconKeyframes} 5s ease 0s`
   },
 
   splash: {
