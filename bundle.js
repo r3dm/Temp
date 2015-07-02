@@ -40690,13 +40690,16 @@
 
 	var sunIconKeyframes = _radium2['default'].keyframes({
 	  '0%': {
-	    opacity: 0,
-	    transform: 'rotate(-1turn) translateY(100%)',
-	    transformOrigin: '50% 75%'
+	    opacity: 1,
+	    transform: 'none'
+	  },
+	  '50%': {
+	    opacity: 0.1,
+	    transform: 'rotate(1turn)'
 	  },
 	  '100%': {
 	    opacity: 1,
-	    transform: 'none'
+	    transform: 'rotate(1turn)'
 	  }
 	});
 	var styles = {
@@ -40714,7 +40717,7 @@
 
 	  sunIcon: {
 	    fontSize: '7em',
-	    animation: '' + sunIconKeyframes + ' 5s ease 0s'
+	    animation: '' + sunIconKeyframes + ' 5s ease 1s'
 	  },
 
 	  splash: {
