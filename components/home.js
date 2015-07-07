@@ -34,6 +34,7 @@ class Home extends React.Component {
           temp={ this.props.state.temp }
           units={ this.props.state.units } />
         <ForecastToday
+          conditionsId = { this.props.state.weather.weather[0].id }
           currentConditions = { this.props.state.currentConditions }
           forecasts = { this.props.state.hourlyForecast }
           temp={ this.props.state.temp }
@@ -48,7 +49,7 @@ class Home extends React.Component {
                                   Math.round(f.temp.min)
             return (
               <ForecastFiveDay
-                conditions={f.weather[0].main}
+                conditionsId={f.weather[0].id}
                 high={high}
                 key={index}
                 low={low}

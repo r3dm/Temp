@@ -43,7 +43,7 @@ class ForecastHourly extends React.Component {
         <div style={styles.timeStyle} >
           {timeObj.format('h:mm a')}
         </div>
-        <i className={`wi wi-${ mapWeather(this.props.weather)}`}
+        <i className={`wi wi-${ mapWeather(this.props.conditionId)}`}
            style={styles.iStyle}></i>
         <div style={styles.tempStyle} >
           { Math.round(this.props.temp) }&deg;
@@ -56,7 +56,7 @@ ForecastHourly.propTypes = {
   temp: React.PropTypes.number,
   time: React.PropTypes.string,
   units: React.PropTypes.string,
-  weather: React.PropTypes.string
+  conditionId: React.PropTypes.number
 }
 
 export default new Radium(ForecastHourly)

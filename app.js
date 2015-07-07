@@ -25,23 +25,28 @@ let App = React.createClass({
       lon: NaN,
       units: 'imperial',
       hourlyForecast: [
-        { dt_txt: moment().add( 1, 'h').format(dtFmtStr), weather: [{main: 'Clear'}], main: {temp: 89} },
-        { dt_txt: moment().add( 4, 'h').format(dtFmtStr), weather: [{main: 'Clear'}], main: {temp: 99} },
-        { dt_txt: moment().add( 7, 'h').format(dtFmtStr), weather: [{main: 'Clear'}], main: {temp: 89} },
-        { dt_txt: moment().add(10, 'h').format(dtFmtStr), weather: [{main: 'Clear'}], main: {temp: 79} },
-        { dt_txt: moment().add(13, 'h').format(dtFmtStr), weather: [{main: 'Clear'}], main: {temp: 69} },
-        { dt_txt: moment().add(16, 'h').format(dtFmtStr), weather: [{main: 'Clear'}], main: {temp: 59} },
-        { dt_txt: moment().add(19, 'h').format(dtFmtStr), weather: [{main: 'Clear'}], main: {temp: 69} },
-        { dt_txt: moment().add(22, 'h').format(dtFmtStr), weather: [{main: 'Clear'}], main: {temp: 79} },
-        { dt_txt: moment().add(25, 'h').format(dtFmtStr), weather: [{main: 'Clear'}], main: {temp: 89} }
+        { dt_txt: moment().add( 1, 'h').format(dtFmtStr), weather: [{id: 800}], main: {temp: 89} },
+        { dt_txt: moment().add( 4, 'h').format(dtFmtStr), weather: [{id: 800}], main: {temp: 99} },
+        { dt_txt: moment().add( 7, 'h').format(dtFmtStr), weather: [{id: 800}], main: {temp: 89} },
+        { dt_txt: moment().add(10, 'h').format(dtFmtStr), weather: [{id: 800}], main: {temp: 79} },
+        { dt_txt: moment().add(13, 'h').format(dtFmtStr), weather: [{id: 800}], main: {temp: 69} },
+        { dt_txt: moment().add(16, 'h').format(dtFmtStr), weather: [{id: 800}], main: {temp: 59} },
+        { dt_txt: moment().add(19, 'h').format(dtFmtStr), weather: [{id: 800}], main: {temp: 69} },
+        { dt_txt: moment().add(22, 'h').format(dtFmtStr), weather: [{id: 800}], main: {temp: 79} },
+        { dt_txt: moment().add(25, 'h').format(dtFmtStr), weather: [{id: 800}], main: {temp: 89} }
       ],
       fiveDayForecast: [
-        { dt: parseInt(moment().add( 0, 'd').format('X')), temp: { max: 92, min: 65 }, weather: [{main: 'Clear'}]},
-        { dt: parseInt(moment().add( 1, 'd').format('X')), temp: { max: 83, min: 65 }, weather: [{main: 'Clear'}]},
-        { dt: parseInt(moment().add( 2, 'd').format('X')), temp: { max: 92, min: 69 }, weather: [{main: 'Clear'}]},
-        { dt: parseInt(moment().add( 3, 'd').format('X')), temp: { max: 89, min: 70 }, weather: [{main: 'Clear'}]},
-        { dt: parseInt(moment().add( 4, 'd').format('X')), temp: { max: 89, min: 65 }, weather: [{main: 'Clear'}]}
-      ]
+        { dt: parseInt(moment().add( 0, 'd').format('X')), temp: { max: 92, min: 65 }, weather: [{id: 800}]},
+        { dt: parseInt(moment().add( 1, 'd').format('X')), temp: { max: 83, min: 65 }, weather: [{id: 801}]},
+        { dt: parseInt(moment().add( 2, 'd').format('X')), temp: { max: 92, min: 69 }, weather: [{id: 802}]},
+        { dt: parseInt(moment().add( 3, 'd').format('X')), temp: { max: 89, min: 70 }, weather: [{id: 803}]},
+        { dt: parseInt(moment().add( 4, 'd').format('X')), temp: { max: 89, min: 65 }, weather: [{id: 804}]}
+      ],
+      weather: {
+        weather: [
+          { id: 800 }
+        ]
+      }
     }
   },
   componentDidMount() {

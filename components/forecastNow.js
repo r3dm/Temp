@@ -96,7 +96,7 @@ class ForecastNow extends React.Component {
 
         <div style={styles.forecastAndChance} >
           <div style={styles.forecastAndChanceChild} >
-            <i className={`wi wi-${ mapWeather(this.props.currentConditions)}`}
+            <i className={`wi wi-${ mapWeather(this.props.conditionsId)}`}
                style={styles.icon}></i>
             <p>{ humanize(this.props.currentConditions) }</p>
           </div>
@@ -118,6 +118,7 @@ class ForecastNow extends React.Component {
   }
 }
 ForecastNow.propTypes = {
+  conditionsId: React.PropTypes.number,
   currentConditions: React.PropTypes.string,
   temp: React.PropTypes.number,
   units: React.PropTypes.string
