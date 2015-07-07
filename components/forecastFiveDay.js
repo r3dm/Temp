@@ -46,7 +46,7 @@ class ForecastFiveDay extends React.Component {
           { timeObj.format('ddd') }
         </h3>
         <i
-          className={`wi wi-${ mapWeather(this.props.conditions)}`}
+          className={`wi wi-${ mapWeather(this.props.conditionsId)}`}
           style={styles.icon}></i>
         <p style={styles.highLow} >
           {this.props.high}/{this.props.low}
@@ -56,7 +56,7 @@ class ForecastFiveDay extends React.Component {
   }
 }
 ForecastFiveDay.propTypes = {
-  conditions: React.PropTypes.string,
+  conditionsId: React.PropTypes.number,
   high: React.PropTypes.number,
   low: React.PropTypes.number,
   temp: React.PropTypes.number,
