@@ -38760,7 +38760,6 @@
 	});
 	exports.fetchWeather = fetchWeather;
 	exports.mapWeather = mapWeather;
-	exports.humanize = humanize;
 
 	function _interopRequireDefault(obj) {
 	  return obj && obj.__esModule ? obj : { 'default': obj };
@@ -38864,21 +38863,6 @@
 	  } else {
 	    return lookup[series];
 	  }
-	}
-
-	/*
-	 * maps api weather description (Rain, Snow, Extreme etc.) to
-	 * human friendly names
-	 */
-
-	function humanize(str) {
-	  var lookup = {
-	    'Clear': 'Clear',
-	    'Clouds': 'Sunny',
-	    'Haze': 'Haze',
-	    'Rain': 'Rainy'
-	  };
-	  return lookup[str];
 	}
 
 	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "weather.js" + ": " + err.message); } }); } } })(); }
@@ -40375,7 +40359,7 @@
 	      styles.base.boxShadow = '0 2px ' + colorLight;
 
 	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.flexGrow }), _react2['default'].createElement('div', { style: styles.mainTempWrapper }, _react2['default'].createElement('span', null, this.props.temp), _react2['default'].createElement('span', { style: styles.degrees }, '°')), _react2['default'].createElement('div', { style: styles.forecastAndChance }, _react2['default'].createElement('div', { style: styles.forecastAndChanceChild }, _react2['default'].createElement('i', { className: 'wi wi-' + (0, _utilsWeatherJs.mapWeather)(this.props.conditionsId),
-	        style: styles.icon }), _react2['default'].createElement('p', null, (0, _utilsWeatherJs.humanize)(this.props.currentConditions))), _react2['default'].createElement('div', { style: styles.verticalDivider }), _react2['default'].createElement('div', { style: styles.forecastAndChanceChild }, _react2['default'].createElement('i', { className: 'wi wi-sprinkles',
+	        style: styles.icon }), _react2['default'].createElement('p', null, this.props.currentConditions)), _react2['default'].createElement('div', { style: styles.verticalDivider }), _react2['default'].createElement('div', { style: styles.forecastAndChanceChild }, _react2['default'].createElement('i', { className: 'wi wi-sprinkles',
 	        style: styles.icon }), _react2['default'].createElement('p', null, '50%'))), _react2['default'].createElement('div', { style: styles.flexGrow }), _react2['default'].createElement(_dividerJs2['default'], null));
 	    }
 	  }]);
