@@ -105,17 +105,3 @@ export function mapWeather(id, night) {
     return lookup[series]
   }
 }
-
-/*
- * maps api weather description (Rain, Snow, Extreme etc.) to
- * human friendly names
- */
-export function humanize(str) {
-  var lookup = {
-    'Clear': 'Clear',
-    'Clouds': 'Sunny',
-    'Haze': 'Haze',
-    'Rain': 'Rainy'
-  }
-  return lookup[str]
-}

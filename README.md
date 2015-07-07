@@ -15,20 +15,14 @@ To run project locally do
 
 webpack will bundle the project and start a server available at `localhost:8080`
 
-To build project
-
-    npm run build
-
-then upload project to hosting provider
-
 ## updating site
-If you'd like to update the only version merge master onto the gh-pages branch.
+If you'd like to update the site build and push onto the gh-pages branch.
 Run
 
     npm run build
 
 and push the branch to github. This flow prevents re-build clutter from
-appearing in the diffs.
+appearing in the git log.
 
 ## License
 
