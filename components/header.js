@@ -47,7 +47,7 @@ let Header = React.createClass({
     if(cityState.length > 20) {
       cityState = cityState.slice(0, 18) + ' ...'
     }
-    if(device.platform === 'iOS') {
+    if(window.device && device.platform === 'iOS') {
       styles.base.padding = '23px 0px 7px 7px'
     }
 
@@ -64,6 +64,7 @@ let Header = React.createClass({
         <i
           className="fa fa-gears"
           onClick={() => this.transitionTo('settings')}
+          onTouchStart={() => this.transitionTo('settings')}
           style={styles.settingsIcon}></i>
       </div>
     )

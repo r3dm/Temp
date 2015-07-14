@@ -56,9 +56,10 @@ let Splash = React.createClass({
 
   render: function() {
     return (
-      <div onClick={() => this.transitionTo('home')}
-           onTouchEnd={() => this.transitionTo('home')}
-           style={styles.base} >
+      <div
+        onClick={() => this.transitionTo('home') }
+        onTouchEnd={() => this.transitionTo('home') }
+        style={styles.base} >
         <i className="wi wi-day-sunny"
            style={styles.sunIcon} ></i>
         <h1 style={styles.splash} >
