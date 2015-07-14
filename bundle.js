@@ -97,8 +97,11 @@
 	      lat: NaN,
 	      lon: NaN,
 	      units: 'imperial',
-	      hourlyForecast: [{ dt_txt: (0, _moment2['default'])().add(1, 'h').format(dtFmtStr), weather: [{ main: 'Clear' }], main: { temp: 89 } }, { dt_txt: (0, _moment2['default'])().add(4, 'h').format(dtFmtStr), weather: [{ main: 'Clear' }], main: { temp: 99 } }, { dt_txt: (0, _moment2['default'])().add(7, 'h').format(dtFmtStr), weather: [{ main: 'Clear' }], main: { temp: 89 } }, { dt_txt: (0, _moment2['default'])().add(10, 'h').format(dtFmtStr), weather: [{ main: 'Clear' }], main: { temp: 79 } }, { dt_txt: (0, _moment2['default'])().add(13, 'h').format(dtFmtStr), weather: [{ main: 'Clear' }], main: { temp: 69 } }, { dt_txt: (0, _moment2['default'])().add(16, 'h').format(dtFmtStr), weather: [{ main: 'Clear' }], main: { temp: 59 } }, { dt_txt: (0, _moment2['default'])().add(19, 'h').format(dtFmtStr), weather: [{ main: 'Clear' }], main: { temp: 69 } }, { dt_txt: (0, _moment2['default'])().add(22, 'h').format(dtFmtStr), weather: [{ main: 'Clear' }], main: { temp: 79 } }, { dt_txt: (0, _moment2['default'])().add(25, 'h').format(dtFmtStr), weather: [{ main: 'Clear' }], main: { temp: 89 } }],
-	      fiveDayForecast: [{ dt: parseInt((0, _moment2['default'])().add(0, 'd').format('X')), temp: { max: 92, min: 65 }, weather: [{ main: 'Clear' }] }, { dt: parseInt((0, _moment2['default'])().add(1, 'd').format('X')), temp: { max: 83, min: 65 }, weather: [{ main: 'Clear' }] }, { dt: parseInt((0, _moment2['default'])().add(2, 'd').format('X')), temp: { max: 92, min: 69 }, weather: [{ main: 'Clear' }] }, { dt: parseInt((0, _moment2['default'])().add(3, 'd').format('X')), temp: { max: 89, min: 70 }, weather: [{ main: 'Clear' }] }, { dt: parseInt((0, _moment2['default'])().add(4, 'd').format('X')), temp: { max: 89, min: 65 }, weather: [{ main: 'Clear' }] }]
+	      hourlyForecast: [{ dt_txt: (0, _moment2['default'])().add(1, 'h').format(dtFmtStr), weather: [{ id: 800 }], main: { temp: 89 } }, { dt_txt: (0, _moment2['default'])().add(4, 'h').format(dtFmtStr), weather: [{ id: 800 }], main: { temp: 99 } }, { dt_txt: (0, _moment2['default'])().add(7, 'h').format(dtFmtStr), weather: [{ id: 800 }], main: { temp: 89 } }, { dt_txt: (0, _moment2['default'])().add(10, 'h').format(dtFmtStr), weather: [{ id: 800 }], main: { temp: 79 } }, { dt_txt: (0, _moment2['default'])().add(13, 'h').format(dtFmtStr), weather: [{ id: 800 }], main: { temp: 69 } }, { dt_txt: (0, _moment2['default'])().add(16, 'h').format(dtFmtStr), weather: [{ id: 800 }], main: { temp: 59 } }, { dt_txt: (0, _moment2['default'])().add(19, 'h').format(dtFmtStr), weather: [{ id: 800 }], main: { temp: 69 } }, { dt_txt: (0, _moment2['default'])().add(22, 'h').format(dtFmtStr), weather: [{ id: 800 }], main: { temp: 79 } }, { dt_txt: (0, _moment2['default'])().add(25, 'h').format(dtFmtStr), weather: [{ id: 800 }], main: { temp: 89 } }],
+	      fiveDayForecast: [{ dt: parseInt((0, _moment2['default'])().add(0, 'd').format('X')), temp: { max: 92, min: 65 }, weather: [{ id: 800 }] }, { dt: parseInt((0, _moment2['default'])().add(1, 'd').format('X')), temp: { max: 83, min: 65 }, weather: [{ id: 801 }] }, { dt: parseInt((0, _moment2['default'])().add(2, 'd').format('X')), temp: { max: 92, min: 69 }, weather: [{ id: 802 }] }, { dt: parseInt((0, _moment2['default'])().add(3, 'd').format('X')), temp: { max: 89, min: 70 }, weather: [{ id: 803 }] }, { dt: parseInt((0, _moment2['default'])().add(4, 'd').format('X')), temp: { max: 89, min: 65 }, weather: [{ id: 804 }] }],
+	      weather: {
+	        weather: [{ id: 800 }]
+	      }
 	    };
 	  },
 	  componentDidMount: function componentDidMount() {
@@ -117,12 +120,9 @@
 	          resolve(result);
 	        }, function () {
 	          // error
+	          console.log('geolocation error branch, fetch weather anyway');
 	          resolve((0, _utilsWeatherJs.fetchWeather)(_this.state.lat, _this.state.lon, _this.state.units).then(_this.weatherCallback, _this.fetchWeatherError));
 	        });
-	        window.setTimeout(function () {
-	          console.log('timeout');
-	          resolve((0, _utilsWeatherJs.fetchWeather)(_this.state.lat, _this.state.lon, _this.state.units).then(_this.weatherCallback, _this.fetchWeatherError));
-	        }, 8000);
 	      });
 	      promise.then(function (result) {
 	        _this.setState(result);
@@ -169,10 +169,27 @@
 	  name: 'settings',
 	  path: '/settings' }));
 
-	_reactRouter2['default'].run(routes, function (Handler) {
-	  _react2['default'].initializeTouchEvents(true);
-	  _react2['default'].render(_react2['default'].createElement(Handler, null), document.getElementById('content'));
-	});
+	function startApp() {
+	  _reactRouter2['default'].run(routes, function (Handler) {
+	    _react2['default'].initializeTouchEvents(true);
+	    _react2['default'].render(_react2['default'].createElement(Handler, null), document.getElementById('content'));
+	  });
+	}
+
+	if (window.cordova) {
+	  console.log('wait for deviceready');
+	  document.addEventListener('deviceready', startApp, false);
+	} else {
+	  // browser, start asap
+	  startApp();
+	}
+	// window.setTimeout(() => {
+	//   console.log('timeout')
+	//   resolve(
+	//     fetchWeather(this.state.lat, this.state.lon, this.state.units)
+	//     .then(this.weatherCallback, this.fetchWeatherError)
+	//   )
+	// }, 8000)
 
 	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "app.js" + ": " + err.message); } }); } } })(); }
 
@@ -27251,6 +27268,7 @@
 	        country: this.props.state.country,
 	        temp: this.props.state.temp,
 	        units: this.props.state.units }), _react2['default'].createElement(_forecastTodayJs2['default'], {
+	        conditionsId: this.props.state.weather.weather[0].id,
 	        currentConditions: this.props.state.currentConditions,
 	        forecasts: this.props.state.hourlyForecast,
 	        temp: this.props.state.temp,
@@ -27258,7 +27276,7 @@
 	        var high = _this.props.state.units === 'metric' ? _utilsConvertTempJs2['default'].toCelsius(f.temp.max) : Math.round(f.temp.max);
 	        var low = _this.props.state.units === 'metric' ? _utilsConvertTempJs2['default'].toCelsius(f.temp.min) : Math.round(f.temp.min);
 	        return _react2['default'].createElement(_forecastFiveDayJs2['default'], {
-	          conditions: f.weather[0].main,
+	          conditionsId: f.weather[0].id,
 	          high: high,
 	          key: index,
 	          low: low,
@@ -27405,6 +27423,7 @@
 	      return _react2['default'].createElement('div', {
 	        id: 'todayDiv',
 	        style: styles.base }, _react2['default'].createElement(_forecastNowJs2['default'], {
+	        conditionsId: this.props.conditionsId,
 	        currentConditions: this.props.currentConditions,
 	        temp: this.props.temp,
 	        units: this.props.units }), _react2['default'].createElement('div', { style: styles.overflowDiv }, forecasts.map(function (f, index) {
@@ -27414,7 +27433,7 @@
 	          temp: temp,
 	          time: f.dt_txt,
 	          units: _this.props.units,
-	          weather: f.weather[0].main });
+	          conditionId: f.weather[0].id });
 	      })));
 	    }
 	  }]);
@@ -27423,6 +27442,7 @@
 	})(_react2['default'].Component);
 
 	ForecastToday.propTypes = {
+	  conditionsId: _react2['default'].PropTypes.number,
 	  currentConditions: _react2['default'].PropTypes.string,
 	  forecasts: _react2['default'].PropTypes.array,
 	  temp: _react2['default'].PropTypes.number,
@@ -27534,7 +27554,7 @@
 	      styles.base.backgroundColor = (0, _utilsWeatherColorJs.weatherColor)(this.props.temp, this.props.units);
 	      var timeObj = (0, _moment2['default'])(this.props.time + ' +0000', 'YYYY-MM-DD HH:mm:ss Z');
 
-	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.timeStyle }, timeObj.format('h:mm a')), _react2['default'].createElement('i', { className: 'wi wi-' + (0, _utilsWeatherJs.mapWeather)(this.props.weather),
+	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.timeStyle }, timeObj.format('h:mm a')), _react2['default'].createElement('i', { className: 'wi wi-' + (0, _utilsWeatherJs.mapWeather)(this.props.conditionId),
 	        style: styles.iStyle }), _react2['default'].createElement('div', { style: styles.tempStyle }, Math.round(this.props.temp), '°'));
 	    }
 	  }]);
@@ -27546,7 +27566,7 @@
 	  temp: _react2['default'].PropTypes.number,
 	  time: _react2['default'].PropTypes.string,
 	  units: _react2['default'].PropTypes.string,
-	  weather: _react2['default'].PropTypes.string
+	  conditionId: _react2['default'].PropTypes.number
 	};
 
 	exports['default'] = new _radium2['default'](ForecastHourly);
@@ -38754,7 +38774,6 @@
 	});
 	exports.fetchWeather = fetchWeather;
 	exports.mapWeather = mapWeather;
-	exports.humanize = humanize;
 
 	function _interopRequireDefault(obj) {
 	  return obj && obj.__esModule ? obj : { 'default': obj };
@@ -38806,31 +38825,58 @@
 	}
 
 	/*
-	 * maps api weather description (Rain, Snow, Extreme etc.) to
+	 * maps api weather id to and time of day
 	 * weather-icons names
 	 */
 
-	function mapWeather(str) {
+	function mapWeather(id, night) {
 	  var lookup = {
-	    'Clear': 'day-sunny',
-	    'Clouds': 'day-sunny',
-	    'Rain': 'rain'
+	    2: 'thunderstorm',
+	    3: 'sprinkle',
+	    6: 'snow',
+	    7: 'day-haze',
+	    500: 'day-rain',
+	    501: 'day-rain',
+	    502: 'rain',
+	    503: 'rain',
+	    504: 'rain',
+	    511: 'rain-mix',
+	    520: 'rain',
+	    521: 'rain',
+	    522: 'rain',
+	    531: 'rain',
+	    800: 'day-sunny',
+	    801: 'day-cloudy',
+	    802: 'cloud',
+	    803: 'cloudy',
+	    804: 'cloudy',
+	    900: 'tornado',
+	    901: 'hurricane',
+	    902: 'hurricane',
+	    903: 'snowflake-cold',
+	    904: 'hot',
+	    905: 'windy',
+	    951: 'day-sunny',
+	    952: 'day-windy',
+	    953: 'day-windy',
+	    954: 'day-windy',
+	    955: 'day-windy',
+	    956: 'strong-wind',
+	    957: 'strong-wind',
+	    958: 'strong-wind',
+	    959: 'strong-wind',
+	    960: 'strong-wind',
+	    961: 'hurricane',
+	    962: 'hurricane'
 	  };
-	  return lookup[str];
-	}
+	  var stringify = id + '';
+	  var series = stringify[0];
 
-	/*
-	 * maps api weather description (Rain, Snow, Extreme etc.) to
-	 * human friendly names
-	 */
-
-	function humanize(str) {
-	  var lookup = {
-	    'Clear': 'Clear',
-	    'Clouds': 'Sunny',
-	    'Rain': 'Rainy'
-	  };
-	  return lookup[str];
+	  if (lookup[id]) {
+	    return lookup[id];
+	  } else {
+	    return lookup[series];
+	  }
 	}
 
 	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "weather.js" + ": " + err.message); } }); } } })(); }
@@ -40326,8 +40372,8 @@
 	      styles.base.borderBottomColor = colorDark;
 	      styles.base.boxShadow = '0 2px ' + colorLight;
 
-	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.flexGrow }), _react2['default'].createElement('div', { style: styles.mainTempWrapper }, _react2['default'].createElement('span', null, this.props.temp), _react2['default'].createElement('span', { style: styles.degrees }, '°')), _react2['default'].createElement('div', { style: styles.forecastAndChance }, _react2['default'].createElement('div', { style: styles.forecastAndChanceChild }, _react2['default'].createElement('i', { className: 'wi wi-' + (0, _utilsWeatherJs.mapWeather)(this.props.currentConditions),
-	        style: styles.icon }), _react2['default'].createElement('p', null, (0, _utilsWeatherJs.humanize)(this.props.currentConditions))), _react2['default'].createElement('div', { style: styles.verticalDivider }), _react2['default'].createElement('div', { style: styles.forecastAndChanceChild }, _react2['default'].createElement('i', { className: 'wi wi-sprinkles',
+	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.flexGrow }), _react2['default'].createElement('div', { style: styles.mainTempWrapper }, _react2['default'].createElement('span', null, this.props.temp), _react2['default'].createElement('span', { style: styles.degrees }, '°')), _react2['default'].createElement('div', { style: styles.forecastAndChance }, _react2['default'].createElement('div', { style: styles.forecastAndChanceChild }, _react2['default'].createElement('i', { className: 'wi wi-' + (0, _utilsWeatherJs.mapWeather)(this.props.conditionsId),
+	        style: styles.icon }), _react2['default'].createElement('p', null, this.props.currentConditions)), _react2['default'].createElement('div', { style: styles.verticalDivider }), _react2['default'].createElement('div', { style: styles.forecastAndChanceChild }, _react2['default'].createElement('i', { className: 'wi wi-sprinkles',
 	        style: styles.icon }), _react2['default'].createElement('p', null, '50%'))), _react2['default'].createElement('div', { style: styles.flexGrow }), _react2['default'].createElement(_dividerJs2['default'], null));
 	    }
 	  }]);
@@ -40336,6 +40382,7 @@
 	})(_react2['default'].Component);
 
 	ForecastNow.propTypes = {
+	  conditionsId: _react2['default'].PropTypes.number,
 	  currentConditions: _react2['default'].PropTypes.string,
 	  temp: _react2['default'].PropTypes.number,
 	  units: _react2['default'].PropTypes.string
@@ -40517,6 +40564,9 @@
 	    if (cityState.length > 20) {
 	      cityState = cityState.slice(0, 18) + ' ...';
 	    }
+	    if (device.platform === 'iOS') {
+	      styles.base.padding = '23px 0px 7px 7px';
+	    }
 
 	    return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.cityTimeWrapper }, _react2['default'].createElement('p', { style: styles.cityState }, cityState), _react2['default'].createElement('p', { style: styles.headerDate }, (0, _moment2['default'])().format('dddd, MMMM D'))), _react2['default'].createElement('i', {
 	      className: 'fa fa-gears',
@@ -40638,7 +40688,7 @@
 	      var timeObj = (0, _moment2['default'])(this.props.time, 'X');
 
 	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('h3', { style: styles.dayName }, timeObj.format('ddd')), _react2['default'].createElement('i', {
-	        className: 'wi wi-' + (0, _utilsWeatherJs.mapWeather)(this.props.conditions),
+	        className: 'wi wi-' + (0, _utilsWeatherJs.mapWeather)(this.props.conditionsId),
 	        style: styles.icon }), _react2['default'].createElement('p', { style: styles.highLow }, this.props.high, '/', this.props.low));
 	    }
 	  }]);
@@ -40647,7 +40697,7 @@
 	})(_react2['default'].Component);
 
 	ForecastFiveDay.propTypes = {
-	  conditions: _react2['default'].PropTypes.string,
+	  conditionsId: _react2['default'].PropTypes.number,
 	  high: _react2['default'].PropTypes.number,
 	  low: _react2['default'].PropTypes.number,
 	  temp: _react2['default'].PropTypes.number,
@@ -40689,7 +40739,18 @@
 	var _utilsWeatherColorJs = __webpack_require__(2);
 
 	var sunIconKeyframes = _radium2['default'].keyframes({
-	  '100%': { transform: 'rotate(360deg)' }
+	  '0%': {
+	    opacity: 1,
+	    transform: 'none'
+	  },
+	  '50%': {
+	    opacity: 0.1,
+	    transform: 'rotate(1turn)'
+	  },
+	  '100%': {
+	    opacity: 1,
+	    transform: 'rotate(1turn)'
+	  }
 	});
 	var styles = {
 	  base: {
@@ -40706,7 +40767,7 @@
 
 	  sunIcon: {
 	    fontSize: '7em',
-	    animation: '' + sunIconKeyframes + ' 5s ease 0s infinite'
+	    animation: '' + sunIconKeyframes + ' 5s ease 1s'
 	  },
 
 	  splash: {
