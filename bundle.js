@@ -337,9 +337,16 @@
 	    styles.radio.backgroundImage = 'radial-gradient(circle, ' + mainColor + ' 10%, ' + shadow + ' 80%)';
 
 	    var check = _react2['default'].createElement('div', { style: styles.check });
+	    if (window.device && device.platform === 'iOS') {
+	      styles.base.paddingTop = '23px';
+	    }
+
 	    return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('i', {
 	      className: 'fa fa-angle-double-left',
 	      onClick: function onClick() {
+	        return _this.transitionSync();
+	      },
+	      onTouchEnd: function onTouchEnd() {
 	        return _this.transitionSync();
 	      },
 	      style: styles.backIcon }), _react2['default'].createElement('div', { style: styles.navigation }, _react2['default'].createElement('p', { style: styles.header }, 'Settings')), _react2['default'].createElement('div', { style: styles.body }, _react2['default'].createElement('label', { style: styles.label }, _react2['default'].createElement('input', {
@@ -40564,13 +40571,16 @@
 	    if (cityState.length > 20) {
 	      cityState = cityState.slice(0, 18) + ' ...';
 	    }
-	    if (device.platform === 'iOS') {
+	    if (window.device && device.platform === 'iOS') {
 	      styles.base.padding = '23px 0px 7px 7px';
 	    }
 
 	    return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.cityTimeWrapper }, _react2['default'].createElement('p', { style: styles.cityState }, cityState), _react2['default'].createElement('p', { style: styles.headerDate }, (0, _moment2['default'])().format('dddd, MMMM D'))), _react2['default'].createElement('i', {
 	      className: 'fa fa-gears',
 	      onClick: function onClick() {
+	        return _this.transitionTo('settings');
+	      },
+	      onTouchStart: function onTouchStart() {
 	        return _this.transitionTo('settings');
 	      },
 	      style: styles.settingsIcon }));
@@ -40794,7 +40804,8 @@
 	  render: function render() {
 	    var _this = this;
 
-	    return _react2['default'].createElement('div', { onClick: function onClick() {
+	    return _react2['default'].createElement('div', {
+	      onClick: function onClick() {
 	        return _this.transitionTo('home');
 	      },
 	      onTouchEnd: function onTouchEnd() {
