@@ -67,19 +67,20 @@ let App = React.createClass({
             resolve(result)
           },
           () => { // error
+            console.log('geolocation error branch, fetch weather anyway')
             resolve(
               fetchWeather(this.state.lat, this.state.lon, this.state.units)
                 .then(this.weatherCallback, this.fetchWeatherError)
             )
           }
         )
-        window.setTimeout(() => {
-          console.log('timeout')
-          resolve(
-            fetchWeather(this.state.lat, this.state.lon, this.state.units)
-            .then(this.weatherCallback, this.fetchWeatherError)
-          )
-        }, 8000)
+        // window.setTimeout(() => {
+        //   console.log('timeout')
+        //   resolve(
+        //     fetchWeather(this.state.lat, this.state.lon, this.state.units)
+        //     .then(this.weatherCallback, this.fetchWeatherError)
+        //   )
+        // }, 8000)
       })
       promise.then((result) => {
         this.setState(result)
@@ -136,7 +137,17 @@ let routes = (
   </Route>
 )
 
-Router.run(routes, function (Handler) {
-  React.initializeTouchEvents(true)
-  React.render(<Handler/>, document.getElementById('content'))
-})
+function startApp() {
+  Router.run(routes, function (Handler) {
+    React.initializeTouchEvents(true)
+    React.render(<Handler/>, document.getElementById('content'))
+  })
+}
+
+if (window.cordova) {
+  console.log('wait for deviceready')
+  document.addEventListener('deviceready', startApp, false);
+} else {
+  // browser, start asap
+  startApp();
+}

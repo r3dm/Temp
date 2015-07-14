@@ -120,12 +120,9 @@
 	          resolve(result);
 	        }, function () {
 	          // error
+	          console.log('geolocation error branch, fetch weather anyway');
 	          resolve((0, _utilsWeatherJs.fetchWeather)(_this.state.lat, _this.state.lon, _this.state.units).then(_this.weatherCallback, _this.fetchWeatherError));
 	        });
-	        window.setTimeout(function () {
-	          console.log('timeout');
-	          resolve((0, _utilsWeatherJs.fetchWeather)(_this.state.lat, _this.state.lon, _this.state.units).then(_this.weatherCallback, _this.fetchWeatherError));
-	        }, 8000);
 	      });
 	      promise.then(function (result) {
 	        _this.setState(result);
@@ -172,10 +169,27 @@
 	  name: 'settings',
 	  path: '/settings' }));
 
-	_reactRouter2['default'].run(routes, function (Handler) {
-	  _react2['default'].initializeTouchEvents(true);
-	  _react2['default'].render(_react2['default'].createElement(Handler, null), document.getElementById('content'));
-	});
+	function startApp() {
+	  _reactRouter2['default'].run(routes, function (Handler) {
+	    _react2['default'].initializeTouchEvents(true);
+	    _react2['default'].render(_react2['default'].createElement(Handler, null), document.getElementById('content'));
+	  });
+	}
+
+	if (window.cordova) {
+	  console.log('wait for deviceready');
+	  document.addEventListener('deviceready', startApp, false);
+	} else {
+	  // browser, start asap
+	  startApp();
+	}
+	// window.setTimeout(() => {
+	//   console.log('timeout')
+	//   resolve(
+	//     fetchWeather(this.state.lat, this.state.lon, this.state.units)
+	//     .then(this.weatherCallback, this.fetchWeatherError)
+	//   )
+	// }, 8000)
 
 	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "app.js" + ": " + err.message); } }); } } })(); }
 
@@ -40549,6 +40563,9 @@
 	    var cityState = this.props.cityName + ', ' + this.props.country;
 	    if (cityState.length > 20) {
 	      cityState = cityState.slice(0, 18) + ' ...';
+	    }
+	    if (device.platform === 'iOS') {
+	      styles.base.padding = '23px 0px 7px 7px';
 	    }
 
 	    return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.cityTimeWrapper }, _react2['default'].createElement('p', { style: styles.cityState }, cityState), _react2['default'].createElement('p', { style: styles.headerDate }, (0, _moment2['default'])().format('dddd, MMMM D'))), _react2['default'].createElement('i', {
