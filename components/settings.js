@@ -109,12 +109,17 @@ let Settings = React.createClass({
     styles.radio.backgroundImage = `radial-gradient(circle, ${mainColor} 10%, ${shadow} 80%)`
 
     var check = <div style={styles.check} ></div>
+    if(window.device && device.platform === 'iOS') {
+      styles.base.paddingTop = '23px'
+    }
+
     return (
       <div style={styles.base} >
 
         <i
           className="fa fa-angle-double-left"
           onClick={() => this.transitionSync()}
+          onTouchEnd={() => this.transitionSync()}
           style={styles.backIcon}></i>
         <div style={styles.navigation} >
           <p style={styles.header}>
