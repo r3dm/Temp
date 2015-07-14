@@ -47,6 +47,9 @@ let Header = React.createClass({
     if(cityState.length > 20) {
       cityState = cityState.slice(0, 18) + ' ...'
     }
+    if(device.platform === 'iOS') {
+      styles.base.padding = '23px 0px 7px 7px'
+    }
 
     return (
       <div style={styles.base} >
