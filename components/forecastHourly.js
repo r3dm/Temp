@@ -31,6 +31,14 @@ var styles = {
     fontSize: '3em',
     flexGrow: 1,
     textAlign: 'center'
+  },
+  iconStyle: {
+    display: 'flex',
+    flexDirection: 'column',
+    flexBasis: '30vw',
+    flexGrow: 1,
+    justifyContent: 'center',
+    textAlign: 'center'
   }
 }
 
@@ -44,10 +52,13 @@ class ForecastHourly extends React.Component {
     return (
       <div style={styles.base} >
         <div style={styles.timeStyle} >
-          {timeObj.format('h:mm a')}
+          {timeObj.format(' h a')}
         </div>
-        <i className={`wi wi-${ mapWeather(this.props.conditionId)}`}
-           style={styles.iStyle}></i>
+        <div style={styles.iconStyle}>
+          <i className={`wi wi-${ mapWeather(this.props.conditionId)}`}
+             style={styles.iStyle}></i>
+          { this.props.conditions }
+        </div>
         <div style={styles.tempStyle} >
           { Math.round(temp) }&deg;
         </div>
@@ -59,7 +70,8 @@ ForecastHourly.propTypes = {
   temp: React.PropTypes.number,
   time: React.PropTypes.string,
   units: React.PropTypes.string,
-  conditionId: React.PropTypes.number
+  conditionId: React.PropTypes.number,
+  conditions: React.PropTypes.string
 }
 
 export default new Radium(ForecastHourly)
