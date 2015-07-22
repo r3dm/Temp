@@ -6,7 +6,6 @@ import { Route, DefaultRoute, RouteHandler } from 'react-router'
 import Home from './components/home.js'
 import Splash from './components/splash.js'
 import Settings from './components/settings.js'
-import { fetchWeather } from './utils/weather.js'
 import moment from 'moment'
 
 const dtFmtStr = 'YYYY-MM-DD HH:00:00'
@@ -17,8 +16,8 @@ const dtFmtStr = 'YYYY-MM-DD HH:00:00'
 let App = React.createClass({
   getInitialState() {
     return {
-      cityName: 'somewhere',
-      country: 'USA',
+      cityName: 'none',
+      country: 'N/A',
       currentConditions: 'Clear',
       temp: 89,
       lat: NaN,
@@ -48,70 +47,6 @@ let App = React.createClass({
         ]
       }
     }
-  },
-  componentDidMount() {
-    if(navigator.geolocation) {
-      var promise = new Promise((resolve) => {
-        console.log('browser supports geolocation, waiting for user')
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            console.log('browser gps given', position)
-            var result = fetchWeather(position.coords.latitude,
-                                      position.coords.longitude,
-                                      this.state.units)
-                            .then(this.weatherCallback, this.fetchWeatherError)
-            result.lat = position.coords.latitude
-            result.lon = position.coords.longitude
-            console.log('return value', result)
-
-            resolve(result)
-          },
-          () => { // error
-            console.log('geolocation error branch, fetch weather anyway')
-            resolve(
-              fetchWeather(this.state.lat, this.state.lon, this.state.units)
-                .then(this.weatherCallback, this.fetchWeatherError)
-            )
-          }
-        )
-        // window.setTimeout(() => {
-        //   console.log('timeout')
-        //   resolve(
-        //     fetchWeather(this.state.lat, this.state.lon, this.state.units)
-        //     .then(this.weatherCallback, this.fetchWeatherError)
-        //   )
-        // }, 8000)
-      })
-      promise.then((result) => {
-        this.setState(result)
-      })
-    } else {
-      console.log('no geolocation available')
-    }
-  },
-  weatherCallback(results) {
-    var weather = results[0].body
-    var hourlyForecast = results[1].body.list
-    var fiveDayForecast = results[2].body.list
-
-    // weather api may return an array here, so we check
-    var currentWeather = Array.isArray(weather.weather) ?
-                    weather.weather[0] :
-                    weather.weather
-    return {
-      weather,
-      hourlyForecast,
-      fiveDayForecast,
-      temp: Math.round(weather.main.temp),
-      cityName: weather.name,
-      sunrise: weather.sys.sunrise,
-      sunset: weather.sys.sunset,
-      currentConditions: currentWeather.main,
-      country: weather.sys.country
-    }
-  },
-  fetchWeatherError(reason) {
-    console.log(reason)
   },
   saveSettings: function(newState) {
     this.setState(newState)
