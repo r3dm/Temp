@@ -16,8 +16,8 @@ const dtFmtStr = 'YYYY-MM-DD HH:00:00'
 let App = React.createClass({
   getInitialState() {
     return {
-      cityName: 'somewhere',
-      country: 'USA',
+      cityName: 'none',
+      country: 'N/A',
       currentConditions: 'Clear',
       temp: 89,
       lat: NaN,

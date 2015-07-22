@@ -85,6 +85,10 @@ var styles = {
   geoLabel: {
     fontSize: '2em',
     paddingLeft: '14vw'
+  },
+  location: {
+    fontSize: '1.5em',
+    textAlign: 'center'
   }
 }
 
@@ -94,6 +98,8 @@ let Settings = React.createClass({
     syncFunc: React.PropTypes.func
   },
   mixins: [Navigation],
+
+  // declare setting component initial state based off passed in props
   getInitialState: function() {
     return {
       units: this.props.state.units,
@@ -108,16 +114,24 @@ let Settings = React.createClass({
     })
   },
 
+  // updates settings component state upon user input to form
   handleChange: function(event) {
     this.setState({
       units: event.target.value,
       temp: convertTemp.convertUnits(this.state.temp, event.target.value)
     })
   },
+
+  // syncronizes the settings component state object with the app's topmost
+  // state object, this is neccessary due to the way form state works with
+  // react
   transitionSync: function() {
     this.props.syncFunc(this.state)
     this.transitionTo('home')
   },
+
+  // request geolocation data from browser
+  // pass this info to api
   fetchWeather: function() {
     if(navigator.geolocation) {
       var promise = new Promise((resolve) => {
@@ -143,13 +157,6 @@ let Settings = React.createClass({
             )
           }
         )
-        // window.setTimeout(() => {
-        //   console.log('timeout')
-        //   resolve(
-        //     fetchWeather(this.state.lat, this.state.lon, this.state.units)
-        //     .then(this.weatherCallback, this.fetchWeatherError)
-        //   )
-        // }, 8000)
       })
       promise.then((result) => {
         this.setState(result)
@@ -159,6 +166,8 @@ let Settings = React.createClass({
     }
   },
 
+  // used for weather api callbacks, parses the raw response into the fields
+  // we expect
   weatherCallback(results) {
     var weather = results[0].body
     var hourlyForecast = results[1].body.list
@@ -193,9 +202,20 @@ let Settings = React.createClass({
     styles.base.backgroundColor = mainColor
     styles.radio.backgroundImage = `radial-gradient(circle, ${mainColor} 10%, ${shadow} 80%)`
 
+    // radio button check-fill object
     var check = <div style={styles.check} ></div>
+
+    // Cordova-specific check
     if(window.device && device.platform === 'iOS') {
       styles.base.paddingTop = '23px'
+    }
+
+    // cityName has two sources of truth - give precedence to local state object
+    var cityName = 'N/A';
+    if(this.state.cityName) {
+      cityName = this.state.cityName
+    } else if (this.props.state.cityName) {
+      cityName = this.props.state.cityName
     }
 
     return (
@@ -249,6 +269,11 @@ let Settings = React.createClass({
               onClick={() => { this.fetchWeather() }}>
               <i className="fa fa-location-arrow" />
             </button>
+          </div>
+
+          <div style={styles.location} >
+            <div>Your location:</div>
+            <div>{ cityName }</div>
           </div>
 
         </div>
