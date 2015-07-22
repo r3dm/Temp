@@ -107,9 +107,10 @@ let Settings = React.createClass({
   // declare setting component initial state based off passed in props
   getInitialState: function() {
     return {
-      units: this.props.state.units,
+      online: window.navigator.onLine,
+      querying: false,
       temp: this.props.state.temp,
-      querying: false
+      units: this.props.state.units,
     }
   },
 
@@ -205,6 +206,15 @@ let Settings = React.createClass({
   hideSpinner() {
     this.setState({ querying: false })
   },
+  warnOffline() {
+    // TODO properly test this
+    if(navigator.notification) {
+      navigator.notification.alert("you are currently offline", // message
+                                   null, // callback
+                                   'Warning', // title
+                                   'OK') // button name
+    }
+  },
 
   render: function() {
     let mainColor = weatherColor(this.state.temp)
@@ -285,8 +295,12 @@ let Settings = React.createClass({
             <button
               style={styles.geoButton}
               onClick={() => {
-                this.fetchWeather()
-                this.showSpinner()
+                if(this.state.online) {
+                  this.fetchWeather()
+                  this.showSpinner()
+                } else {
+                  this.warnOffline()
+                }
               }}>
               <i className={spinnerClasses} />
             </button>
