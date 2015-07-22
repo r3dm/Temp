@@ -284,10 +284,10 @@
 	  // declare setting component initial state based off passed in props
 	  getInitialState: function getInitialState() {
 	    return {
-	      units: this.props.state.units,
+	      online: window.navigator.onLine,
+	      querying: false,
 	      temp: this.props.state.temp,
-	      querying: false
-	    };
+	      units: this.props.state.units };
 	  },
 
 	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
@@ -374,6 +374,15 @@
 	  hideSpinner: function hideSpinner() {
 	    this.setState({ querying: false });
 	  },
+	  warnOffline: function warnOffline() {
+	    // TODO properly test this
+	    if (navigator.notification) {
+	      navigator.notification.alert('you are currently offline', // message
+	      null, // callback
+	      'Warning', // title
+	      'OK');
+	    }
+	  },
 
 	  render: function render() {
 	    var _this2 = this;
@@ -430,14 +439,19 @@
 	      value: 'imperial' }), _react2['default'].createElement('span', { style: styles.optionText }, 'Fahrenheit'), _react2['default'].createElement('div', { style: styles.radio }, this.state.units === 'imperial' ? check : null)), _react2['default'].createElement('div', { style: styles.geoRow }, _react2['default'].createElement('div', { style: styles.geoLabel }, 'Geolocation'), _react2['default'].createElement('button', {
 	      style: styles.geoButton,
 	      onClick: function onClick() {
-	        _this2.fetchWeather();
-	        _this2.showSpinner();
+	        if (_this2.state.online) {
+	          _this2.fetchWeather();
+	          _this2.showSpinner();
+	        } else {
+	          _this2.warnOffline();
+	        }
 	      } }, _react2['default'].createElement('i', { className: spinnerClasses }))), _react2['default'].createElement('div', { style: styles.location }, _react2['default'].createElement('div', null, 'Your location:'), _react2['default'].createElement('div', null, cityName))));
 	  }
 	});
 
 	exports['default'] = new _radium2['default'](Settings);
 	module.exports = exports['default'];
+	// button name
 
 	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "settings.js" + ": " + err.message); } }); } } })(); }
 
