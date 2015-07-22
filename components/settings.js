@@ -81,11 +81,15 @@ var styles = {
     color: 'white',
     background: 'none',
     borderRadius: '10px',
-    marginRight: '6vw'
+    marginRight: '6vw',
+    flexShrink: 0
   },
   geoLabel: {
     fontSize: '2em',
-    paddingLeft: '14vw'
+    flexBasis: '50vw',
+    flexGrow: 1,
+    flexShrink: 1,
+    textAlign: 'center'
   },
   location: {
     fontSize: '1.5em',
@@ -170,6 +174,7 @@ let Settings = React.createClass({
   // used for weather api callbacks, parses the raw response into the fields
   // we expect
   weatherCallback(results) {
+    console.log('response:', results)
     var weather = results[0].body
     var hourlyForecast = results[1].body.list
     var fiveDayForecast = results[2].body.list
@@ -276,7 +281,7 @@ let Settings = React.createClass({
           </label>
 
           <div style={styles.geoRow} >
-            <span style={styles.geoLabel}>Geolocation</span>
+            <div style={styles.geoLabel}>Geolocation</div>
             <button
               style={styles.geoButton}
               onClick={() => {
