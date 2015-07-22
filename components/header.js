@@ -27,7 +27,7 @@ var styles = {
   },
 
   settingsIcon: {
-    fontSize: '2.2em',
+    fontSize: '2.3em',
     padding: '10px 10px'
   }
 }

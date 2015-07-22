@@ -5,6 +5,7 @@ import { weatherColor } from '../utils/weatherColor.js'
 import convertTemp from '../utils/convertTemp.js'
 import { fetchWeather } from '../utils/weather.js'
 import Color from 'color'
+import classNames from 'classnames'
 
 var styles = {
   base: {
@@ -80,11 +81,15 @@ var styles = {
     color: 'white',
     background: 'none',
     borderRadius: '10px',
-    marginRight: '6vw'
+    marginRight: '6vw',
+    flexShrink: 0
   },
   geoLabel: {
     fontSize: '2em',
-    paddingLeft: '14vw'
+    flexBasis: '50vw',
+    flexGrow: 1,
+    flexShrink: 1,
+    textAlign: 'center'
   },
   location: {
     fontSize: '1.5em',
@@ -103,7 +108,8 @@ let Settings = React.createClass({
   getInitialState: function() {
     return {
       units: this.props.state.units,
-      temp: this.props.state.temp
+      temp: this.props.state.temp,
+      querying: false
     }
   },
 
@@ -168,6 +174,7 @@ let Settings = React.createClass({
   // used for weather api callbacks, parses the raw response into the fields
   // we expect
   weatherCallback(results) {
+    console.log('response:', results)
     var weather = results[0].body
     var hourlyForecast = results[1].body.list
     var fiveDayForecast = results[2].body.list
@@ -176,6 +183,7 @@ let Settings = React.createClass({
     var currentWeather = Array.isArray(weather.weather) ?
                     weather.weather[0] :
                     weather.weather
+    this.hideSpinner()
     return {
       weather,
       hourlyForecast,
@@ -190,6 +198,12 @@ let Settings = React.createClass({
   },
   fetchWeatherError(reason) {
     console.log(reason)
+  },
+  showSpinner() {
+    this.setState({ querying: true })
+  },
+  hideSpinner() {
+    this.setState({ querying: false })
   },
 
   render: function() {
@@ -216,6 +230,11 @@ let Settings = React.createClass({
     } else if (this.props.state.cityName) {
       cityName = this.props.state.cityName
     }
+    var spinnerClasses = classNames({
+      'fa': true,
+      'fa-location-arrow': !this.state.querying,
+      'fa-circle-o-notch fa-spin': this.state.querying
+    })
 
     return (
       <div style={styles.base} >
@@ -262,11 +281,14 @@ let Settings = React.createClass({
           </label>
 
           <div style={styles.geoRow} >
-            <span style={styles.geoLabel}>Geolocation</span>
+            <div style={styles.geoLabel}>Geolocation</div>
             <button
               style={styles.geoButton}
-              onClick={() => { this.fetchWeather() }}>
-              <i className="fa fa-location-arrow" />
+              onClick={() => {
+                this.fetchWeather()
+                this.showSpinner()
+              }}>
+              <i className={spinnerClasses} />
             </button>
           </div>
 

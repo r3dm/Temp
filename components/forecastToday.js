@@ -58,7 +58,8 @@ class ForecastToday extends React.Component {
                 temp={f.main.temp}
                 time={f.dt_txt}
                 units={ this.props.units }
-                conditionId={f.weather[0].id} />
+                conditionId={f.weather[0].id}
+                conditions={f.weather[0].description} />
             )
           })}
         </div>
