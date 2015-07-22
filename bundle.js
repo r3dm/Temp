@@ -72,7 +72,7 @@
 
 	var _componentsSettingsJs2 = _interopRequireDefault(_componentsSettingsJs);
 
-	var _moment = __webpack_require__(221);
+	var _moment = __webpack_require__(210);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -23663,25 +23663,21 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _radium = __webpack_require__(199);
+	var _radium = __webpack_require__(197);
 
 	var _radium2 = _interopRequireDefault(_radium);
 
-	var _headerJs = __webpack_require__(313);
+	var _headerJs = __webpack_require__(209);
 
 	var _headerJs2 = _interopRequireDefault(_headerJs);
 
-	var _forecastTodayJs = __webpack_require__(197);
+	var _forecastTodayJs = __webpack_require__(306);
 
 	var _forecastTodayJs2 = _interopRequireDefault(_forecastTodayJs);
 
 	var _forecastFiveDayJs = __webpack_require__(314);
 
 	var _forecastFiveDayJs2 = _interopRequireDefault(_forecastFiveDayJs);
-
-	var _utilsConvertTempJs = __webpack_require__(220);
-
-	var _utilsConvertTempJs2 = _interopRequireDefault(_utilsConvertTempJs);
 
 	var styles = {
 	  base: {
@@ -23728,13 +23724,11 @@
 	        forecasts: this.props.state.hourlyForecast,
 	        temp: this.props.state.temp,
 	        units: this.props.state.units }), _react2['default'].createElement('div', { style: styles.footer }, fiveDayForecast.map(function (f, index) {
-	        var high = _this.props.state.units === 'metric' ? _utilsConvertTempJs2['default'].toCelsius(f.temp.max) : Math.round(f.temp.max);
-	        var low = _this.props.state.units === 'metric' ? _utilsConvertTempJs2['default'].toCelsius(f.temp.min) : Math.round(f.temp.min);
 	        return _react2['default'].createElement(_forecastFiveDayJs2['default'], {
 	          conditionsId: f.weather[0].id,
-	          high: high,
+	          high: f.temp.max,
 	          key: index,
-	          low: low,
+	          low: f.temp.min,
 	          time: f.dt,
 	          units: _this.props.state.units });
 	      })));
@@ -23757,295 +23751,19 @@
 /* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } (function () {
-
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-
-	var _createClass = (function () {
-	  function defineProperties(target, props) {
-	    for (var i = 0; i < props.length; i++) {
-	      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-	    }
-	  }return function (Constructor, protoProps, staticProps) {
-	    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-	  };
-	})();
-
-	var _get = function get(_x, _x2, _x3) {
-	  var _again = true;_function: while (_again) {
-	    var object = _x,
-	        property = _x2,
-	        receiver = _x3;desc = parent = getter = undefined;_again = false;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
-	      var parent = Object.getPrototypeOf(object);if (parent === null) {
-	        return undefined;
-	      } else {
-	        _x = parent;_x2 = property;_x3 = receiver;_again = true;continue _function;
-	      }
-	    } else if ('value' in desc) {
-	      return desc.value;
-	    } else {
-	      var getter = desc.get;if (getter === undefined) {
-	        return undefined;
-	      }return getter.call(receiver);
-	    }
-	  }
-	};
-
-	function _interopRequireDefault(obj) {
-	  return obj && obj.__esModule ? obj : { 'default': obj };
-	}
-
-	function _classCallCheck(instance, Constructor) {
-	  if (!(instance instanceof Constructor)) {
-	    throw new TypeError('Cannot call a class as a function');
-	  }
-	}
-
-	function _inherits(subClass, superClass) {
-	  if (typeof superClass !== 'function' && superClass !== null) {
-	    throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
-	  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) subClass.__proto__ = superClass;
-	}
-
-	var _react = __webpack_require__(5);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _forecastHourlyJs = __webpack_require__(198);
-
-	var _forecastHourlyJs2 = _interopRequireDefault(_forecastHourlyJs);
-
-	var _forecastNowJs = __webpack_require__(311);
-
-	var _forecastNowJs2 = _interopRequireDefault(_forecastNowJs);
-
-	var _radium = __webpack_require__(199);
-
-	var _radium2 = _interopRequireDefault(_radium);
-
-	var _utilsConvertTempJs = __webpack_require__(220);
-
-	var _utilsConvertTempJs2 = _interopRequireDefault(_utilsConvertTempJs);
-
-	var styles = {
-	  base: {
-	    flexGrow: 1,
-	    overflowY: 'scroll',
-	    overflowX: 'hidden'
-	  },
-
-	  overflowDiv: {
-	    overflowY: 'scroll',
-	    overflowX: 'hidden',
-	    height: '55vh'
-	  }
-	};
-
-	var ForecastToday = (function (_React$Component) {
-	  function ForecastToday(props) {
-	    _classCallCheck(this, ForecastToday);
-
-	    _get(Object.getPrototypeOf(ForecastToday.prototype), 'constructor', this).call(this, props);
-	    this.state = { overflowHeight: '55vh' };
-	  }
-
-	  _inherits(ForecastToday, _React$Component);
-
-	  _createClass(ForecastToday, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var todayDivHeight = document.getElementById('todayDiv').clientHeight;
-	      var mainDividerHeight = document.getElementById('mainDivider').clientHeight;
-	      this.setState({
-	        overflowHeight: todayDivHeight - mainDividerHeight - 30
-	      });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this = this;
-
-	      styles.overflowDiv.height = this.state.overflowHeight;
-	      var forecasts = this.props.forecasts;
-	      if (forecasts && forecasts.length > 8) {
-	        forecasts = forecasts.slice(1, 9);
-	      }
-
-	      return _react2['default'].createElement('div', {
-	        id: 'todayDiv',
-	        style: styles.base }, _react2['default'].createElement(_forecastNowJs2['default'], {
-	        conditionsId: this.props.conditionsId,
-	        currentConditions: this.props.currentConditions,
-	        temp: this.props.temp,
-	        units: this.props.units }), _react2['default'].createElement('div', { style: styles.overflowDiv }, forecasts.map(function (f, index) {
-	        var temp = _this.props.units === 'metric' ? _utilsConvertTempJs2['default'].toCelsius(f.main.temp) : f.main.temp;
-	        return _react2['default'].createElement(_forecastHourlyJs2['default'], {
-	          key: index,
-	          temp: temp,
-	          time: f.dt_txt,
-	          units: _this.props.units,
-	          conditionId: f.weather[0].id });
-	      })));
-	    }
-	  }]);
-
-	  return ForecastToday;
-	})(_react2['default'].Component);
-
-	ForecastToday.propTypes = {
-	  conditionsId: _react2['default'].PropTypes.number,
-	  currentConditions: _react2['default'].PropTypes.string,
-	  forecasts: _react2['default'].PropTypes.array,
-	  temp: _react2['default'].PropTypes.number,
-	  units: _react2['default'].PropTypes.string
-	};
-
-	exports['default'] = new _radium2['default'](ForecastToday);
-	module.exports = exports['default'];
-
-	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "forecastToday.js" + ": " + err.message); } }); } } })(); }
-
-/***/ },
-/* 198 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } (function () {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-
-	var _createClass = (function () {
-	  function defineProperties(target, props) {
-	    for (var i = 0; i < props.length; i++) {
-	      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-	    }
-	  }return function (Constructor, protoProps, staticProps) {
-	    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-	  };
-	})();
-
-	function _interopRequireDefault(obj) {
-	  return obj && obj.__esModule ? obj : { 'default': obj };
-	}
-
-	function _classCallCheck(instance, Constructor) {
-	  if (!(instance instanceof Constructor)) {
-	    throw new TypeError('Cannot call a class as a function');
-	  }
-	}
-
-	function _inherits(subClass, superClass) {
-	  if (typeof superClass !== 'function' && superClass !== null) {
-	    throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
-	  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) subClass.__proto__ = superClass;
-	}
-
-	var _react = __webpack_require__(5);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _radium = __webpack_require__(199);
-
-	var _radium2 = _interopRequireDefault(_radium);
-
-	var _utilsWeatherColorJs = __webpack_require__(211);
-
-	var _moment = __webpack_require__(221);
-
-	var _moment2 = _interopRequireDefault(_moment);
-
-	var _utilsWeatherJs = __webpack_require__(307);
-
-	var styles = {
-	  base: {
-	    display: 'flex',
-	    flexDirection: 'row',
-	    flexGrow: 1,
-	    flexWrap: 'nowrap',
-	    justifyContent: 'center',
-	    alignItems: 'center',
-	    minHeight: '90px'
-	  },
-	  timeStyle: {
-	    fontSize: '1.5em',
-	    flexBasis: '20vw',
-	    flexGrow: 1,
-	    textAlign: 'center'
-	  },
-	  tempStyle: {
-	    fontSize: '1.5em',
-	    flexBasis: '10vw',
-	    flexGrow: 1,
-	    textAlign: 'center'
-	  },
-	  iStyle: {
-	    fontSize: '3em',
-	    flexGrow: 1,
-	    textAlign: 'center'
-	  }
-	};
-
-	var ForecastHourly = (function (_React$Component) {
-	  function ForecastHourly() {
-	    _classCallCheck(this, ForecastHourly);
-
-	    if (_React$Component != null) {
-	      _React$Component.apply(this, arguments);
-	    }
-	  }
-
-	  _inherits(ForecastHourly, _React$Component);
-
-	  _createClass(ForecastHourly, [{
-	    key: 'render',
-	    value: function render() {
-	      styles.base.backgroundColor = (0, _utilsWeatherColorJs.weatherColor)(this.props.temp, this.props.units);
-	      var timeObj = (0, _moment2['default'])(this.props.time + ' +0000', 'YYYY-MM-DD HH:mm:ss Z');
-
-	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.timeStyle }, timeObj.format('h:mm a')), _react2['default'].createElement('i', { className: 'wi wi-' + (0, _utilsWeatherJs.mapWeather)(this.props.conditionId),
-	        style: styles.iStyle }), _react2['default'].createElement('div', { style: styles.tempStyle }, Math.round(this.props.temp), '°'));
-	    }
-	  }]);
-
-	  return ForecastHourly;
-	})(_react2['default'].Component);
-
-	ForecastHourly.propTypes = {
-	  temp: _react2['default'].PropTypes.number,
-	  time: _react2['default'].PropTypes.string,
-	  units: _react2['default'].PropTypes.string,
-	  conditionId: _react2['default'].PropTypes.number
-	};
-
-	exports['default'] = new _radium2['default'](ForecastHourly);
-	module.exports = exports['default'];
-
-	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "forecastHourly.js" + ": " + err.message); } }); } } })(); }
-
-/***/ },
-/* 199 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var Enhancer = __webpack_require__(200);
+	var Enhancer = __webpack_require__(198);
 
 	module.exports = function (ComposedComponent) {
 	  return Enhancer(ComposedComponent);
 	};
-	module.exports.Style = __webpack_require__(208);
-	module.exports.getState = __webpack_require__(204);
-	module.exports.keyframes = __webpack_require__(210);
+	module.exports.Style = __webpack_require__(206);
+	module.exports.getState = __webpack_require__(202);
+	module.exports.keyframes = __webpack_require__(208);
 
 /***/ },
-/* 200 */
+/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
@@ -24060,7 +23778,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
 
-	var resolveStyles = __webpack_require__(201);
+	var resolveStyles = __webpack_require__(199);
 
 	var enhanceWithRadium = function enhanceWithRadium(ComposedComponent) {
 	  var displayName = ComposedComponent.displayName || ComposedComponent.name || 'Component';
@@ -24113,20 +23831,20 @@
 	module.exports = enhanceWithRadium;
 
 /***/ },
-/* 201 */
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
 
 	'use strict';
 
-	var MouseUpListener = __webpack_require__(203);
-	var getState = __webpack_require__(204);
-	var Prefixer = __webpack_require__(205);
+	var MouseUpListener = __webpack_require__(201);
+	var getState = __webpack_require__(202);
+	var Prefixer = __webpack_require__(203);
 
-	var ExecutionEnvironment = __webpack_require__(202);
+	var ExecutionEnvironment = __webpack_require__(200);
 	var React = __webpack_require__(5);
-	var objectAssign = __webpack_require__(207);
+	var objectAssign = __webpack_require__(205);
 
 	// babel-eslint 3.1.7 fails here for some reason, error:
 	//   0:0  error  Cannot call method 'isSequenceExpression' of undefined
@@ -24391,7 +24109,7 @@
 	module.exports = resolveStyles;
 
 /***/ },
-/* 202 */
+/* 200 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -24436,7 +24154,7 @@
 
 
 /***/ },
-/* 203 */
+/* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
@@ -24480,7 +24198,7 @@
 	};
 
 /***/ },
-/* 204 */
+/* 202 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
@@ -24502,7 +24220,7 @@
 	module.exports = getState;
 
 /***/ },
-/* 205 */
+/* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -24512,8 +24230,8 @@
 
 	'use strict';
 
-	var ExecutionEnvironment = __webpack_require__(202);
-	var arrayFind = __webpack_require__(206);
+	var ExecutionEnvironment = __webpack_require__(200);
+	var arrayFind = __webpack_require__(204);
 
 	var infoByCssPrefix = {
 	  '-moz-': {
@@ -24717,7 +24435,7 @@
 	};
 
 /***/ },
-/* 206 */
+/* 204 */
 /***/ function(module, exports, __webpack_require__) {
 
 	function find(array, predicate, self) {
@@ -24744,7 +24462,7 @@
 
 
 /***/ },
-/* 207 */
+/* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24776,13 +24494,13 @@
 
 
 /***/ },
-/* 208 */
+/* 206 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var createMarkupForStyles = __webpack_require__(209);
-	var Prefixer = __webpack_require__(205);
+	var createMarkupForStyles = __webpack_require__(207);
+	var Prefixer = __webpack_require__(203);
 
 	var React = __webpack_require__(5);
 
@@ -24867,7 +24585,7 @@
 	module.exports = Style;
 
 /***/ },
-/* 209 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
@@ -24884,17 +24602,17 @@
 	module.exports = createMarkupForStyles;
 
 /***/ },
-/* 210 */
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
 
 	'use strict';
 
-	var createMarkupForStyles = __webpack_require__(209);
-	var Prefixer = __webpack_require__(205);
+	var createMarkupForStyles = __webpack_require__(207);
+	var Prefixer = __webpack_require__(203);
 
-	var ExecutionEnvironment = __webpack_require__(202);
+	var ExecutionEnvironment = __webpack_require__(200);
 
 	var isAnimationSupported = ExecutionEnvironment.canUseDOM && Prefixer.getPrefixedPropertyName('animation') !== false;
 
@@ -24944,7 +24662,7 @@
 	module.exports = keyframes;
 
 /***/ },
-/* 211 */
+/* 209 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } (function () {
@@ -24954,2400 +24672,97 @@
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
-	exports.weatherColor = weatherColor;
 
 	function _interopRequireDefault(obj) {
 	  return obj && obj.__esModule ? obj : { 'default': obj };
 	}
 
-	var _interpolation = __webpack_require__(212);
+	var _react = __webpack_require__(5);
 
-	var _color = __webpack_require__(215);
+	var _react2 = _interopRequireDefault(_react);
 
-	var _color2 = _interopRequireDefault(_color);
+	var _radium = __webpack_require__(197);
 
-	var _convertTempJs = __webpack_require__(220);
+	var _radium2 = _interopRequireDefault(_radium);
 
-	var _convertTempJs2 = _interopRequireDefault(_convertTempJs);
+	var _moment = __webpack_require__(210);
 
-	var splashRed = new _color2['default']('#ff5136');
-	exports.splashRed = splashRed;
-	var start = new _color2['default']('#7ea4b3');
-	var end = new _color2['default']('#ff5136');
-	var textColor = new _color2['default']('white');
-	var maxTemp = 100; // resonable temperatures
-	var minTemp = 0;
+	var _moment2 = _interopRequireDefault(_moment);
 
-	/*
-	 * scale our currentTemp to a number between 0 and 1
-	 */
-	var scale = function scale(currentTemp) {
+	var _reactRouter = __webpack_require__(1);
 
-	  var numerand = currentTemp - minTemp;
-	  var denominator = maxTemp - minTemp;
-	  var result = numerand / denominator;
+	var _utilsWeatherColorJs = __webpack_require__(296);
 
-	  // clip to [0, 1]
-	  result = result > 1 ? 1 : result;
-	  result = result < 0 ? 0 : result;
+	var styles = {
+	  base: {
+	    padding: '7px 0px 7px 7px',
+	    flexShrink: '0',
+	    display: 'flex',
+	    flexDirection: 'row'
+	  },
+	  cityTimeWrapper: {
+	    flexGrow: 1
+	  },
 
-	  return result;
-	};
+	  cityState: {
+	    fontFamily: '"Comfortaa-Bold", sans-serif',
+	    fontSize: '1.8em',
+	    margin: '0'
+	  },
 
-	// ensure color has sufficient contrast against text color
-	var contrast = function contrast(color) {
-	  while (color.contrast(textColor) < 2) {
-	    color = color.darken(0.1);
+	  headerDate: {
+	    margin: '0',
+	    fontSize: '1.3em'
+	  },
+
+	  settingsIcon: {
+	    fontSize: '2.2em',
+	    padding: '10px 10px'
 	  }
 	};
 
-	/*
-	 * Takes a temperature and returns an appropriate color
-	 * in hsl you can modify by hue, saturation and lightness, so
-	 * we calculate a color between 'blue' & 'red' by Linear Interpolation
-	 * ex. lerp(start, end, ratio)
-	 */
-
-	function weatherColor(currentTemp, units) {
-	  if (units === 'metric') {
-	    currentTemp = _convertTempJs2['default'].toFahrenheit(currentTemp);
-	  }
-	  if (isNaN(currentTemp)) {
-	    return 'white';
-	  }
-
-	  var result = start.clone();
-
-	  var ratio = scale(currentTemp);
-
-	  var newHue = (0, _interpolation.lerp)(start.hue(), end.hue(), ratio);
-	  var newSaturation = (0, _interpolation.lerp)(start.saturation(), end.saturation(), ratio);
-	  var newLightness = (0, _interpolation.lerp)(start.lightness(), end.lightness(), ratio);
-
-	  result.hue(newHue);
-	  result.saturation(newSaturation);
-	  result.lightness(newLightness);
-	  contrast(result);
-	  // result.alpha(0.3)
-
-	  return result.hslaString();
-	}
-
-	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "weatherColor.js" + ": " + err.message); } }); } } })(); }
-
-/***/ },
-/* 212 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/** Utility function for linear interpolation. */
-	module.exports.lerp = __webpack_require__(213)
-
-	/** Utility function for Hermite interpolation. */
-	module.exports.smoothstep = __webpack_require__(214)
-
-/***/ },
-/* 213 */
-/***/ function(module, exports, __webpack_require__) {
-
-	function lerp(v0, v1, t) {
-	    return v0*(1-t)+v1*t
-	}
-	module.exports = lerp
-
-/***/ },
-/* 214 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = function smoothstep (min, max, value) {
-	  var x = Math.max(0, Math.min(1, (value-min)/(max-min)));
-	  return x*x*(3 - 2*x);
-	};
-
-
-/***/ },
-/* 215 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* MIT license */
-	var convert = __webpack_require__(216),
-	    string = __webpack_require__(218);
-
-	var Color = function(obj) {
-	  if (obj instanceof Color) return obj;
-	  if (! (this instanceof Color)) return new Color(obj);
-
-	   this.values = {
-	      rgb: [0, 0, 0],
-	      hsl: [0, 0, 0],
-	      hsv: [0, 0, 0],
-	      hwb: [0, 0, 0],
-	      cmyk: [0, 0, 0, 0],
-	      alpha: 1
-	   }
-
-	   // parse Color() argument
-	   if (typeof obj == "string") {
-	      var vals = string.getRgba(obj);
-	      if (vals) {
-	         this.setValues("rgb", vals);
-	      }
-	      else if(vals = string.getHsla(obj)) {
-	         this.setValues("hsl", vals);
-	      }
-	      else if(vals = string.getHwb(obj)) {
-	         this.setValues("hwb", vals);
-	      }
-	      else {
-	        throw new Error("Unable to parse color from string \"" + obj + "\"");
-	      }
-	   }
-	   else if (typeof obj == "object") {
-	      var vals = obj;
-	      if(vals["r"] !== undefined || vals["red"] !== undefined) {
-	         this.setValues("rgb", vals)
-	      }
-	      else if(vals["l"] !== undefined || vals["lightness"] !== undefined) {
-	         this.setValues("hsl", vals)
-	      }
-	      else if(vals["v"] !== undefined || vals["value"] !== undefined) {
-	         this.setValues("hsv", vals)
-	      }
-	      else if(vals["w"] !== undefined || vals["whiteness"] !== undefined) {
-	         this.setValues("hwb", vals)
-	      }
-	      else if(vals["c"] !== undefined || vals["cyan"] !== undefined) {
-	         this.setValues("cmyk", vals)
-	      }
-	      else {
-	        throw new Error("Unable to parse color from object " + JSON.stringify(obj));
-	      }
-	   }
-	}
-
-	Color.prototype = {
-	   rgb: function (vals) {
-	      return this.setSpace("rgb", arguments);
-	   },
-	   hsl: function(vals) {
-	      return this.setSpace("hsl", arguments);
-	   },
-	   hsv: function(vals) {
-	      return this.setSpace("hsv", arguments);
-	   },
-	   hwb: function(vals) {
-	      return this.setSpace("hwb", arguments);
-	   },
-	   cmyk: function(vals) {
-	      return this.setSpace("cmyk", arguments);
-	   },
-
-	   rgbArray: function() {
-	      return this.values.rgb;
-	   },
-	   hslArray: function() {
-	      return this.values.hsl;
-	   },
-	   hsvArray: function() {
-	      return this.values.hsv;
-	   },
-	   hwbArray: function() {
-	      if (this.values.alpha !== 1) {
-	        return this.values.hwb.concat([this.values.alpha])
-	      }
-	      return this.values.hwb;
-	   },
-	   cmykArray: function() {
-	      return this.values.cmyk;
-	   },
-	   rgbaArray: function() {
-	      var rgb = this.values.rgb;
-	      return rgb.concat([this.values.alpha]);
-	   },
-	   hslaArray: function() {
-	      var hsl = this.values.hsl;
-	      return hsl.concat([this.values.alpha]);
-	   },
-	   alpha: function(val) {
-	      if (val === undefined) {
-	         return this.values.alpha;
-	      }
-	      this.setValues("alpha", val);
-	      return this;
-	   },
-
-	   red: function(val) {
-	      return this.setChannel("rgb", 0, val);
-	   },
-	   green: function(val) {
-	      return this.setChannel("rgb", 1, val);
-	   },
-	   blue: function(val) {
-	      return this.setChannel("rgb", 2, val);
-	   },
-	   hue: function(val) {
-	      return this.setChannel("hsl", 0, val);
-	   },
-	   saturation: function(val) {
-	      return this.setChannel("hsl", 1, val);
-	   },
-	   lightness: function(val) {
-	      return this.setChannel("hsl", 2, val);
-	   },
-	   saturationv: function(val) {
-	      return this.setChannel("hsv", 1, val);
-	   },
-	   whiteness: function(val) {
-	      return this.setChannel("hwb", 1, val);
-	   },
-	   blackness: function(val) {
-	      return this.setChannel("hwb", 2, val);
-	   },
-	   value: function(val) {
-	      return this.setChannel("hsv", 2, val);
-	   },
-	   cyan: function(val) {
-	      return this.setChannel("cmyk", 0, val);
-	   },
-	   magenta: function(val) {
-	      return this.setChannel("cmyk", 1, val);
-	   },
-	   yellow: function(val) {
-	      return this.setChannel("cmyk", 2, val);
-	   },
-	   black: function(val) {
-	      return this.setChannel("cmyk", 3, val);
-	   },
-
-	   hexString: function() {
-	      return string.hexString(this.values.rgb);
-	   },
-	   rgbString: function() {
-	      return string.rgbString(this.values.rgb, this.values.alpha);
-	   },
-	   rgbaString: function() {
-	      return string.rgbaString(this.values.rgb, this.values.alpha);
-	   },
-	   percentString: function() {
-	      return string.percentString(this.values.rgb, this.values.alpha);
-	   },
-	   hslString: function() {
-	      return string.hslString(this.values.hsl, this.values.alpha);
-	   },
-	   hslaString: function() {
-	      return string.hslaString(this.values.hsl, this.values.alpha);
-	   },
-	   hwbString: function() {
-	      return string.hwbString(this.values.hwb, this.values.alpha);
-	   },
-	   keyword: function() {
-	      return string.keyword(this.values.rgb, this.values.alpha);
-	   },
-
-	   rgbNumber: function() {
-	      return (this.values.rgb[0] << 16) | (this.values.rgb[1] << 8) | this.values.rgb[2];
-	   },
-
-	   luminosity: function() {
-	      // http://www.w3.org/TR/WCAG20/#relativeluminancedef
-	      var rgb = this.values.rgb;
-	      var lum = [];
-	      for (var i = 0; i < rgb.length; i++) {
-	         var chan = rgb[i] / 255;
-	         lum[i] = (chan <= 0.03928) ? chan / 12.92
-	                  : Math.pow(((chan + 0.055) / 1.055), 2.4)
-	      }
-	      return 0.2126 * lum[0] + 0.7152 * lum[1] + 0.0722 * lum[2];
-	   },
-
-	   contrast: function(color2) {
-	      // http://www.w3.org/TR/WCAG20/#contrast-ratiodef
-	      var lum1 = this.luminosity();
-	      var lum2 = color2.luminosity();
-	      if (lum1 > lum2) {
-	         return (lum1 + 0.05) / (lum2 + 0.05)
-	      };
-	      return (lum2 + 0.05) / (lum1 + 0.05);
-	   },
-
-	   level: function(color2) {
-	     var contrastRatio = this.contrast(color2);
-	     return (contrastRatio >= 7.1)
-	       ? 'AAA'
-	       : (contrastRatio >= 4.5)
-	        ? 'AA'
-	        : '';
-	   },
-
-	   dark: function() {
-	      // YIQ equation from http://24ways.org/2010/calculating-color-contrast
-	      var rgb = this.values.rgb,
-	          yiq = (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000;
-	      return yiq < 128;
-	   },
-
-	   light: function() {
-	      return !this.dark();
-	   },
-
-	   negate: function() {
-	      var rgb = []
-	      for (var i = 0; i < 3; i++) {
-	         rgb[i] = 255 - this.values.rgb[i];
-	      }
-	      this.setValues("rgb", rgb);
-	      return this;
-	   },
-
-	   lighten: function(ratio) {
-	      this.values.hsl[2] += this.values.hsl[2] * ratio;
-	      this.setValues("hsl", this.values.hsl);
-	      return this;
-	   },
-
-	   darken: function(ratio) {
-	      this.values.hsl[2] -= this.values.hsl[2] * ratio;
-	      this.setValues("hsl", this.values.hsl);
-	      return this;
-	   },
-
-	   saturate: function(ratio) {
-	      this.values.hsl[1] += this.values.hsl[1] * ratio;
-	      this.setValues("hsl", this.values.hsl);
-	      return this;
-	   },
-
-	   desaturate: function(ratio) {
-	      this.values.hsl[1] -= this.values.hsl[1] * ratio;
-	      this.setValues("hsl", this.values.hsl);
-	      return this;
-	   },
-
-	   whiten: function(ratio) {
-	      this.values.hwb[1] += this.values.hwb[1] * ratio;
-	      this.setValues("hwb", this.values.hwb);
-	      return this;
-	   },
-
-	   blacken: function(ratio) {
-	      this.values.hwb[2] += this.values.hwb[2] * ratio;
-	      this.setValues("hwb", this.values.hwb);
-	      return this;
-	   },
-
-	   greyscale: function() {
-	      var rgb = this.values.rgb;
-	      // http://en.wikipedia.org/wiki/Grayscale#Converting_color_to_grayscale
-	      var val = rgb[0] * 0.3 + rgb[1] * 0.59 + rgb[2] * 0.11;
-	      this.setValues("rgb", [val, val, val]);
-	      return this;
-	   },
-
-	   clearer: function(ratio) {
-	      this.setValues("alpha", this.values.alpha - (this.values.alpha * ratio));
-	      return this;
-	   },
-
-	   opaquer: function(ratio) {
-	      this.setValues("alpha", this.values.alpha + (this.values.alpha * ratio));
-	      return this;
-	   },
-
-	   rotate: function(degrees) {
-	      var hue = this.values.hsl[0];
-	      hue = (hue + degrees) % 360;
-	      hue = hue < 0 ? 360 + hue : hue;
-	      this.values.hsl[0] = hue;
-	      this.setValues("hsl", this.values.hsl);
-	      return this;
-	   },
-
-	   mix: function(color2, weight) {
-	      weight = 1 - (weight == null ? 0.5 : weight);
-
-	      // algorithm from Sass's mix(). Ratio of first color in mix is
-	      // determined by the alphas of both colors and the weight
-	      var t1 = weight * 2 - 1,
-	          d = this.alpha() - color2.alpha();
-
-	      var weight1 = (((t1 * d == -1) ? t1 : (t1 + d) / (1 + t1 * d)) + 1) / 2;
-	      var weight2 = 1 - weight1;
-
-	      var rgb = this.rgbArray();
-	      var rgb2 = color2.rgbArray();
-
-	      for (var i = 0; i < rgb.length; i++) {
-	         rgb[i] = rgb[i] * weight1 + rgb2[i] * weight2;
-	      }
-	      this.setValues("rgb", rgb);
-
-	      var alpha = this.alpha() * weight + color2.alpha() * (1 - weight);
-	      this.setValues("alpha", alpha);
-
-	      return this;
-	   },
-
-	   toJSON: function() {
-	     return this.rgb();
-	   },
-
-	   clone: function() {
-	     return new Color(this.rgb());
-	   }
-	}
-
-
-	Color.prototype.getValues = function(space) {
-	   var vals = {};
-	   for (var i = 0; i < space.length; i++) {
-	      vals[space.charAt(i)] = this.values[space][i];
-	   }
-	   if (this.values.alpha != 1) {
-	      vals["a"] = this.values.alpha;
-	   }
-	   // {r: 255, g: 255, b: 255, a: 0.4}
-	   return vals;
-	}
-
-	Color.prototype.setValues = function(space, vals) {
-	   var spaces = {
-	      "rgb": ["red", "green", "blue"],
-	      "hsl": ["hue", "saturation", "lightness"],
-	      "hsv": ["hue", "saturation", "value"],
-	      "hwb": ["hue", "whiteness", "blackness"],
-	      "cmyk": ["cyan", "magenta", "yellow", "black"]
-	   };
-
-	   var maxes = {
-	      "rgb": [255, 255, 255],
-	      "hsl": [360, 100, 100],
-	      "hsv": [360, 100, 100],
-	      "hwb": [360, 100, 100],
-	      "cmyk": [100, 100, 100, 100]
-	   };
-
-	   var alpha = 1;
-	   if (space == "alpha") {
-	      alpha = vals;
-	   }
-	   else if (vals.length) {
-	      // [10, 10, 10]
-	      this.values[space] = vals.slice(0, space.length);
-	      alpha = vals[space.length];
-	   }
-	   else if (vals[space.charAt(0)] !== undefined) {
-	      // {r: 10, g: 10, b: 10}
-	      for (var i = 0; i < space.length; i++) {
-	        this.values[space][i] = vals[space.charAt(i)];
-	      }
-	      alpha = vals.a;
-	   }
-	   else if (vals[spaces[space][0]] !== undefined) {
-	      // {red: 10, green: 10, blue: 10}
-	      var chans = spaces[space];
-	      for (var i = 0; i < space.length; i++) {
-	        this.values[space][i] = vals[chans[i]];
-	      }
-	      alpha = vals.alpha;
-	   }
-	   this.values.alpha = Math.max(0, Math.min(1, (alpha !== undefined ? alpha : this.values.alpha) ));
-	   if (space == "alpha") {
-	      return;
-	   }
-
-	   // cap values of the space prior converting all values
-	   for (var i = 0; i < space.length; i++) {
-	      var capped = Math.max(0, Math.min(maxes[space][i], this.values[space][i]));
-	      this.values[space][i] = Math.round(capped);
-	   }
-
-	   // convert to all the other color spaces
-	   for (var sname in spaces) {
-	      if (sname != space) {
-	         this.values[sname] = convert[space][sname](this.values[space])
-	      }
-
-	      // cap values
-	      for (var i = 0; i < sname.length; i++) {
-	         var capped = Math.max(0, Math.min(maxes[sname][i], this.values[sname][i]));
-	         this.values[sname][i] = Math.round(capped);
-	      }
-	   }
-	   return true;
-	}
-
-	Color.prototype.setSpace = function(space, args) {
-	   var vals = args[0];
-	   if (vals === undefined) {
-	      // color.rgb()
-	      return this.getValues(space);
-	   }
-	   // color.rgb(10, 10, 10)
-	   if (typeof vals == "number") {
-	      vals = Array.prototype.slice.call(args);
-	   }
-	   this.setValues(space, vals);
-	   return this;
-	}
-
-	Color.prototype.setChannel = function(space, index, val) {
-	   if (val === undefined) {
-	      // color.red()
-	      return this.values[space][index];
-	   }
-	   // color.red(100)
-	   this.values[space][index] = val;
-	   this.setValues(space, this.values[space]);
-	   return this;
-	}
-
-	module.exports = Color;
-
-
-/***/ },
-/* 216 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var conversions = __webpack_require__(217);
-
-	var convert = function() {
-	   return new Converter();
-	}
-
-	for (var func in conversions) {
-	  // export Raw versions
-	  convert[func + "Raw"] =  (function(func) {
-	    // accept array or plain args
-	    return function(arg) {
-	      if (typeof arg == "number")
-	        arg = Array.prototype.slice.call(arguments);
-	      return conversions[func](arg);
+	var Header = _react2['default'].createClass({
+	  displayName: 'Header',
+
+	  propTypes: {
+	    cityName: _react2['default'].PropTypes.string,
+	    country: _react2['default'].PropTypes.string,
+	    temp: _react2['default'].PropTypes.number,
+	    units: _react2['default'].PropTypes.string
+	  },
+	  mixins: [_reactRouter.Navigation],
+
+	  render: function render() {
+	    var _this = this;
+
+	    styles.base.backgroundColor = (0, _utilsWeatherColorJs.weatherColor)(this.props.temp);
+	    var cityState = this.props.cityName + ', ' + this.props.country;
+	    if (cityState.length > 20) {
+	      cityState = cityState.slice(0, 18) + ' ...';
 	    }
-	  })(func);
-
-	  var pair = /(\w+)2(\w+)/.exec(func),
-	      from = pair[1],
-	      to = pair[2];
-
-	  // export rgb2hsl and ["rgb"]["hsl"]
-	  convert[from] = convert[from] || {};
-
-	  convert[from][to] = convert[func] = (function(func) { 
-	    return function(arg) {
-	      if (typeof arg == "number")
-	        arg = Array.prototype.slice.call(arguments);
-	      
-	      var val = conversions[func](arg);
-	      if (typeof val == "string" || val === undefined)
-	        return val; // keyword
-
-	      for (var i = 0; i < val.length; i++)
-	        val[i] = Math.round(val[i]);
-	      return val;
+	    if (window.device && device.platform === 'iOS') {
+	      styles.base.padding = '23px 0px 7px 7px';
 	    }
-	  })(func);
-	}
 
-
-	/* Converter does lazy conversion and caching */
-	var Converter = function() {
-	   this.convs = {};
-	};
-
-	/* Either get the values for a space or
-	  set the values for a space, depending on args */
-	Converter.prototype.routeSpace = function(space, args) {
-	   var values = args[0];
-	   if (values === undefined) {
-	      // color.rgb()
-	      return this.getValues(space);
-	   }
-	   // color.rgb(10, 10, 10)
-	   if (typeof values == "number") {
-	      values = Array.prototype.slice.call(args);        
-	   }
-
-	   return this.setValues(space, values);
-	};
-	  
-	/* Set the values for a space, invalidating cache */
-	Converter.prototype.setValues = function(space, values) {
-	   this.space = space;
-	   this.convs = {};
-	   this.convs[space] = values;
-	   return this;
-	};
-
-	/* Get the values for a space. If there's already
-	  a conversion for the space, fetch it, otherwise
-	  compute it */
-	Converter.prototype.getValues = function(space) {
-	   var vals = this.convs[space];
-	   if (!vals) {
-	      var fspace = this.space,
-	          from = this.convs[fspace];
-	      vals = convert[fspace][space](from);
-
-	      this.convs[space] = vals;
-	   }
-	  return vals;
-	};
-
-	["rgb", "hsl", "hsv", "cmyk", "keyword"].forEach(function(space) {
-	   Converter.prototype[space] = function(vals) {
-	      return this.routeSpace(space, arguments);
-	   }
+	    return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.cityTimeWrapper }, _react2['default'].createElement('p', { style: styles.cityState }, cityState), _react2['default'].createElement('p', { style: styles.headerDate }, (0, _moment2['default'])().format('dddd, MMMM D'))), _react2['default'].createElement('i', {
+	      className: 'fa fa-gears',
+	      onClick: function onClick() {
+	        return _this.transitionTo('settings');
+	      },
+	      onTouchStart: function onTouchStart() {
+	        return _this.transitionTo('settings');
+	      },
+	      style: styles.settingsIcon }));
+	  }
 	});
 
-	module.exports = convert;
-
-/***/ },
-/* 217 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* MIT license */
-
-	module.exports = {
-	  rgb2hsl: rgb2hsl,
-	  rgb2hsv: rgb2hsv,
-	  rgb2hwb: rgb2hwb,
-	  rgb2cmyk: rgb2cmyk,
-	  rgb2keyword: rgb2keyword,
-	  rgb2xyz: rgb2xyz,
-	  rgb2lab: rgb2lab,
-	  rgb2lch: rgb2lch,
-
-	  hsl2rgb: hsl2rgb,
-	  hsl2hsv: hsl2hsv,
-	  hsl2hwb: hsl2hwb,
-	  hsl2cmyk: hsl2cmyk,
-	  hsl2keyword: hsl2keyword,
-
-	  hsv2rgb: hsv2rgb,
-	  hsv2hsl: hsv2hsl,
-	  hsv2hwb: hsv2hwb,
-	  hsv2cmyk: hsv2cmyk,
-	  hsv2keyword: hsv2keyword,
-
-	  hwb2rgb: hwb2rgb,
-	  hwb2hsl: hwb2hsl,
-	  hwb2hsv: hwb2hsv,
-	  hwb2cmyk: hwb2cmyk,
-	  hwb2keyword: hwb2keyword,
-
-	  cmyk2rgb: cmyk2rgb,
-	  cmyk2hsl: cmyk2hsl,
-	  cmyk2hsv: cmyk2hsv,
-	  cmyk2hwb: cmyk2hwb,
-	  cmyk2keyword: cmyk2keyword,
-
-	  keyword2rgb: keyword2rgb,
-	  keyword2hsl: keyword2hsl,
-	  keyword2hsv: keyword2hsv,
-	  keyword2hwb: keyword2hwb,
-	  keyword2cmyk: keyword2cmyk,
-	  keyword2lab: keyword2lab,
-	  keyword2xyz: keyword2xyz,
-
-	  xyz2rgb: xyz2rgb,
-	  xyz2lab: xyz2lab,
-	  xyz2lch: xyz2lch,
-
-	  lab2xyz: lab2xyz,
-	  lab2rgb: lab2rgb,
-	  lab2lch: lab2lch,
-
-	  lch2lab: lch2lab,
-	  lch2xyz: lch2xyz,
-	  lch2rgb: lch2rgb
-	}
-
-
-	function rgb2hsl(rgb) {
-	  var r = rgb[0]/255,
-	      g = rgb[1]/255,
-	      b = rgb[2]/255,
-	      min = Math.min(r, g, b),
-	      max = Math.max(r, g, b),
-	      delta = max - min,
-	      h, s, l;
-
-	  if (max == min)
-	    h = 0;
-	  else if (r == max)
-	    h = (g - b) / delta;
-	  else if (g == max)
-	    h = 2 + (b - r) / delta;
-	  else if (b == max)
-	    h = 4 + (r - g)/ delta;
-
-	  h = Math.min(h * 60, 360);
-
-	  if (h < 0)
-	    h += 360;
-
-	  l = (min + max) / 2;
-
-	  if (max == min)
-	    s = 0;
-	  else if (l <= 0.5)
-	    s = delta / (max + min);
-	  else
-	    s = delta / (2 - max - min);
-
-	  return [h, s * 100, l * 100];
-	}
-
-	function rgb2hsv(rgb) {
-	  var r = rgb[0],
-	      g = rgb[1],
-	      b = rgb[2],
-	      min = Math.min(r, g, b),
-	      max = Math.max(r, g, b),
-	      delta = max - min,
-	      h, s, v;
-
-	  if (max == 0)
-	    s = 0;
-	  else
-	    s = (delta/max * 1000)/10;
-
-	  if (max == min)
-	    h = 0;
-	  else if (r == max)
-	    h = (g - b) / delta;
-	  else if (g == max)
-	    h = 2 + (b - r) / delta;
-	  else if (b == max)
-	    h = 4 + (r - g) / delta;
-
-	  h = Math.min(h * 60, 360);
-
-	  if (h < 0)
-	    h += 360;
-
-	  v = ((max / 255) * 1000) / 10;
-
-	  return [h, s, v];
-	}
-
-	function rgb2hwb(rgb) {
-	  var r = rgb[0],
-	      g = rgb[1],
-	      b = rgb[2],
-	      h = rgb2hsl(rgb)[0],
-	      w = 1/255 * Math.min(r, Math.min(g, b)),
-	      b = 1 - 1/255 * Math.max(r, Math.max(g, b));
-
-	  return [h, w * 100, b * 100];
-	}
-
-	function rgb2cmyk(rgb) {
-	  var r = rgb[0] / 255,
-	      g = rgb[1] / 255,
-	      b = rgb[2] / 255,
-	      c, m, y, k;
-
-	  k = Math.min(1 - r, 1 - g, 1 - b);
-	  c = (1 - r - k) / (1 - k) || 0;
-	  m = (1 - g - k) / (1 - k) || 0;
-	  y = (1 - b - k) / (1 - k) || 0;
-	  return [c * 100, m * 100, y * 100, k * 100];
-	}
-
-	function rgb2keyword(rgb) {
-	  return reverseKeywords[JSON.stringify(rgb)];
-	}
-
-	function rgb2xyz(rgb) {
-	  var r = rgb[0] / 255,
-	      g = rgb[1] / 255,
-	      b = rgb[2] / 255;
-
-	  // assume sRGB
-	  r = r > 0.04045 ? Math.pow(((r + 0.055) / 1.055), 2.4) : (r / 12.92);
-	  g = g > 0.04045 ? Math.pow(((g + 0.055) / 1.055), 2.4) : (g / 12.92);
-	  b = b > 0.04045 ? Math.pow(((b + 0.055) / 1.055), 2.4) : (b / 12.92);
-
-	  var x = (r * 0.4124) + (g * 0.3576) + (b * 0.1805);
-	  var y = (r * 0.2126) + (g * 0.7152) + (b * 0.0722);
-	  var z = (r * 0.0193) + (g * 0.1192) + (b * 0.9505);
-
-	  return [x * 100, y *100, z * 100];
-	}
-
-	function rgb2lab(rgb) {
-	  var xyz = rgb2xyz(rgb),
-	        x = xyz[0],
-	        y = xyz[1],
-	        z = xyz[2],
-	        l, a, b;
-
-	  x /= 95.047;
-	  y /= 100;
-	  z /= 108.883;
-
-	  x = x > 0.008856 ? Math.pow(x, 1/3) : (7.787 * x) + (16 / 116);
-	  y = y > 0.008856 ? Math.pow(y, 1/3) : (7.787 * y) + (16 / 116);
-	  z = z > 0.008856 ? Math.pow(z, 1/3) : (7.787 * z) + (16 / 116);
-
-	  l = (116 * y) - 16;
-	  a = 500 * (x - y);
-	  b = 200 * (y - z);
-
-	  return [l, a, b];
-	}
-
-	function rgb2lch(args) {
-	  return lab2lch(rgb2lab(args));
-	}
-
-	function hsl2rgb(hsl) {
-	  var h = hsl[0] / 360,
-	      s = hsl[1] / 100,
-	      l = hsl[2] / 100,
-	      t1, t2, t3, rgb, val;
-
-	  if (s == 0) {
-	    val = l * 255;
-	    return [val, val, val];
-	  }
-
-	  if (l < 0.5)
-	    t2 = l * (1 + s);
-	  else
-	    t2 = l + s - l * s;
-	  t1 = 2 * l - t2;
-
-	  rgb = [0, 0, 0];
-	  for (var i = 0; i < 3; i++) {
-	    t3 = h + 1 / 3 * - (i - 1);
-	    t3 < 0 && t3++;
-	    t3 > 1 && t3--;
-
-	    if (6 * t3 < 1)
-	      val = t1 + (t2 - t1) * 6 * t3;
-	    else if (2 * t3 < 1)
-	      val = t2;
-	    else if (3 * t3 < 2)
-	      val = t1 + (t2 - t1) * (2 / 3 - t3) * 6;
-	    else
-	      val = t1;
-
-	    rgb[i] = val * 255;
-	  }
-
-	  return rgb;
-	}
-
-	function hsl2hsv(hsl) {
-	  var h = hsl[0],
-	      s = hsl[1] / 100,
-	      l = hsl[2] / 100,
-	      sv, v;
-
-	  if(l === 0) {
-	      // no need to do calc on black
-	      // also avoids divide by 0 error
-	      return [0, 0, 0];
-	  }
-
-	  l *= 2;
-	  s *= (l <= 1) ? l : 2 - l;
-	  v = (l + s) / 2;
-	  sv = (2 * s) / (l + s);
-	  return [h, sv * 100, v * 100];
-	}
-
-	function hsl2hwb(args) {
-	  return rgb2hwb(hsl2rgb(args));
-	}
-
-	function hsl2cmyk(args) {
-	  return rgb2cmyk(hsl2rgb(args));
-	}
-
-	function hsl2keyword(args) {
-	  return rgb2keyword(hsl2rgb(args));
-	}
-
-
-	function hsv2rgb(hsv) {
-	  var h = hsv[0] / 60,
-	      s = hsv[1] / 100,
-	      v = hsv[2] / 100,
-	      hi = Math.floor(h) % 6;
-
-	  var f = h - Math.floor(h),
-	      p = 255 * v * (1 - s),
-	      q = 255 * v * (1 - (s * f)),
-	      t = 255 * v * (1 - (s * (1 - f))),
-	      v = 255 * v;
-
-	  switch(hi) {
-	    case 0:
-	      return [v, t, p];
-	    case 1:
-	      return [q, v, p];
-	    case 2:
-	      return [p, v, t];
-	    case 3:
-	      return [p, q, v];
-	    case 4:
-	      return [t, p, v];
-	    case 5:
-	      return [v, p, q];
-	  }
-	}
-
-	function hsv2hsl(hsv) {
-	  var h = hsv[0],
-	      s = hsv[1] / 100,
-	      v = hsv[2] / 100,
-	      sl, l;
-
-	  l = (2 - s) * v;
-	  sl = s * v;
-	  sl /= (l <= 1) ? l : 2 - l;
-	  sl = sl || 0;
-	  l /= 2;
-	  return [h, sl * 100, l * 100];
-	}
-
-	function hsv2hwb(args) {
-	  return rgb2hwb(hsv2rgb(args))
-	}
-
-	function hsv2cmyk(args) {
-	  return rgb2cmyk(hsv2rgb(args));
-	}
-
-	function hsv2keyword(args) {
-	  return rgb2keyword(hsv2rgb(args));
-	}
-
-	// http://dev.w3.org/csswg/css-color/#hwb-to-rgb
-	function hwb2rgb(hwb) {
-	  var h = hwb[0] / 360,
-	      wh = hwb[1] / 100,
-	      bl = hwb[2] / 100,
-	      ratio = wh + bl,
-	      i, v, f, n;
-
-	  // wh + bl cant be > 1
-	  if (ratio > 1) {
-	    wh /= ratio;
-	    bl /= ratio;
-	  }
-
-	  i = Math.floor(6 * h);
-	  v = 1 - bl;
-	  f = 6 * h - i;
-	  if ((i & 0x01) != 0) {
-	    f = 1 - f;
-	  }
-	  n = wh + f * (v - wh);  // linear interpolation
-
-	  switch (i) {
-	    default:
-	    case 6:
-	    case 0: r = v; g = n; b = wh; break;
-	    case 1: r = n; g = v; b = wh; break;
-	    case 2: r = wh; g = v; b = n; break;
-	    case 3: r = wh; g = n; b = v; break;
-	    case 4: r = n; g = wh; b = v; break;
-	    case 5: r = v; g = wh; b = n; break;
-	  }
-
-	  return [r * 255, g * 255, b * 255];
-	}
-
-	function hwb2hsl(args) {
-	  return rgb2hsl(hwb2rgb(args));
-	}
-
-	function hwb2hsv(args) {
-	  return rgb2hsv(hwb2rgb(args));
-	}
-
-	function hwb2cmyk(args) {
-	  return rgb2cmyk(hwb2rgb(args));
-	}
-
-	function hwb2keyword(args) {
-	  return rgb2keyword(hwb2rgb(args));
-	}
-
-	function cmyk2rgb(cmyk) {
-	  var c = cmyk[0] / 100,
-	      m = cmyk[1] / 100,
-	      y = cmyk[2] / 100,
-	      k = cmyk[3] / 100,
-	      r, g, b;
-
-	  r = 1 - Math.min(1, c * (1 - k) + k);
-	  g = 1 - Math.min(1, m * (1 - k) + k);
-	  b = 1 - Math.min(1, y * (1 - k) + k);
-	  return [r * 255, g * 255, b * 255];
-	}
-
-	function cmyk2hsl(args) {
-	  return rgb2hsl(cmyk2rgb(args));
-	}
-
-	function cmyk2hsv(args) {
-	  return rgb2hsv(cmyk2rgb(args));
-	}
-
-	function cmyk2hwb(args) {
-	  return rgb2hwb(cmyk2rgb(args));
-	}
-
-	function cmyk2keyword(args) {
-	  return rgb2keyword(cmyk2rgb(args));
-	}
-
-
-	function xyz2rgb(xyz) {
-	  var x = xyz[0] / 100,
-	      y = xyz[1] / 100,
-	      z = xyz[2] / 100,
-	      r, g, b;
-
-	  r = (x * 3.2406) + (y * -1.5372) + (z * -0.4986);
-	  g = (x * -0.9689) + (y * 1.8758) + (z * 0.0415);
-	  b = (x * 0.0557) + (y * -0.2040) + (z * 1.0570);
-
-	  // assume sRGB
-	  r = r > 0.0031308 ? ((1.055 * Math.pow(r, 1.0 / 2.4)) - 0.055)
-	    : r = (r * 12.92);
-
-	  g = g > 0.0031308 ? ((1.055 * Math.pow(g, 1.0 / 2.4)) - 0.055)
-	    : g = (g * 12.92);
-
-	  b = b > 0.0031308 ? ((1.055 * Math.pow(b, 1.0 / 2.4)) - 0.055)
-	    : b = (b * 12.92);
-
-	  r = Math.min(Math.max(0, r), 1);
-	  g = Math.min(Math.max(0, g), 1);
-	  b = Math.min(Math.max(0, b), 1);
-
-	  return [r * 255, g * 255, b * 255];
-	}
-
-	function xyz2lab(xyz) {
-	  var x = xyz[0],
-	      y = xyz[1],
-	      z = xyz[2],
-	      l, a, b;
-
-	  x /= 95.047;
-	  y /= 100;
-	  z /= 108.883;
-
-	  x = x > 0.008856 ? Math.pow(x, 1/3) : (7.787 * x) + (16 / 116);
-	  y = y > 0.008856 ? Math.pow(y, 1/3) : (7.787 * y) + (16 / 116);
-	  z = z > 0.008856 ? Math.pow(z, 1/3) : (7.787 * z) + (16 / 116);
-
-	  l = (116 * y) - 16;
-	  a = 500 * (x - y);
-	  b = 200 * (y - z);
-
-	  return [l, a, b];
-	}
-
-	function xyz2lch(args) {
-	  return lab2lch(xyz2lab(args));
-	}
-
-	function lab2xyz(lab) {
-	  var l = lab[0],
-	      a = lab[1],
-	      b = lab[2],
-	      x, y, z, y2;
-
-	  if (l <= 8) {
-	    y = (l * 100) / 903.3;
-	    y2 = (7.787 * (y / 100)) + (16 / 116);
-	  } else {
-	    y = 100 * Math.pow((l + 16) / 116, 3);
-	    y2 = Math.pow(y / 100, 1/3);
-	  }
-
-	  x = x / 95.047 <= 0.008856 ? x = (95.047 * ((a / 500) + y2 - (16 / 116))) / 7.787 : 95.047 * Math.pow((a / 500) + y2, 3);
-
-	  z = z / 108.883 <= 0.008859 ? z = (108.883 * (y2 - (b / 200) - (16 / 116))) / 7.787 : 108.883 * Math.pow(y2 - (b / 200), 3);
-
-	  return [x, y, z];
-	}
-
-	function lab2lch(lab) {
-	  var l = lab[0],
-	      a = lab[1],
-	      b = lab[2],
-	      hr, h, c;
-
-	  hr = Math.atan2(b, a);
-	  h = hr * 360 / 2 / Math.PI;
-	  if (h < 0) {
-	    h += 360;
-	  }
-	  c = Math.sqrt(a * a + b * b);
-	  return [l, c, h];
-	}
-
-	function lab2rgb(args) {
-	  return xyz2rgb(lab2xyz(args));
-	}
-
-	function lch2lab(lch) {
-	  var l = lch[0],
-	      c = lch[1],
-	      h = lch[2],
-	      a, b, hr;
-
-	  hr = h / 360 * 2 * Math.PI;
-	  a = c * Math.cos(hr);
-	  b = c * Math.sin(hr);
-	  return [l, a, b];
-	}
-
-	function lch2xyz(args) {
-	  return lab2xyz(lch2lab(args));
-	}
-
-	function lch2rgb(args) {
-	  return lab2rgb(lch2lab(args));
-	}
-
-	function keyword2rgb(keyword) {
-	  return cssKeywords[keyword];
-	}
-
-	function keyword2hsl(args) {
-	  return rgb2hsl(keyword2rgb(args));
-	}
-
-	function keyword2hsv(args) {
-	  return rgb2hsv(keyword2rgb(args));
-	}
-
-	function keyword2hwb(args) {
-	  return rgb2hwb(keyword2rgb(args));
-	}
-
-	function keyword2cmyk(args) {
-	  return rgb2cmyk(keyword2rgb(args));
-	}
-
-	function keyword2lab(args) {
-	  return rgb2lab(keyword2rgb(args));
-	}
-
-	function keyword2xyz(args) {
-	  return rgb2xyz(keyword2rgb(args));
-	}
-
-	var cssKeywords = {
-	  aliceblue:  [240,248,255],
-	  antiquewhite: [250,235,215],
-	  aqua: [0,255,255],
-	  aquamarine: [127,255,212],
-	  azure:  [240,255,255],
-	  beige:  [245,245,220],
-	  bisque: [255,228,196],
-	  black:  [0,0,0],
-	  blanchedalmond: [255,235,205],
-	  blue: [0,0,255],
-	  blueviolet: [138,43,226],
-	  brown:  [165,42,42],
-	  burlywood:  [222,184,135],
-	  cadetblue:  [95,158,160],
-	  chartreuse: [127,255,0],
-	  chocolate:  [210,105,30],
-	  coral:  [255,127,80],
-	  cornflowerblue: [100,149,237],
-	  cornsilk: [255,248,220],
-	  crimson:  [220,20,60],
-	  cyan: [0,255,255],
-	  darkblue: [0,0,139],
-	  darkcyan: [0,139,139],
-	  darkgoldenrod:  [184,134,11],
-	  darkgray: [169,169,169],
-	  darkgreen:  [0,100,0],
-	  darkgrey: [169,169,169],
-	  darkkhaki:  [189,183,107],
-	  darkmagenta:  [139,0,139],
-	  darkolivegreen: [85,107,47],
-	  darkorange: [255,140,0],
-	  darkorchid: [153,50,204],
-	  darkred:  [139,0,0],
-	  darksalmon: [233,150,122],
-	  darkseagreen: [143,188,143],
-	  darkslateblue:  [72,61,139],
-	  darkslategray:  [47,79,79],
-	  darkslategrey:  [47,79,79],
-	  darkturquoise:  [0,206,209],
-	  darkviolet: [148,0,211],
-	  deeppink: [255,20,147],
-	  deepskyblue:  [0,191,255],
-	  dimgray:  [105,105,105],
-	  dimgrey:  [105,105,105],
-	  dodgerblue: [30,144,255],
-	  firebrick:  [178,34,34],
-	  floralwhite:  [255,250,240],
-	  forestgreen:  [34,139,34],
-	  fuchsia:  [255,0,255],
-	  gainsboro:  [220,220,220],
-	  ghostwhite: [248,248,255],
-	  gold: [255,215,0],
-	  goldenrod:  [218,165,32],
-	  gray: [128,128,128],
-	  green:  [0,128,0],
-	  greenyellow:  [173,255,47],
-	  grey: [128,128,128],
-	  honeydew: [240,255,240],
-	  hotpink:  [255,105,180],
-	  indianred:  [205,92,92],
-	  indigo: [75,0,130],
-	  ivory:  [255,255,240],
-	  khaki:  [240,230,140],
-	  lavender: [230,230,250],
-	  lavenderblush:  [255,240,245],
-	  lawngreen:  [124,252,0],
-	  lemonchiffon: [255,250,205],
-	  lightblue:  [173,216,230],
-	  lightcoral: [240,128,128],
-	  lightcyan:  [224,255,255],
-	  lightgoldenrodyellow: [250,250,210],
-	  lightgray:  [211,211,211],
-	  lightgreen: [144,238,144],
-	  lightgrey:  [211,211,211],
-	  lightpink:  [255,182,193],
-	  lightsalmon:  [255,160,122],
-	  lightseagreen:  [32,178,170],
-	  lightskyblue: [135,206,250],
-	  lightslategray: [119,136,153],
-	  lightslategrey: [119,136,153],
-	  lightsteelblue: [176,196,222],
-	  lightyellow:  [255,255,224],
-	  lime: [0,255,0],
-	  limegreen:  [50,205,50],
-	  linen:  [250,240,230],
-	  magenta:  [255,0,255],
-	  maroon: [128,0,0],
-	  mediumaquamarine: [102,205,170],
-	  mediumblue: [0,0,205],
-	  mediumorchid: [186,85,211],
-	  mediumpurple: [147,112,219],
-	  mediumseagreen: [60,179,113],
-	  mediumslateblue:  [123,104,238],
-	  mediumspringgreen:  [0,250,154],
-	  mediumturquoise:  [72,209,204],
-	  mediumvioletred:  [199,21,133],
-	  midnightblue: [25,25,112],
-	  mintcream:  [245,255,250],
-	  mistyrose:  [255,228,225],
-	  moccasin: [255,228,181],
-	  navajowhite:  [255,222,173],
-	  navy: [0,0,128],
-	  oldlace:  [253,245,230],
-	  olive:  [128,128,0],
-	  olivedrab:  [107,142,35],
-	  orange: [255,165,0],
-	  orangered:  [255,69,0],
-	  orchid: [218,112,214],
-	  palegoldenrod:  [238,232,170],
-	  palegreen:  [152,251,152],
-	  paleturquoise:  [175,238,238],
-	  palevioletred:  [219,112,147],
-	  papayawhip: [255,239,213],
-	  peachpuff:  [255,218,185],
-	  peru: [205,133,63],
-	  pink: [255,192,203],
-	  plum: [221,160,221],
-	  powderblue: [176,224,230],
-	  purple: [128,0,128],
-	  rebeccapurple: [102, 51, 153],
-	  red:  [255,0,0],
-	  rosybrown:  [188,143,143],
-	  royalblue:  [65,105,225],
-	  saddlebrown:  [139,69,19],
-	  salmon: [250,128,114],
-	  sandybrown: [244,164,96],
-	  seagreen: [46,139,87],
-	  seashell: [255,245,238],
-	  sienna: [160,82,45],
-	  silver: [192,192,192],
-	  skyblue:  [135,206,235],
-	  slateblue:  [106,90,205],
-	  slategray:  [112,128,144],
-	  slategrey:  [112,128,144],
-	  snow: [255,250,250],
-	  springgreen:  [0,255,127],
-	  steelblue:  [70,130,180],
-	  tan:  [210,180,140],
-	  teal: [0,128,128],
-	  thistle:  [216,191,216],
-	  tomato: [255,99,71],
-	  turquoise:  [64,224,208],
-	  violet: [238,130,238],
-	  wheat:  [245,222,179],
-	  white:  [255,255,255],
-	  whitesmoke: [245,245,245],
-	  yellow: [255,255,0],
-	  yellowgreen:  [154,205,50]
-	};
-
-	var reverseKeywords = {};
-	for (var key in cssKeywords) {
-	  reverseKeywords[JSON.stringify(cssKeywords[key])] = key;
-	}
-
-
-/***/ },
-/* 218 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* MIT license */
-	var colorNames = __webpack_require__(219);
-
-	module.exports = {
-	   getRgba: getRgba,
-	   getHsla: getHsla,
-	   getRgb: getRgb,
-	   getHsl: getHsl,
-	   getHwb: getHwb,
-	   getAlpha: getAlpha,
-
-	   hexString: hexString,
-	   rgbString: rgbString,
-	   rgbaString: rgbaString,
-	   percentString: percentString,
-	   percentaString: percentaString,
-	   hslString: hslString,
-	   hslaString: hslaString,
-	   hwbString: hwbString,
-	   keyword: keyword
-	}
-
-	function getRgba(string) {
-	   if (!string) {
-	      return;
-	   }
-	   var abbr =  /^#([a-fA-F0-9]{3})$/,
-	       hex =  /^#([a-fA-F0-9]{6})$/,
-	       rgba = /^rgba?\(\s*([+-]?\d+)\s*,\s*([+-]?\d+)\s*,\s*([+-]?\d+)\s*(?:,\s*([+-]?[\d\.]+)\s*)?\)$/,
-	       per = /^rgba?\(\s*([+-]?[\d\.]+)\%\s*,\s*([+-]?[\d\.]+)\%\s*,\s*([+-]?[\d\.]+)\%\s*(?:,\s*([+-]?[\d\.]+)\s*)?\)$/,
-	       keyword = /(\D+)/;
-
-	   var rgb = [0, 0, 0],
-	       a = 1,
-	       match = string.match(abbr);
-	   if (match) {
-	      match = match[1];
-	      for (var i = 0; i < rgb.length; i++) {
-	         rgb[i] = parseInt(match[i] + match[i], 16);
-	      }
-	   }
-	   else if (match = string.match(hex)) {
-	      match = match[1];
-	      for (var i = 0; i < rgb.length; i++) {
-	         rgb[i] = parseInt(match.slice(i * 2, i * 2 + 2), 16);
-	      }
-	   }
-	   else if (match = string.match(rgba)) {
-	      for (var i = 0; i < rgb.length; i++) {
-	         rgb[i] = parseInt(match[i + 1]);
-	      }
-	      a = parseFloat(match[4]);
-	   }
-	   else if (match = string.match(per)) {
-	      for (var i = 0; i < rgb.length; i++) {
-	         rgb[i] = Math.round(parseFloat(match[i + 1]) * 2.55);
-	      }
-	      a = parseFloat(match[4]);
-	   }
-	   else if (match = string.match(keyword)) {
-	      if (match[1] == "transparent") {
-	         return [0, 0, 0, 0];
-	      }
-	      rgb = colorNames[match[1]];
-	      if (!rgb) {
-	         return;
-	      }
-	   }
-
-	   for (var i = 0; i < rgb.length; i++) {
-	      rgb[i] = scale(rgb[i], 0, 255);
-	   }
-	   if (!a && a != 0) {
-	      a = 1;
-	   }
-	   else {
-	      a = scale(a, 0, 1);
-	   }
-	   rgb[3] = a;
-	   return rgb;
-	}
-
-	function getHsla(string) {
-	   if (!string) {
-	      return;
-	   }
-	   var hsl = /^hsla?\(\s*([+-]?\d+)(?:deg)?\s*,\s*([+-]?[\d\.]+)%\s*,\s*([+-]?[\d\.]+)%\s*(?:,\s*([+-]?[\d\.]+)\s*)?\)/;
-	   var match = string.match(hsl);
-	   if (match) {
-	      var alpha = parseFloat(match[4]);
-	      var h = scale(parseInt(match[1]), 0, 360),
-	          s = scale(parseFloat(match[2]), 0, 100),
-	          l = scale(parseFloat(match[3]), 0, 100),
-	          a = scale(isNaN(alpha) ? 1 : alpha, 0, 1);
-	      return [h, s, l, a];
-	   }
-	}
-
-	function getHwb(string) {
-	   if (!string) {
-	      return;
-	   }
-	   var hwb = /^hwb\(\s*([+-]?\d+)(?:deg)?\s*,\s*([+-]?[\d\.]+)%\s*,\s*([+-]?[\d\.]+)%\s*(?:,\s*([+-]?[\d\.]+)\s*)?\)/;
-	   var match = string.match(hwb);
-	   if (match) {
-	    var alpha = parseFloat(match[4]);
-	      var h = scale(parseInt(match[1]), 0, 360),
-	          w = scale(parseFloat(match[2]), 0, 100),
-	          b = scale(parseFloat(match[3]), 0, 100),
-	          a = scale(isNaN(alpha) ? 1 : alpha, 0, 1);
-	      return [h, w, b, a];
-	   }
-	}
-
-	function getRgb(string) {
-	   var rgba = getRgba(string);
-	   return rgba && rgba.slice(0, 3);
-	}
-
-	function getHsl(string) {
-	  var hsla = getHsla(string);
-	  return hsla && hsla.slice(0, 3);
-	}
-
-	function getAlpha(string) {
-	   var vals = getRgba(string);
-	   if (vals) {
-	      return vals[3];
-	   }
-	   else if (vals = getHsla(string)) {
-	      return vals[3];
-	   }
-	   else if (vals = getHwb(string)) {
-	      return vals[3];
-	   }
-	}
-
-	// generators
-	function hexString(rgb) {
-	   return "#" + hexDouble(rgb[0]) + hexDouble(rgb[1])
-	              + hexDouble(rgb[2]);
-	}
-
-	function rgbString(rgba, alpha) {
-	   if (alpha < 1 || (rgba[3] && rgba[3] < 1)) {
-	      return rgbaString(rgba, alpha);
-	   }
-	   return "rgb(" + rgba[0] + ", " + rgba[1] + ", " + rgba[2] + ")";
-	}
-
-	function rgbaString(rgba, alpha) {
-	   if (alpha === undefined) {
-	      alpha = (rgba[3] !== undefined ? rgba[3] : 1);
-	   }
-	   return "rgba(" + rgba[0] + ", " + rgba[1] + ", " + rgba[2]
-	           + ", " + alpha + ")";
-	}
-
-	function percentString(rgba, alpha) {
-	   if (alpha < 1 || (rgba[3] && rgba[3] < 1)) {
-	      return percentaString(rgba, alpha);
-	   }
-	   var r = Math.round(rgba[0]/255 * 100),
-	       g = Math.round(rgba[1]/255 * 100),
-	       b = Math.round(rgba[2]/255 * 100);
-
-	   return "rgb(" + r + "%, " + g + "%, " + b + "%)";
-	}
-
-	function percentaString(rgba, alpha) {
-	   var r = Math.round(rgba[0]/255 * 100),
-	       g = Math.round(rgba[1]/255 * 100),
-	       b = Math.round(rgba[2]/255 * 100);
-	   return "rgba(" + r + "%, " + g + "%, " + b + "%, " + (alpha || rgba[3] || 1) + ")";
-	}
-
-	function hslString(hsla, alpha) {
-	   if (alpha < 1 || (hsla[3] && hsla[3] < 1)) {
-	      return hslaString(hsla, alpha);
-	   }
-	   return "hsl(" + hsla[0] + ", " + hsla[1] + "%, " + hsla[2] + "%)";
-	}
-
-	function hslaString(hsla, alpha) {
-	   if (alpha === undefined) {
-	      alpha = (hsla[3] !== undefined ? hsla[3] : 1);
-	   }
-	   return "hsla(" + hsla[0] + ", " + hsla[1] + "%, " + hsla[2] + "%, "
-	           + alpha + ")";
-	}
-
-	// hwb is a bit different than rgb(a) & hsl(a) since there is no alpha specific syntax
-	// (hwb have alpha optional & 1 is default value)
-	function hwbString(hwb, alpha) {
-	   if (alpha === undefined) {
-	      alpha = (hwb[3] !== undefined ? hwb[3] : 1);
-	   }
-	   return "hwb(" + hwb[0] + ", " + hwb[1] + "%, " + hwb[2] + "%"
-	           + (alpha !== undefined && alpha !== 1 ? ", " + alpha : "") + ")";
-	}
-
-	function keyword(rgb) {
-	  return reverseNames[rgb.slice(0, 3)];
-	}
-
-	// helpers
-	function scale(num, min, max) {
-	   return Math.min(Math.max(min, num), max);
-	}
-
-	function hexDouble(num) {
-	  var str = num.toString(16).toUpperCase();
-	  return (str.length < 2) ? "0" + str : str;
-	}
-
-
-	//create a list of reverse color names
-	var reverseNames = {};
-	for (var name in colorNames) {
-	   reverseNames[colorNames[name]] = name;
-	}
-
-
-/***/ },
-/* 219 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = {
-		"aliceblue": [
-			240,
-			248,
-			255
-		],
-		"antiquewhite": [
-			250,
-			235,
-			215
-		],
-		"aqua": [
-			0,
-			255,
-			255
-		],
-		"aquamarine": [
-			127,
-			255,
-			212
-		],
-		"azure": [
-			240,
-			255,
-			255
-		],
-		"beige": [
-			245,
-			245,
-			220
-		],
-		"bisque": [
-			255,
-			228,
-			196
-		],
-		"black": [
-			0,
-			0,
-			0
-		],
-		"blanchedalmond": [
-			255,
-			235,
-			205
-		],
-		"blue": [
-			0,
-			0,
-			255
-		],
-		"blueviolet": [
-			138,
-			43,
-			226
-		],
-		"brown": [
-			165,
-			42,
-			42
-		],
-		"burlywood": [
-			222,
-			184,
-			135
-		],
-		"cadetblue": [
-			95,
-			158,
-			160
-		],
-		"chartreuse": [
-			127,
-			255,
-			0
-		],
-		"chocolate": [
-			210,
-			105,
-			30
-		],
-		"coral": [
-			255,
-			127,
-			80
-		],
-		"cornflowerblue": [
-			100,
-			149,
-			237
-		],
-		"cornsilk": [
-			255,
-			248,
-			220
-		],
-		"crimson": [
-			220,
-			20,
-			60
-		],
-		"cyan": [
-			0,
-			255,
-			255
-		],
-		"darkblue": [
-			0,
-			0,
-			139
-		],
-		"darkcyan": [
-			0,
-			139,
-			139
-		],
-		"darkgoldenrod": [
-			184,
-			134,
-			11
-		],
-		"darkgray": [
-			169,
-			169,
-			169
-		],
-		"darkgreen": [
-			0,
-			100,
-			0
-		],
-		"darkgrey": [
-			169,
-			169,
-			169
-		],
-		"darkkhaki": [
-			189,
-			183,
-			107
-		],
-		"darkmagenta": [
-			139,
-			0,
-			139
-		],
-		"darkolivegreen": [
-			85,
-			107,
-			47
-		],
-		"darkorange": [
-			255,
-			140,
-			0
-		],
-		"darkorchid": [
-			153,
-			50,
-			204
-		],
-		"darkred": [
-			139,
-			0,
-			0
-		],
-		"darksalmon": [
-			233,
-			150,
-			122
-		],
-		"darkseagreen": [
-			143,
-			188,
-			143
-		],
-		"darkslateblue": [
-			72,
-			61,
-			139
-		],
-		"darkslategray": [
-			47,
-			79,
-			79
-		],
-		"darkslategrey": [
-			47,
-			79,
-			79
-		],
-		"darkturquoise": [
-			0,
-			206,
-			209
-		],
-		"darkviolet": [
-			148,
-			0,
-			211
-		],
-		"deeppink": [
-			255,
-			20,
-			147
-		],
-		"deepskyblue": [
-			0,
-			191,
-			255
-		],
-		"dimgray": [
-			105,
-			105,
-			105
-		],
-		"dimgrey": [
-			105,
-			105,
-			105
-		],
-		"dodgerblue": [
-			30,
-			144,
-			255
-		],
-		"firebrick": [
-			178,
-			34,
-			34
-		],
-		"floralwhite": [
-			255,
-			250,
-			240
-		],
-		"forestgreen": [
-			34,
-			139,
-			34
-		],
-		"fuchsia": [
-			255,
-			0,
-			255
-		],
-		"gainsboro": [
-			220,
-			220,
-			220
-		],
-		"ghostwhite": [
-			248,
-			248,
-			255
-		],
-		"gold": [
-			255,
-			215,
-			0
-		],
-		"goldenrod": [
-			218,
-			165,
-			32
-		],
-		"gray": [
-			128,
-			128,
-			128
-		],
-		"green": [
-			0,
-			128,
-			0
-		],
-		"greenyellow": [
-			173,
-			255,
-			47
-		],
-		"grey": [
-			128,
-			128,
-			128
-		],
-		"honeydew": [
-			240,
-			255,
-			240
-		],
-		"hotpink": [
-			255,
-			105,
-			180
-		],
-		"indianred": [
-			205,
-			92,
-			92
-		],
-		"indigo": [
-			75,
-			0,
-			130
-		],
-		"ivory": [
-			255,
-			255,
-			240
-		],
-		"khaki": [
-			240,
-			230,
-			140
-		],
-		"lavender": [
-			230,
-			230,
-			250
-		],
-		"lavenderblush": [
-			255,
-			240,
-			245
-		],
-		"lawngreen": [
-			124,
-			252,
-			0
-		],
-		"lemonchiffon": [
-			255,
-			250,
-			205
-		],
-		"lightblue": [
-			173,
-			216,
-			230
-		],
-		"lightcoral": [
-			240,
-			128,
-			128
-		],
-		"lightcyan": [
-			224,
-			255,
-			255
-		],
-		"lightgoldenrodyellow": [
-			250,
-			250,
-			210
-		],
-		"lightgray": [
-			211,
-			211,
-			211
-		],
-		"lightgreen": [
-			144,
-			238,
-			144
-		],
-		"lightgrey": [
-			211,
-			211,
-			211
-		],
-		"lightpink": [
-			255,
-			182,
-			193
-		],
-		"lightsalmon": [
-			255,
-			160,
-			122
-		],
-		"lightseagreen": [
-			32,
-			178,
-			170
-		],
-		"lightskyblue": [
-			135,
-			206,
-			250
-		],
-		"lightslategray": [
-			119,
-			136,
-			153
-		],
-		"lightslategrey": [
-			119,
-			136,
-			153
-		],
-		"lightsteelblue": [
-			176,
-			196,
-			222
-		],
-		"lightyellow": [
-			255,
-			255,
-			224
-		],
-		"lime": [
-			0,
-			255,
-			0
-		],
-		"limegreen": [
-			50,
-			205,
-			50
-		],
-		"linen": [
-			250,
-			240,
-			230
-		],
-		"magenta": [
-			255,
-			0,
-			255
-		],
-		"maroon": [
-			128,
-			0,
-			0
-		],
-		"mediumaquamarine": [
-			102,
-			205,
-			170
-		],
-		"mediumblue": [
-			0,
-			0,
-			205
-		],
-		"mediumorchid": [
-			186,
-			85,
-			211
-		],
-		"mediumpurple": [
-			147,
-			112,
-			219
-		],
-		"mediumseagreen": [
-			60,
-			179,
-			113
-		],
-		"mediumslateblue": [
-			123,
-			104,
-			238
-		],
-		"mediumspringgreen": [
-			0,
-			250,
-			154
-		],
-		"mediumturquoise": [
-			72,
-			209,
-			204
-		],
-		"mediumvioletred": [
-			199,
-			21,
-			133
-		],
-		"midnightblue": [
-			25,
-			25,
-			112
-		],
-		"mintcream": [
-			245,
-			255,
-			250
-		],
-		"mistyrose": [
-			255,
-			228,
-			225
-		],
-		"moccasin": [
-			255,
-			228,
-			181
-		],
-		"navajowhite": [
-			255,
-			222,
-			173
-		],
-		"navy": [
-			0,
-			0,
-			128
-		],
-		"oldlace": [
-			253,
-			245,
-			230
-		],
-		"olive": [
-			128,
-			128,
-			0
-		],
-		"olivedrab": [
-			107,
-			142,
-			35
-		],
-		"orange": [
-			255,
-			165,
-			0
-		],
-		"orangered": [
-			255,
-			69,
-			0
-		],
-		"orchid": [
-			218,
-			112,
-			214
-		],
-		"palegoldenrod": [
-			238,
-			232,
-			170
-		],
-		"palegreen": [
-			152,
-			251,
-			152
-		],
-		"paleturquoise": [
-			175,
-			238,
-			238
-		],
-		"palevioletred": [
-			219,
-			112,
-			147
-		],
-		"papayawhip": [
-			255,
-			239,
-			213
-		],
-		"peachpuff": [
-			255,
-			218,
-			185
-		],
-		"peru": [
-			205,
-			133,
-			63
-		],
-		"pink": [
-			255,
-			192,
-			203
-		],
-		"plum": [
-			221,
-			160,
-			221
-		],
-		"powderblue": [
-			176,
-			224,
-			230
-		],
-		"purple": [
-			128,
-			0,
-			128
-		],
-		"rebeccapurple": [
-			102,
-			51,
-			153
-		],
-		"red": [
-			255,
-			0,
-			0
-		],
-		"rosybrown": [
-			188,
-			143,
-			143
-		],
-		"royalblue": [
-			65,
-			105,
-			225
-		],
-		"saddlebrown": [
-			139,
-			69,
-			19
-		],
-		"salmon": [
-			250,
-			128,
-			114
-		],
-		"sandybrown": [
-			244,
-			164,
-			96
-		],
-		"seagreen": [
-			46,
-			139,
-			87
-		],
-		"seashell": [
-			255,
-			245,
-			238
-		],
-		"sienna": [
-			160,
-			82,
-			45
-		],
-		"silver": [
-			192,
-			192,
-			192
-		],
-		"skyblue": [
-			135,
-			206,
-			235
-		],
-		"slateblue": [
-			106,
-			90,
-			205
-		],
-		"slategray": [
-			112,
-			128,
-			144
-		],
-		"slategrey": [
-			112,
-			128,
-			144
-		],
-		"snow": [
-			255,
-			250,
-			250
-		],
-		"springgreen": [
-			0,
-			255,
-			127
-		],
-		"steelblue": [
-			70,
-			130,
-			180
-		],
-		"tan": [
-			210,
-			180,
-			140
-		],
-		"teal": [
-			0,
-			128,
-			128
-		],
-		"thistle": [
-			216,
-			191,
-			216
-		],
-		"tomato": [
-			255,
-			99,
-			71
-		],
-		"turquoise": [
-			64,
-			224,
-			208
-		],
-		"violet": [
-			238,
-			130,
-			238
-		],
-		"wheat": [
-			245,
-			222,
-			179
-		],
-		"white": [
-			255,
-			255,
-			255
-		],
-		"whitesmoke": [
-			245,
-			245,
-			245
-		],
-		"yellow": [
-			255,
-			255,
-			0
-		],
-		"yellowgreen": [
-			154,
-			205,
-			50
-		]
-	}
-
-/***/ },
-/* 220 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } (function () {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-
-	var _createClass = (function () {
-	  function defineProperties(target, props) {
-	    for (var i = 0; i < props.length; i++) {
-	      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-	    }
-	  }return function (Constructor, protoProps, staticProps) {
-	    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-	  };
-	})();
-
-	function _classCallCheck(instance, Constructor) {
-	  if (!(instance instanceof Constructor)) {
-	    throw new TypeError('Cannot call a class as a function');
-	  }
-	}
-
-	var ConvertTemp = (function () {
-	  function ConvertTemp() {
-	    _classCallCheck(this, ConvertTemp);
-	  }
-
-	  _createClass(ConvertTemp, [{
-	    key: 'toFahrenheit',
-	    value: function toFahrenheit(num) {
-	      return Math.round(num * (9 / 5) + 32);
-	    }
-	  }, {
-	    key: 'toCelsius',
-	    value: function toCelsius(num) {
-	      return Math.round((num - 32) * (5 / 9));
-	    }
-	  }, {
-	    key: 'convertUnits',
-
-	    /* converts given number to target units
-	     * e.g. convertUnits(0, 'imperial') = 32
-	     */
-	    value: function convertUnits(num, unit) {
-	      if (unit === 'metric') {
-	        return this.toCelsius(num);
-	      } else if (unit === 'imperial') {
-	        return this.toFahrenheit(num);
-	      } else {
-	        throw 'error - unknown unit type ' + unit;
-	      }
-	    }
-	  }]);
-
-	  return ConvertTemp;
-	})();
-
-	exports['default'] = new ConvertTemp();
+	exports['default'] = new _radium2['default'](Header);
 	module.exports = exports['default'];
 
-	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "convertTemp.js" + ": " + err.message); } }); } } })(); }
+	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "header.js" + ": " + err.message); } }); } } })(); }
 
 /***/ },
-/* 221 */
+/* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {//! moment.js
@@ -27613,7 +25028,7 @@
 	                module && module.exports) {
 	            try {
 	                oldLocale = globalLocale._abbr;
-	                __webpack_require__(223)("./" + name);
+	                __webpack_require__(212)("./" + name);
 	                // because defineLocale currently also sets the global locale, we
 	                // want to undo that for lazy loaded locales
 	                locale_locales__getSetGlobalLocale(oldLocale);
@@ -30461,10 +27876,10 @@
 	    return _moment;
 
 	}));
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(222)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(211)(module)))
 
 /***/ },
-/* 222 */
+/* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function(module) {
@@ -30480,176 +27895,176 @@
 
 
 /***/ },
-/* 223 */
+/* 212 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./af": 224,
-		"./af.js": 224,
-		"./ar": 225,
-		"./ar-ma": 226,
-		"./ar-ma.js": 226,
-		"./ar-sa": 227,
-		"./ar-sa.js": 227,
-		"./ar-tn": 228,
-		"./ar-tn.js": 228,
-		"./ar.js": 225,
-		"./az": 229,
-		"./az.js": 229,
-		"./be": 230,
-		"./be.js": 230,
-		"./bg": 231,
-		"./bg.js": 231,
-		"./bn": 232,
-		"./bn.js": 232,
-		"./bo": 233,
-		"./bo.js": 233,
-		"./br": 234,
-		"./br.js": 234,
-		"./bs": 235,
-		"./bs.js": 235,
-		"./ca": 236,
-		"./ca.js": 236,
-		"./cs": 237,
-		"./cs.js": 237,
-		"./cv": 238,
-		"./cv.js": 238,
-		"./cy": 239,
-		"./cy.js": 239,
-		"./da": 240,
-		"./da.js": 240,
-		"./de": 241,
-		"./de-at": 242,
-		"./de-at.js": 242,
-		"./de.js": 241,
-		"./el": 243,
-		"./el.js": 243,
-		"./en-au": 244,
-		"./en-au.js": 244,
-		"./en-ca": 245,
-		"./en-ca.js": 245,
-		"./en-gb": 246,
-		"./en-gb.js": 246,
-		"./eo": 247,
-		"./eo.js": 247,
-		"./es": 248,
-		"./es.js": 248,
-		"./et": 249,
-		"./et.js": 249,
-		"./eu": 250,
-		"./eu.js": 250,
-		"./fa": 251,
-		"./fa.js": 251,
-		"./fi": 252,
-		"./fi.js": 252,
-		"./fo": 253,
-		"./fo.js": 253,
-		"./fr": 254,
-		"./fr-ca": 255,
-		"./fr-ca.js": 255,
-		"./fr.js": 254,
-		"./fy": 256,
-		"./fy.js": 256,
-		"./gl": 257,
-		"./gl.js": 257,
-		"./he": 258,
-		"./he.js": 258,
-		"./hi": 259,
-		"./hi.js": 259,
-		"./hr": 260,
-		"./hr.js": 260,
-		"./hu": 261,
-		"./hu.js": 261,
-		"./hy-am": 262,
-		"./hy-am.js": 262,
-		"./id": 263,
-		"./id.js": 263,
-		"./is": 264,
-		"./is.js": 264,
-		"./it": 265,
-		"./it.js": 265,
-		"./ja": 266,
-		"./ja.js": 266,
-		"./jv": 267,
-		"./jv.js": 267,
-		"./ka": 268,
-		"./ka.js": 268,
-		"./km": 269,
-		"./km.js": 269,
-		"./ko": 270,
-		"./ko.js": 270,
-		"./lb": 271,
-		"./lb.js": 271,
-		"./lt": 272,
-		"./lt.js": 272,
-		"./lv": 273,
-		"./lv.js": 273,
-		"./me": 274,
-		"./me.js": 274,
-		"./mk": 275,
-		"./mk.js": 275,
-		"./ml": 276,
-		"./ml.js": 276,
-		"./mr": 277,
-		"./mr.js": 277,
-		"./ms-my": 278,
-		"./ms-my.js": 278,
-		"./my": 279,
-		"./my.js": 279,
-		"./nb": 280,
-		"./nb.js": 280,
-		"./ne": 281,
-		"./ne.js": 281,
-		"./nl": 282,
-		"./nl.js": 282,
-		"./nn": 283,
-		"./nn.js": 283,
-		"./pl": 284,
-		"./pl.js": 284,
-		"./pt": 285,
-		"./pt-br": 286,
-		"./pt-br.js": 286,
-		"./pt.js": 285,
-		"./ro": 287,
-		"./ro.js": 287,
-		"./ru": 288,
-		"./ru.js": 288,
-		"./si": 289,
-		"./si.js": 289,
-		"./sk": 290,
-		"./sk.js": 290,
-		"./sl": 291,
-		"./sl.js": 291,
-		"./sq": 292,
-		"./sq.js": 292,
-		"./sr": 293,
-		"./sr-cyrl": 294,
-		"./sr-cyrl.js": 294,
-		"./sr.js": 293,
-		"./sv": 295,
-		"./sv.js": 295,
-		"./ta": 296,
-		"./ta.js": 296,
-		"./th": 297,
-		"./th.js": 297,
-		"./tl-ph": 298,
-		"./tl-ph.js": 298,
-		"./tr": 299,
-		"./tr.js": 299,
-		"./tzm": 300,
-		"./tzm-latn": 301,
-		"./tzm-latn.js": 301,
-		"./tzm.js": 300,
-		"./uk": 302,
-		"./uk.js": 302,
-		"./uz": 303,
-		"./uz.js": 303,
-		"./vi": 304,
-		"./vi.js": 304,
-		"./zh-cn": 305,
-		"./zh-cn.js": 305,
-		"./zh-tw": 306,
-		"./zh-tw.js": 306
+		"./af": 213,
+		"./af.js": 213,
+		"./ar": 214,
+		"./ar-ma": 215,
+		"./ar-ma.js": 215,
+		"./ar-sa": 216,
+		"./ar-sa.js": 216,
+		"./ar-tn": 217,
+		"./ar-tn.js": 217,
+		"./ar.js": 214,
+		"./az": 218,
+		"./az.js": 218,
+		"./be": 219,
+		"./be.js": 219,
+		"./bg": 220,
+		"./bg.js": 220,
+		"./bn": 221,
+		"./bn.js": 221,
+		"./bo": 222,
+		"./bo.js": 222,
+		"./br": 223,
+		"./br.js": 223,
+		"./bs": 224,
+		"./bs.js": 224,
+		"./ca": 225,
+		"./ca.js": 225,
+		"./cs": 226,
+		"./cs.js": 226,
+		"./cv": 227,
+		"./cv.js": 227,
+		"./cy": 228,
+		"./cy.js": 228,
+		"./da": 229,
+		"./da.js": 229,
+		"./de": 230,
+		"./de-at": 231,
+		"./de-at.js": 231,
+		"./de.js": 230,
+		"./el": 232,
+		"./el.js": 232,
+		"./en-au": 233,
+		"./en-au.js": 233,
+		"./en-ca": 234,
+		"./en-ca.js": 234,
+		"./en-gb": 235,
+		"./en-gb.js": 235,
+		"./eo": 236,
+		"./eo.js": 236,
+		"./es": 237,
+		"./es.js": 237,
+		"./et": 238,
+		"./et.js": 238,
+		"./eu": 239,
+		"./eu.js": 239,
+		"./fa": 240,
+		"./fa.js": 240,
+		"./fi": 241,
+		"./fi.js": 241,
+		"./fo": 242,
+		"./fo.js": 242,
+		"./fr": 243,
+		"./fr-ca": 244,
+		"./fr-ca.js": 244,
+		"./fr.js": 243,
+		"./fy": 245,
+		"./fy.js": 245,
+		"./gl": 246,
+		"./gl.js": 246,
+		"./he": 247,
+		"./he.js": 247,
+		"./hi": 248,
+		"./hi.js": 248,
+		"./hr": 249,
+		"./hr.js": 249,
+		"./hu": 250,
+		"./hu.js": 250,
+		"./hy-am": 251,
+		"./hy-am.js": 251,
+		"./id": 252,
+		"./id.js": 252,
+		"./is": 253,
+		"./is.js": 253,
+		"./it": 254,
+		"./it.js": 254,
+		"./ja": 255,
+		"./ja.js": 255,
+		"./jv": 256,
+		"./jv.js": 256,
+		"./ka": 257,
+		"./ka.js": 257,
+		"./km": 258,
+		"./km.js": 258,
+		"./ko": 259,
+		"./ko.js": 259,
+		"./lb": 260,
+		"./lb.js": 260,
+		"./lt": 261,
+		"./lt.js": 261,
+		"./lv": 262,
+		"./lv.js": 262,
+		"./me": 263,
+		"./me.js": 263,
+		"./mk": 264,
+		"./mk.js": 264,
+		"./ml": 265,
+		"./ml.js": 265,
+		"./mr": 266,
+		"./mr.js": 266,
+		"./ms-my": 267,
+		"./ms-my.js": 267,
+		"./my": 268,
+		"./my.js": 268,
+		"./nb": 269,
+		"./nb.js": 269,
+		"./ne": 270,
+		"./ne.js": 270,
+		"./nl": 271,
+		"./nl.js": 271,
+		"./nn": 272,
+		"./nn.js": 272,
+		"./pl": 273,
+		"./pl.js": 273,
+		"./pt": 274,
+		"./pt-br": 275,
+		"./pt-br.js": 275,
+		"./pt.js": 274,
+		"./ro": 276,
+		"./ro.js": 276,
+		"./ru": 277,
+		"./ru.js": 277,
+		"./si": 278,
+		"./si.js": 278,
+		"./sk": 279,
+		"./sk.js": 279,
+		"./sl": 280,
+		"./sl.js": 280,
+		"./sq": 281,
+		"./sq.js": 281,
+		"./sr": 282,
+		"./sr-cyrl": 283,
+		"./sr-cyrl.js": 283,
+		"./sr.js": 282,
+		"./sv": 284,
+		"./sv.js": 284,
+		"./ta": 285,
+		"./ta.js": 285,
+		"./th": 286,
+		"./th.js": 286,
+		"./tl-ph": 287,
+		"./tl-ph.js": 287,
+		"./tr": 288,
+		"./tr.js": 288,
+		"./tzm": 289,
+		"./tzm-latn": 290,
+		"./tzm-latn.js": 290,
+		"./tzm.js": 289,
+		"./uk": 291,
+		"./uk.js": 291,
+		"./uz": 292,
+		"./uz.js": 292,
+		"./vi": 293,
+		"./vi.js": 293,
+		"./zh-cn": 294,
+		"./zh-cn.js": 294,
+		"./zh-tw": 295,
+		"./zh-tw.js": 295
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -30662,11 +28077,11 @@
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 223;
+	webpackContext.id = 212;
 
 
 /***/ },
-/* 224 */
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -30674,7 +28089,7 @@
 	//! author : Werner Mollentze : https://github.com/wernerm
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -30743,7 +28158,7 @@
 	}));
 
 /***/ },
-/* 225 */
+/* 214 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -30753,7 +28168,7 @@
 	//! Native plural forms: forabi https://github.com/forabi
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -30883,7 +28298,7 @@
 	}));
 
 /***/ },
-/* 226 */
+/* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -30892,7 +28307,7 @@
 	//! author : Abdel Said : https://github.com/abdelsaid
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -30946,7 +28361,7 @@
 	}));
 
 /***/ },
-/* 227 */
+/* 216 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -30954,7 +28369,7 @@
 	//! author : Suhail Alkowaileet : https://github.com/xsoh
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -31053,14 +28468,14 @@
 	}));
 
 /***/ },
-/* 228 */
+/* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale  : Tunisian Arabic (ar-tn)
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -31114,7 +28529,7 @@
 	}));
 
 /***/ },
-/* 229 */
+/* 218 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -31122,7 +28537,7 @@
 	//! author : topchiyev : https://github.com/topchiyev
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -31222,7 +28637,7 @@
 	}));
 
 /***/ },
-/* 230 */
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -31232,7 +28647,7 @@
 	//! Author : Menelion Elensúle : https://github.com/Oire
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -31373,7 +28788,7 @@
 	}));
 
 /***/ },
-/* 231 */
+/* 220 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -31381,7 +28796,7 @@
 	//! author : Krasen Borisov : https://github.com/kraz
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -31467,7 +28882,7 @@
 	}));
 
 /***/ },
-/* 232 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -31475,7 +28890,7 @@
 	//! author : Kaushik Gandhi : https://github.com/kaushikgandhi
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -31584,7 +28999,7 @@
 	}));
 
 /***/ },
-/* 233 */
+/* 222 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -31592,7 +29007,7 @@
 	//! author : Thupten N. Chakrishar : https://github.com/vajradog
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -31698,7 +29113,7 @@
 	}));
 
 /***/ },
-/* 234 */
+/* 223 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -31706,7 +29121,7 @@
 	//! author : Jean-Baptiste Le Duigou : https://github.com/jbleduigou
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -31809,7 +29224,7 @@
 	}));
 
 /***/ },
-/* 235 */
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -31818,7 +29233,7 @@
 	//! based on (hr) translation by Bojan Marković
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -31954,7 +29369,7 @@
 	}));
 
 /***/ },
-/* 236 */
+/* 225 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -31962,7 +29377,7 @@
 	//! author : Juan G. Hurtado : https://github.com/juanghurtado
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -32037,7 +29452,7 @@
 	}));
 
 /***/ },
-/* 237 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -32045,7 +29460,7 @@
 	//! author : petrbela : https://github.com/petrbela
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -32198,7 +29613,7 @@
 	}));
 
 /***/ },
-/* 238 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -32206,7 +29621,7 @@
 	//! author : Anatoly Mironov : https://github.com/mirontoli
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -32265,7 +29680,7 @@
 	}));
 
 /***/ },
-/* 239 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -32273,7 +29688,7 @@
 	//! author : Robert Allen
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -32348,7 +29763,7 @@
 	}));
 
 /***/ },
-/* 240 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -32356,7 +29771,7 @@
 	//! author : Ulrik Nielsen : https://github.com/mrbase
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -32412,7 +29827,7 @@
 	}));
 
 /***/ },
-/* 241 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -32421,7 +29836,7 @@
 	//! author: Menelion Elensúle: https://github.com/Oire
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -32491,7 +29906,7 @@
 	}));
 
 /***/ },
-/* 242 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -32501,7 +29916,7 @@
 	//! author : Martin Groller : https://github.com/MadMG
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -32571,7 +29986,7 @@
 	}));
 
 /***/ },
-/* 243 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -32579,7 +29994,7 @@
 	//! author : Aggelos Karalias : https://github.com/mehiel
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -32669,14 +30084,14 @@
 	}));
 
 /***/ },
-/* 244 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : australian english (en-au)
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -32739,7 +30154,7 @@
 	}));
 
 /***/ },
-/* 245 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -32747,7 +30162,7 @@
 	//! author : Jonathan Abourbih : https://github.com/jonbca
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -32806,7 +30221,7 @@
 	}));
 
 /***/ },
-/* 246 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -32814,7 +30229,7 @@
 	//! author : Chris Gedrim : https://github.com/chrisgedrim
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -32877,7 +30292,7 @@
 	}));
 
 /***/ },
-/* 247 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -32887,7 +30302,7 @@
 	//!          Se ne, bonvolu korekti kaj avizi min por ke mi povas lerni!
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -32954,7 +30369,7 @@
 	}));
 
 /***/ },
-/* 248 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -32962,7 +30377,7 @@
 	//! author : Julio Napurí : https://github.com/julionc
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -33037,7 +30452,7 @@
 	}));
 
 /***/ },
-/* 249 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -33046,7 +30461,7 @@
 	//! improvements : Illimar Tambek : https://github.com/ragulka
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -33121,7 +30536,7 @@
 	}));
 
 /***/ },
-/* 250 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -33129,7 +30544,7 @@
 	//! author : Eneko Illarramendi : https://github.com/eillarra
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -33189,7 +30604,7 @@
 	}));
 
 /***/ },
-/* 251 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -33197,7 +30612,7 @@
 	//! author : Ebrahim Byagowi : https://github.com/ebraminio
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -33298,7 +30713,7 @@
 	}));
 
 /***/ },
-/* 252 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -33306,7 +30721,7 @@
 	//! author : Tarmo Aidantausta : https://github.com/bleadof
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -33409,7 +30824,7 @@
 	}));
 
 /***/ },
-/* 253 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -33417,7 +30832,7 @@
 	//! author : Ragnar Johannesen : https://github.com/ragnar123
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -33473,7 +30888,7 @@
 	}));
 
 /***/ },
-/* 254 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -33481,7 +30896,7 @@
 	//! author : John Fischer : https://github.com/jfroffice
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -33539,7 +30954,7 @@
 	}));
 
 /***/ },
-/* 255 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -33547,7 +30962,7 @@
 	//! author : Jonathan Abourbih : https://github.com/jonbca
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -33601,7 +31016,7 @@
 	}));
 
 /***/ },
-/* 256 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -33609,7 +31024,7 @@
 	//! author : Robin van der Vliet : https://github.com/robin0van0der0v
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -33676,7 +31091,7 @@
 	}));
 
 /***/ },
-/* 257 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -33684,7 +31099,7 @@
 	//! author : Juan G. Hurtado : https://github.com/juanghurtado
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -33755,7 +31170,7 @@
 	}));
 
 /***/ },
-/* 258 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -33765,7 +31180,7 @@
 	//! author : Tal Ater : https://github.com/TalAter
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -33841,7 +31256,7 @@
 	}));
 
 /***/ },
-/* 259 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -33849,7 +31264,7 @@
 	//! author : Mayank Singhal : https://github.com/mayanksinghal
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -33968,7 +31383,7 @@
 	}));
 
 /***/ },
-/* 260 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -33976,7 +31391,7 @@
 	//! author : Bojan Marković : https://github.com/bmarkovic
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -34112,7 +31527,7 @@
 	}));
 
 /***/ },
-/* 261 */
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -34120,7 +31535,7 @@
 	//! author : Adam Brunner : https://github.com/adambrunner
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -34225,7 +31640,7 @@
 	}));
 
 /***/ },
-/* 262 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -34233,7 +31648,7 @@
 	//! author : Armendarabyan : https://github.com/armendarabyan
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -34340,7 +31755,7 @@
 	}));
 
 /***/ },
-/* 263 */
+/* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -34349,7 +31764,7 @@
 	//! reference: http://id.wikisource.org/wiki/Pedoman_Umum_Ejaan_Bahasa_Indonesia_yang_Disempurnakan
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -34427,7 +31842,7 @@
 	}));
 
 /***/ },
-/* 264 */
+/* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -34435,7 +31850,7 @@
 	//! author : Hinrik Örn Sigurðsson : https://github.com/hinrik
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -34558,7 +31973,7 @@
 	}));
 
 /***/ },
-/* 265 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -34567,7 +31982,7 @@
 	//! author: Mattia Larentis: https://github.com/nostalgiaz
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -34632,7 +32047,7 @@
 	}));
 
 /***/ },
-/* 266 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -34640,7 +32055,7 @@
 	//! author : LI Long : https://github.com/baryon
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -34701,7 +32116,7 @@
 	}));
 
 /***/ },
-/* 267 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -34710,7 +32125,7 @@
 	//! reference: http://jv.wikipedia.org/wiki/Basa_Jawa
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -34788,7 +32203,7 @@
 	}));
 
 /***/ },
-/* 268 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -34796,7 +32211,7 @@
 	//! author : Irakli Janiashvili : https://github.com/irakli-janiashvili
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -34895,7 +32310,7 @@
 	}));
 
 /***/ },
-/* 269 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -34903,7 +32318,7 @@
 	//! author : Kruy Vanna : https://github.com/kruyvanna
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -34957,7 +32372,7 @@
 	}));
 
 /***/ },
-/* 270 */
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -34969,7 +32384,7 @@
 	//! - Jeeeyul Lee <jeeeyul@gmail.com>
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -35029,7 +32444,7 @@
 	}));
 
 /***/ },
-/* 271 */
+/* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -35037,7 +32452,7 @@
 	//! author : mweimerskirch : https://github.com/mweimerskirch, David Raison : https://github.com/kwisatz
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -35167,7 +32582,7 @@
 	}));
 
 /***/ },
-/* 272 */
+/* 261 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -35175,7 +32590,7 @@
 	//! author : Mindaugas Mozūras : https://github.com/mmozuras
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -35286,7 +32701,7 @@
 	}));
 
 /***/ },
-/* 273 */
+/* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -35295,7 +32710,7 @@
 	//! author : Jānis Elmeris : https://github.com/JanisE
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -35386,7 +32801,7 @@
 	}));
 
 /***/ },
-/* 274 */
+/* 263 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -35394,7 +32809,7 @@
 	//! author : Miodrag Nikač <miodrag@restartit.me> : https://github.com/miodragnikac
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -35499,7 +32914,7 @@
 	}));
 
 /***/ },
-/* 275 */
+/* 264 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -35507,7 +32922,7 @@
 	//! author : Borislav Mickov : https://github.com/B0k0
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -35593,7 +33008,7 @@
 	}));
 
 /***/ },
-/* 276 */
+/* 265 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -35601,7 +33016,7 @@
 	//! author : Floyd Pink : https://github.com/floydpink
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -35668,7 +33083,7 @@
 	}));
 
 /***/ },
-/* 277 */
+/* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -35676,7 +33091,7 @@
 	//! author : Harshad Kale : https://github.com/kalehv
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -35793,7 +33208,7 @@
 	}));
 
 /***/ },
-/* 278 */
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -35801,7 +33216,7 @@
 	//! author : Weldan Jamili : https://github.com/weldan
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -35879,7 +33294,7 @@
 	}));
 
 /***/ },
-/* 279 */
+/* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -35887,7 +33302,7 @@
 	//! author : Squar team, mysquar.com
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -35976,7 +33391,7 @@
 	}));
 
 /***/ },
-/* 280 */
+/* 269 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -35985,7 +33400,7 @@
 	//!           Sigurd Gartmann : https://github.com/sigurdga
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -36041,7 +33456,7 @@
 	}));
 
 /***/ },
-/* 281 */
+/* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -36049,7 +33464,7 @@
 	//! author : suvash : https://github.com/suvash
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -36168,7 +33583,7 @@
 	}));
 
 /***/ },
-/* 282 */
+/* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -36176,7 +33591,7 @@
 	//! author : Joris Röling : https://github.com/jjupiter
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -36243,7 +33658,7 @@
 	}));
 
 /***/ },
-/* 283 */
+/* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -36251,7 +33666,7 @@
 	//! author : https://github.com/mechuwind
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -36307,7 +33722,7 @@
 	}));
 
 /***/ },
-/* 284 */
+/* 273 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -36315,7 +33730,7 @@
 	//! author : Rafal Hirsz : https://github.com/evoL
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -36416,7 +33831,7 @@
 	}));
 
 /***/ },
-/* 285 */
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -36424,7 +33839,7 @@
 	//! author : Jefferson : https://github.com/jalex79
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -36484,7 +33899,7 @@
 	}));
 
 /***/ },
-/* 286 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -36492,7 +33907,7 @@
 	//! author : Caio Ribeiro Pereira : https://github.com/caio-ribeiro-pereira
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -36548,7 +33963,7 @@
 	}));
 
 /***/ },
-/* 287 */
+/* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -36557,7 +33972,7 @@
 	//! author : Valentin Agachi : https://github.com/avaly
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -36626,7 +34041,7 @@
 	}));
 
 /***/ },
-/* 288 */
+/* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -36635,7 +34050,7 @@
 	//! Author : Menelion Elensúle : https://github.com/Oire
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -36794,7 +34209,7 @@
 	}));
 
 /***/ },
-/* 289 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -36802,7 +34217,7 @@
 	//! author : Sampath Sitinamaluwa : https://github.com/sampathsris
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -36863,7 +34278,7 @@
 	}));
 
 /***/ },
-/* 290 */
+/* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -36872,7 +34287,7 @@
 	//! based on work of petrbela : https://github.com/petrbela
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -37025,7 +34440,7 @@
 	}));
 
 /***/ },
-/* 291 */
+/* 280 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -37033,7 +34448,7 @@
 	//! author : Robert Sedovšek : https://github.com/sedovsek
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -37189,7 +34604,7 @@
 	}));
 
 /***/ },
-/* 292 */
+/* 281 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -37199,7 +34614,7 @@
 	//! author : Oerd Cukalla : https://github.com/oerd (fixes)
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -37262,7 +34677,7 @@
 	}));
 
 /***/ },
-/* 293 */
+/* 282 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -37270,7 +34685,7 @@
 	//! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -37374,7 +34789,7 @@
 	}));
 
 /***/ },
-/* 294 */
+/* 283 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -37382,7 +34797,7 @@
 	//! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -37486,7 +34901,7 @@
 	}));
 
 /***/ },
-/* 295 */
+/* 284 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -37494,7 +34909,7 @@
 	//! author : Jens Alm : https://github.com/ulmus
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -37557,7 +34972,7 @@
 	}));
 
 /***/ },
-/* 296 */
+/* 285 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -37565,7 +34980,7 @@
 	//! author : Arjunkumar Krishnamoorthy : https://github.com/tk120404
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -37656,7 +35071,7 @@
 	}));
 
 /***/ },
-/* 297 */
+/* 286 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -37664,7 +35079,7 @@
 	//! author : Kridsada Thanabulpong : https://github.com/sirn
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -37725,7 +35140,7 @@
 	}));
 
 /***/ },
-/* 298 */
+/* 287 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -37733,7 +35148,7 @@
 	//! author : Dan Hagman
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -37791,7 +35206,7 @@
 	}));
 
 /***/ },
-/* 299 */
+/* 288 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -37800,7 +35215,7 @@
 	//!           Burak Yiğit Kaya: https://github.com/BYK
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -37885,7 +35300,7 @@
 	}));
 
 /***/ },
-/* 300 */
+/* 289 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -37893,7 +35308,7 @@
 	//! author : Abdel Said : https://github.com/abdelsaid
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -37947,7 +35362,7 @@
 	}));
 
 /***/ },
-/* 301 */
+/* 290 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -37955,7 +35370,7 @@
 	//! author : Abdel Said : https://github.com/abdelsaid
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -38009,7 +35424,7 @@
 	}));
 
 /***/ },
-/* 302 */
+/* 291 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -38018,7 +35433,7 @@
 	//! Author : Menelion Elensúle : https://github.com/Oire
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -38166,7 +35581,7 @@
 	}));
 
 /***/ },
-/* 303 */
+/* 292 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -38174,7 +35589,7 @@
 	//! author : Sardor Muminov : https://github.com/muminoff
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -38228,7 +35643,7 @@
 	}));
 
 /***/ },
-/* 304 */
+/* 293 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -38236,7 +35651,7 @@
 	//! author : Bang Nguyen : https://github.com/bangnk
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -38298,7 +35713,7 @@
 	}));
 
 /***/ },
-/* 305 */
+/* 294 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -38307,7 +35722,7 @@
 	//! author : Zeno Zeng : https://github.com/zenozeng
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -38429,7 +35844,7 @@
 	}));
 
 /***/ },
-/* 306 */
+/* 295 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -38437,7 +35852,7 @@
 	//! author : Ben : https://github.com/ben-lin
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(221)) :
+	   true ? factory(__webpack_require__(210)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -38534,7 +35949,2687 @@
 	}));
 
 /***/ },
+/* 296 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } (function () {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	exports.weatherColor = weatherColor;
+
+	function _interopRequireDefault(obj) {
+	  return obj && obj.__esModule ? obj : { 'default': obj };
+	}
+
+	var _interpolation = __webpack_require__(297);
+
+	var _color = __webpack_require__(300);
+
+	var _color2 = _interopRequireDefault(_color);
+
+	var _convertTempJs = __webpack_require__(305);
+
+	var _convertTempJs2 = _interopRequireDefault(_convertTempJs);
+
+	var splashRed = new _color2['default']('#ff5136');
+	exports.splashRed = splashRed;
+	var start = new _color2['default']('#7ea4b3');
+	var end = new _color2['default']('#ff5136');
+	var textColor = new _color2['default']('white');
+	var maxTemp = 100; // resonable temperatures
+	var minTemp = 0;
+
+	/*
+	 * scale our currentTemp to a number between 0 and 1
+	 */
+	var scale = function scale(currentTemp) {
+
+	  var numerand = currentTemp - minTemp;
+	  var denominator = maxTemp - minTemp;
+	  var result = numerand / denominator;
+
+	  // clip to [0, 1]
+	  result = result > 1 ? 1 : result;
+	  result = result < 0 ? 0 : result;
+
+	  return result;
+	};
+
+	// ensure color has sufficient contrast against text color
+	var contrast = function contrast(color) {
+	  while (color.contrast(textColor) < 2) {
+	    color = color.darken(0.1);
+	  }
+	};
+
+	/*
+	 * Takes a temperature in Fahrenheit and returns an appropriate color
+	 * in hsl you can modify by hue, saturation and lightness, so
+	 * we calculate a color between 'blue' & 'red' by Linear Interpolation
+	 * ex. lerp(start, end, ratio)
+	 */
+
+	function weatherColor(temp) {
+	  if (isNaN(temp)) {
+	    return 'white';
+	  }
+
+	  var result = start.clone();
+
+	  var ratio = scale(temp);
+
+	  var newHue = (0, _interpolation.lerp)(start.hue(), end.hue(), ratio);
+	  var newSaturation = (0, _interpolation.lerp)(start.saturation(), end.saturation(), ratio);
+	  var newLightness = (0, _interpolation.lerp)(start.lightness(), end.lightness(), ratio);
+
+	  result.hue(newHue);
+	  result.saturation(newSaturation);
+	  result.lightness(newLightness);
+	  contrast(result);
+	  // result.alpha(0.3)
+
+	  return result.hslaString();
+	}
+
+	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "weatherColor.js" + ": " + err.message); } }); } } })(); }
+
+/***/ },
+/* 297 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** Utility function for linear interpolation. */
+	module.exports.lerp = __webpack_require__(298)
+
+	/** Utility function for Hermite interpolation. */
+	module.exports.smoothstep = __webpack_require__(299)
+
+/***/ },
+/* 298 */
+/***/ function(module, exports, __webpack_require__) {
+
+	function lerp(v0, v1, t) {
+	    return v0*(1-t)+v1*t
+	}
+	module.exports = lerp
+
+/***/ },
+/* 299 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function smoothstep (min, max, value) {
+	  var x = Math.max(0, Math.min(1, (value-min)/(max-min)));
+	  return x*x*(3 - 2*x);
+	};
+
+
+/***/ },
+/* 300 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* MIT license */
+	var convert = __webpack_require__(301),
+	    string = __webpack_require__(303);
+
+	var Color = function(obj) {
+	  if (obj instanceof Color) return obj;
+	  if (! (this instanceof Color)) return new Color(obj);
+
+	   this.values = {
+	      rgb: [0, 0, 0],
+	      hsl: [0, 0, 0],
+	      hsv: [0, 0, 0],
+	      hwb: [0, 0, 0],
+	      cmyk: [0, 0, 0, 0],
+	      alpha: 1
+	   }
+
+	   // parse Color() argument
+	   if (typeof obj == "string") {
+	      var vals = string.getRgba(obj);
+	      if (vals) {
+	         this.setValues("rgb", vals);
+	      }
+	      else if(vals = string.getHsla(obj)) {
+	         this.setValues("hsl", vals);
+	      }
+	      else if(vals = string.getHwb(obj)) {
+	         this.setValues("hwb", vals);
+	      }
+	      else {
+	        throw new Error("Unable to parse color from string \"" + obj + "\"");
+	      }
+	   }
+	   else if (typeof obj == "object") {
+	      var vals = obj;
+	      if(vals["r"] !== undefined || vals["red"] !== undefined) {
+	         this.setValues("rgb", vals)
+	      }
+	      else if(vals["l"] !== undefined || vals["lightness"] !== undefined) {
+	         this.setValues("hsl", vals)
+	      }
+	      else if(vals["v"] !== undefined || vals["value"] !== undefined) {
+	         this.setValues("hsv", vals)
+	      }
+	      else if(vals["w"] !== undefined || vals["whiteness"] !== undefined) {
+	         this.setValues("hwb", vals)
+	      }
+	      else if(vals["c"] !== undefined || vals["cyan"] !== undefined) {
+	         this.setValues("cmyk", vals)
+	      }
+	      else {
+	        throw new Error("Unable to parse color from object " + JSON.stringify(obj));
+	      }
+	   }
+	}
+
+	Color.prototype = {
+	   rgb: function (vals) {
+	      return this.setSpace("rgb", arguments);
+	   },
+	   hsl: function(vals) {
+	      return this.setSpace("hsl", arguments);
+	   },
+	   hsv: function(vals) {
+	      return this.setSpace("hsv", arguments);
+	   },
+	   hwb: function(vals) {
+	      return this.setSpace("hwb", arguments);
+	   },
+	   cmyk: function(vals) {
+	      return this.setSpace("cmyk", arguments);
+	   },
+
+	   rgbArray: function() {
+	      return this.values.rgb;
+	   },
+	   hslArray: function() {
+	      return this.values.hsl;
+	   },
+	   hsvArray: function() {
+	      return this.values.hsv;
+	   },
+	   hwbArray: function() {
+	      if (this.values.alpha !== 1) {
+	        return this.values.hwb.concat([this.values.alpha])
+	      }
+	      return this.values.hwb;
+	   },
+	   cmykArray: function() {
+	      return this.values.cmyk;
+	   },
+	   rgbaArray: function() {
+	      var rgb = this.values.rgb;
+	      return rgb.concat([this.values.alpha]);
+	   },
+	   hslaArray: function() {
+	      var hsl = this.values.hsl;
+	      return hsl.concat([this.values.alpha]);
+	   },
+	   alpha: function(val) {
+	      if (val === undefined) {
+	         return this.values.alpha;
+	      }
+	      this.setValues("alpha", val);
+	      return this;
+	   },
+
+	   red: function(val) {
+	      return this.setChannel("rgb", 0, val);
+	   },
+	   green: function(val) {
+	      return this.setChannel("rgb", 1, val);
+	   },
+	   blue: function(val) {
+	      return this.setChannel("rgb", 2, val);
+	   },
+	   hue: function(val) {
+	      return this.setChannel("hsl", 0, val);
+	   },
+	   saturation: function(val) {
+	      return this.setChannel("hsl", 1, val);
+	   },
+	   lightness: function(val) {
+	      return this.setChannel("hsl", 2, val);
+	   },
+	   saturationv: function(val) {
+	      return this.setChannel("hsv", 1, val);
+	   },
+	   whiteness: function(val) {
+	      return this.setChannel("hwb", 1, val);
+	   },
+	   blackness: function(val) {
+	      return this.setChannel("hwb", 2, val);
+	   },
+	   value: function(val) {
+	      return this.setChannel("hsv", 2, val);
+	   },
+	   cyan: function(val) {
+	      return this.setChannel("cmyk", 0, val);
+	   },
+	   magenta: function(val) {
+	      return this.setChannel("cmyk", 1, val);
+	   },
+	   yellow: function(val) {
+	      return this.setChannel("cmyk", 2, val);
+	   },
+	   black: function(val) {
+	      return this.setChannel("cmyk", 3, val);
+	   },
+
+	   hexString: function() {
+	      return string.hexString(this.values.rgb);
+	   },
+	   rgbString: function() {
+	      return string.rgbString(this.values.rgb, this.values.alpha);
+	   },
+	   rgbaString: function() {
+	      return string.rgbaString(this.values.rgb, this.values.alpha);
+	   },
+	   percentString: function() {
+	      return string.percentString(this.values.rgb, this.values.alpha);
+	   },
+	   hslString: function() {
+	      return string.hslString(this.values.hsl, this.values.alpha);
+	   },
+	   hslaString: function() {
+	      return string.hslaString(this.values.hsl, this.values.alpha);
+	   },
+	   hwbString: function() {
+	      return string.hwbString(this.values.hwb, this.values.alpha);
+	   },
+	   keyword: function() {
+	      return string.keyword(this.values.rgb, this.values.alpha);
+	   },
+
+	   rgbNumber: function() {
+	      return (this.values.rgb[0] << 16) | (this.values.rgb[1] << 8) | this.values.rgb[2];
+	   },
+
+	   luminosity: function() {
+	      // http://www.w3.org/TR/WCAG20/#relativeluminancedef
+	      var rgb = this.values.rgb;
+	      var lum = [];
+	      for (var i = 0; i < rgb.length; i++) {
+	         var chan = rgb[i] / 255;
+	         lum[i] = (chan <= 0.03928) ? chan / 12.92
+	                  : Math.pow(((chan + 0.055) / 1.055), 2.4)
+	      }
+	      return 0.2126 * lum[0] + 0.7152 * lum[1] + 0.0722 * lum[2];
+	   },
+
+	   contrast: function(color2) {
+	      // http://www.w3.org/TR/WCAG20/#contrast-ratiodef
+	      var lum1 = this.luminosity();
+	      var lum2 = color2.luminosity();
+	      if (lum1 > lum2) {
+	         return (lum1 + 0.05) / (lum2 + 0.05)
+	      };
+	      return (lum2 + 0.05) / (lum1 + 0.05);
+	   },
+
+	   level: function(color2) {
+	     var contrastRatio = this.contrast(color2);
+	     return (contrastRatio >= 7.1)
+	       ? 'AAA'
+	       : (contrastRatio >= 4.5)
+	        ? 'AA'
+	        : '';
+	   },
+
+	   dark: function() {
+	      // YIQ equation from http://24ways.org/2010/calculating-color-contrast
+	      var rgb = this.values.rgb,
+	          yiq = (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000;
+	      return yiq < 128;
+	   },
+
+	   light: function() {
+	      return !this.dark();
+	   },
+
+	   negate: function() {
+	      var rgb = []
+	      for (var i = 0; i < 3; i++) {
+	         rgb[i] = 255 - this.values.rgb[i];
+	      }
+	      this.setValues("rgb", rgb);
+	      return this;
+	   },
+
+	   lighten: function(ratio) {
+	      this.values.hsl[2] += this.values.hsl[2] * ratio;
+	      this.setValues("hsl", this.values.hsl);
+	      return this;
+	   },
+
+	   darken: function(ratio) {
+	      this.values.hsl[2] -= this.values.hsl[2] * ratio;
+	      this.setValues("hsl", this.values.hsl);
+	      return this;
+	   },
+
+	   saturate: function(ratio) {
+	      this.values.hsl[1] += this.values.hsl[1] * ratio;
+	      this.setValues("hsl", this.values.hsl);
+	      return this;
+	   },
+
+	   desaturate: function(ratio) {
+	      this.values.hsl[1] -= this.values.hsl[1] * ratio;
+	      this.setValues("hsl", this.values.hsl);
+	      return this;
+	   },
+
+	   whiten: function(ratio) {
+	      this.values.hwb[1] += this.values.hwb[1] * ratio;
+	      this.setValues("hwb", this.values.hwb);
+	      return this;
+	   },
+
+	   blacken: function(ratio) {
+	      this.values.hwb[2] += this.values.hwb[2] * ratio;
+	      this.setValues("hwb", this.values.hwb);
+	      return this;
+	   },
+
+	   greyscale: function() {
+	      var rgb = this.values.rgb;
+	      // http://en.wikipedia.org/wiki/Grayscale#Converting_color_to_grayscale
+	      var val = rgb[0] * 0.3 + rgb[1] * 0.59 + rgb[2] * 0.11;
+	      this.setValues("rgb", [val, val, val]);
+	      return this;
+	   },
+
+	   clearer: function(ratio) {
+	      this.setValues("alpha", this.values.alpha - (this.values.alpha * ratio));
+	      return this;
+	   },
+
+	   opaquer: function(ratio) {
+	      this.setValues("alpha", this.values.alpha + (this.values.alpha * ratio));
+	      return this;
+	   },
+
+	   rotate: function(degrees) {
+	      var hue = this.values.hsl[0];
+	      hue = (hue + degrees) % 360;
+	      hue = hue < 0 ? 360 + hue : hue;
+	      this.values.hsl[0] = hue;
+	      this.setValues("hsl", this.values.hsl);
+	      return this;
+	   },
+
+	   mix: function(color2, weight) {
+	      weight = 1 - (weight == null ? 0.5 : weight);
+
+	      // algorithm from Sass's mix(). Ratio of first color in mix is
+	      // determined by the alphas of both colors and the weight
+	      var t1 = weight * 2 - 1,
+	          d = this.alpha() - color2.alpha();
+
+	      var weight1 = (((t1 * d == -1) ? t1 : (t1 + d) / (1 + t1 * d)) + 1) / 2;
+	      var weight2 = 1 - weight1;
+
+	      var rgb = this.rgbArray();
+	      var rgb2 = color2.rgbArray();
+
+	      for (var i = 0; i < rgb.length; i++) {
+	         rgb[i] = rgb[i] * weight1 + rgb2[i] * weight2;
+	      }
+	      this.setValues("rgb", rgb);
+
+	      var alpha = this.alpha() * weight + color2.alpha() * (1 - weight);
+	      this.setValues("alpha", alpha);
+
+	      return this;
+	   },
+
+	   toJSON: function() {
+	     return this.rgb();
+	   },
+
+	   clone: function() {
+	     return new Color(this.rgb());
+	   }
+	}
+
+
+	Color.prototype.getValues = function(space) {
+	   var vals = {};
+	   for (var i = 0; i < space.length; i++) {
+	      vals[space.charAt(i)] = this.values[space][i];
+	   }
+	   if (this.values.alpha != 1) {
+	      vals["a"] = this.values.alpha;
+	   }
+	   // {r: 255, g: 255, b: 255, a: 0.4}
+	   return vals;
+	}
+
+	Color.prototype.setValues = function(space, vals) {
+	   var spaces = {
+	      "rgb": ["red", "green", "blue"],
+	      "hsl": ["hue", "saturation", "lightness"],
+	      "hsv": ["hue", "saturation", "value"],
+	      "hwb": ["hue", "whiteness", "blackness"],
+	      "cmyk": ["cyan", "magenta", "yellow", "black"]
+	   };
+
+	   var maxes = {
+	      "rgb": [255, 255, 255],
+	      "hsl": [360, 100, 100],
+	      "hsv": [360, 100, 100],
+	      "hwb": [360, 100, 100],
+	      "cmyk": [100, 100, 100, 100]
+	   };
+
+	   var alpha = 1;
+	   if (space == "alpha") {
+	      alpha = vals;
+	   }
+	   else if (vals.length) {
+	      // [10, 10, 10]
+	      this.values[space] = vals.slice(0, space.length);
+	      alpha = vals[space.length];
+	   }
+	   else if (vals[space.charAt(0)] !== undefined) {
+	      // {r: 10, g: 10, b: 10}
+	      for (var i = 0; i < space.length; i++) {
+	        this.values[space][i] = vals[space.charAt(i)];
+	      }
+	      alpha = vals.a;
+	   }
+	   else if (vals[spaces[space][0]] !== undefined) {
+	      // {red: 10, green: 10, blue: 10}
+	      var chans = spaces[space];
+	      for (var i = 0; i < space.length; i++) {
+	        this.values[space][i] = vals[chans[i]];
+	      }
+	      alpha = vals.alpha;
+	   }
+	   this.values.alpha = Math.max(0, Math.min(1, (alpha !== undefined ? alpha : this.values.alpha) ));
+	   if (space == "alpha") {
+	      return;
+	   }
+
+	   // cap values of the space prior converting all values
+	   for (var i = 0; i < space.length; i++) {
+	      var capped = Math.max(0, Math.min(maxes[space][i], this.values[space][i]));
+	      this.values[space][i] = Math.round(capped);
+	   }
+
+	   // convert to all the other color spaces
+	   for (var sname in spaces) {
+	      if (sname != space) {
+	         this.values[sname] = convert[space][sname](this.values[space])
+	      }
+
+	      // cap values
+	      for (var i = 0; i < sname.length; i++) {
+	         var capped = Math.max(0, Math.min(maxes[sname][i], this.values[sname][i]));
+	         this.values[sname][i] = Math.round(capped);
+	      }
+	   }
+	   return true;
+	}
+
+	Color.prototype.setSpace = function(space, args) {
+	   var vals = args[0];
+	   if (vals === undefined) {
+	      // color.rgb()
+	      return this.getValues(space);
+	   }
+	   // color.rgb(10, 10, 10)
+	   if (typeof vals == "number") {
+	      vals = Array.prototype.slice.call(args);
+	   }
+	   this.setValues(space, vals);
+	   return this;
+	}
+
+	Color.prototype.setChannel = function(space, index, val) {
+	   if (val === undefined) {
+	      // color.red()
+	      return this.values[space][index];
+	   }
+	   // color.red(100)
+	   this.values[space][index] = val;
+	   this.setValues(space, this.values[space]);
+	   return this;
+	}
+
+	module.exports = Color;
+
+
+/***/ },
+/* 301 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var conversions = __webpack_require__(302);
+
+	var convert = function() {
+	   return new Converter();
+	}
+
+	for (var func in conversions) {
+	  // export Raw versions
+	  convert[func + "Raw"] =  (function(func) {
+	    // accept array or plain args
+	    return function(arg) {
+	      if (typeof arg == "number")
+	        arg = Array.prototype.slice.call(arguments);
+	      return conversions[func](arg);
+	    }
+	  })(func);
+
+	  var pair = /(\w+)2(\w+)/.exec(func),
+	      from = pair[1],
+	      to = pair[2];
+
+	  // export rgb2hsl and ["rgb"]["hsl"]
+	  convert[from] = convert[from] || {};
+
+	  convert[from][to] = convert[func] = (function(func) { 
+	    return function(arg) {
+	      if (typeof arg == "number")
+	        arg = Array.prototype.slice.call(arguments);
+	      
+	      var val = conversions[func](arg);
+	      if (typeof val == "string" || val === undefined)
+	        return val; // keyword
+
+	      for (var i = 0; i < val.length; i++)
+	        val[i] = Math.round(val[i]);
+	      return val;
+	    }
+	  })(func);
+	}
+
+
+	/* Converter does lazy conversion and caching */
+	var Converter = function() {
+	   this.convs = {};
+	};
+
+	/* Either get the values for a space or
+	  set the values for a space, depending on args */
+	Converter.prototype.routeSpace = function(space, args) {
+	   var values = args[0];
+	   if (values === undefined) {
+	      // color.rgb()
+	      return this.getValues(space);
+	   }
+	   // color.rgb(10, 10, 10)
+	   if (typeof values == "number") {
+	      values = Array.prototype.slice.call(args);        
+	   }
+
+	   return this.setValues(space, values);
+	};
+	  
+	/* Set the values for a space, invalidating cache */
+	Converter.prototype.setValues = function(space, values) {
+	   this.space = space;
+	   this.convs = {};
+	   this.convs[space] = values;
+	   return this;
+	};
+
+	/* Get the values for a space. If there's already
+	  a conversion for the space, fetch it, otherwise
+	  compute it */
+	Converter.prototype.getValues = function(space) {
+	   var vals = this.convs[space];
+	   if (!vals) {
+	      var fspace = this.space,
+	          from = this.convs[fspace];
+	      vals = convert[fspace][space](from);
+
+	      this.convs[space] = vals;
+	   }
+	  return vals;
+	};
+
+	["rgb", "hsl", "hsv", "cmyk", "keyword"].forEach(function(space) {
+	   Converter.prototype[space] = function(vals) {
+	      return this.routeSpace(space, arguments);
+	   }
+	});
+
+	module.exports = convert;
+
+/***/ },
+/* 302 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* MIT license */
+
+	module.exports = {
+	  rgb2hsl: rgb2hsl,
+	  rgb2hsv: rgb2hsv,
+	  rgb2hwb: rgb2hwb,
+	  rgb2cmyk: rgb2cmyk,
+	  rgb2keyword: rgb2keyword,
+	  rgb2xyz: rgb2xyz,
+	  rgb2lab: rgb2lab,
+	  rgb2lch: rgb2lch,
+
+	  hsl2rgb: hsl2rgb,
+	  hsl2hsv: hsl2hsv,
+	  hsl2hwb: hsl2hwb,
+	  hsl2cmyk: hsl2cmyk,
+	  hsl2keyword: hsl2keyword,
+
+	  hsv2rgb: hsv2rgb,
+	  hsv2hsl: hsv2hsl,
+	  hsv2hwb: hsv2hwb,
+	  hsv2cmyk: hsv2cmyk,
+	  hsv2keyword: hsv2keyword,
+
+	  hwb2rgb: hwb2rgb,
+	  hwb2hsl: hwb2hsl,
+	  hwb2hsv: hwb2hsv,
+	  hwb2cmyk: hwb2cmyk,
+	  hwb2keyword: hwb2keyword,
+
+	  cmyk2rgb: cmyk2rgb,
+	  cmyk2hsl: cmyk2hsl,
+	  cmyk2hsv: cmyk2hsv,
+	  cmyk2hwb: cmyk2hwb,
+	  cmyk2keyword: cmyk2keyword,
+
+	  keyword2rgb: keyword2rgb,
+	  keyword2hsl: keyword2hsl,
+	  keyword2hsv: keyword2hsv,
+	  keyword2hwb: keyword2hwb,
+	  keyword2cmyk: keyword2cmyk,
+	  keyword2lab: keyword2lab,
+	  keyword2xyz: keyword2xyz,
+
+	  xyz2rgb: xyz2rgb,
+	  xyz2lab: xyz2lab,
+	  xyz2lch: xyz2lch,
+
+	  lab2xyz: lab2xyz,
+	  lab2rgb: lab2rgb,
+	  lab2lch: lab2lch,
+
+	  lch2lab: lch2lab,
+	  lch2xyz: lch2xyz,
+	  lch2rgb: lch2rgb
+	}
+
+
+	function rgb2hsl(rgb) {
+	  var r = rgb[0]/255,
+	      g = rgb[1]/255,
+	      b = rgb[2]/255,
+	      min = Math.min(r, g, b),
+	      max = Math.max(r, g, b),
+	      delta = max - min,
+	      h, s, l;
+
+	  if (max == min)
+	    h = 0;
+	  else if (r == max)
+	    h = (g - b) / delta;
+	  else if (g == max)
+	    h = 2 + (b - r) / delta;
+	  else if (b == max)
+	    h = 4 + (r - g)/ delta;
+
+	  h = Math.min(h * 60, 360);
+
+	  if (h < 0)
+	    h += 360;
+
+	  l = (min + max) / 2;
+
+	  if (max == min)
+	    s = 0;
+	  else if (l <= 0.5)
+	    s = delta / (max + min);
+	  else
+	    s = delta / (2 - max - min);
+
+	  return [h, s * 100, l * 100];
+	}
+
+	function rgb2hsv(rgb) {
+	  var r = rgb[0],
+	      g = rgb[1],
+	      b = rgb[2],
+	      min = Math.min(r, g, b),
+	      max = Math.max(r, g, b),
+	      delta = max - min,
+	      h, s, v;
+
+	  if (max == 0)
+	    s = 0;
+	  else
+	    s = (delta/max * 1000)/10;
+
+	  if (max == min)
+	    h = 0;
+	  else if (r == max)
+	    h = (g - b) / delta;
+	  else if (g == max)
+	    h = 2 + (b - r) / delta;
+	  else if (b == max)
+	    h = 4 + (r - g) / delta;
+
+	  h = Math.min(h * 60, 360);
+
+	  if (h < 0)
+	    h += 360;
+
+	  v = ((max / 255) * 1000) / 10;
+
+	  return [h, s, v];
+	}
+
+	function rgb2hwb(rgb) {
+	  var r = rgb[0],
+	      g = rgb[1],
+	      b = rgb[2],
+	      h = rgb2hsl(rgb)[0],
+	      w = 1/255 * Math.min(r, Math.min(g, b)),
+	      b = 1 - 1/255 * Math.max(r, Math.max(g, b));
+
+	  return [h, w * 100, b * 100];
+	}
+
+	function rgb2cmyk(rgb) {
+	  var r = rgb[0] / 255,
+	      g = rgb[1] / 255,
+	      b = rgb[2] / 255,
+	      c, m, y, k;
+
+	  k = Math.min(1 - r, 1 - g, 1 - b);
+	  c = (1 - r - k) / (1 - k) || 0;
+	  m = (1 - g - k) / (1 - k) || 0;
+	  y = (1 - b - k) / (1 - k) || 0;
+	  return [c * 100, m * 100, y * 100, k * 100];
+	}
+
+	function rgb2keyword(rgb) {
+	  return reverseKeywords[JSON.stringify(rgb)];
+	}
+
+	function rgb2xyz(rgb) {
+	  var r = rgb[0] / 255,
+	      g = rgb[1] / 255,
+	      b = rgb[2] / 255;
+
+	  // assume sRGB
+	  r = r > 0.04045 ? Math.pow(((r + 0.055) / 1.055), 2.4) : (r / 12.92);
+	  g = g > 0.04045 ? Math.pow(((g + 0.055) / 1.055), 2.4) : (g / 12.92);
+	  b = b > 0.04045 ? Math.pow(((b + 0.055) / 1.055), 2.4) : (b / 12.92);
+
+	  var x = (r * 0.4124) + (g * 0.3576) + (b * 0.1805);
+	  var y = (r * 0.2126) + (g * 0.7152) + (b * 0.0722);
+	  var z = (r * 0.0193) + (g * 0.1192) + (b * 0.9505);
+
+	  return [x * 100, y *100, z * 100];
+	}
+
+	function rgb2lab(rgb) {
+	  var xyz = rgb2xyz(rgb),
+	        x = xyz[0],
+	        y = xyz[1],
+	        z = xyz[2],
+	        l, a, b;
+
+	  x /= 95.047;
+	  y /= 100;
+	  z /= 108.883;
+
+	  x = x > 0.008856 ? Math.pow(x, 1/3) : (7.787 * x) + (16 / 116);
+	  y = y > 0.008856 ? Math.pow(y, 1/3) : (7.787 * y) + (16 / 116);
+	  z = z > 0.008856 ? Math.pow(z, 1/3) : (7.787 * z) + (16 / 116);
+
+	  l = (116 * y) - 16;
+	  a = 500 * (x - y);
+	  b = 200 * (y - z);
+
+	  return [l, a, b];
+	}
+
+	function rgb2lch(args) {
+	  return lab2lch(rgb2lab(args));
+	}
+
+	function hsl2rgb(hsl) {
+	  var h = hsl[0] / 360,
+	      s = hsl[1] / 100,
+	      l = hsl[2] / 100,
+	      t1, t2, t3, rgb, val;
+
+	  if (s == 0) {
+	    val = l * 255;
+	    return [val, val, val];
+	  }
+
+	  if (l < 0.5)
+	    t2 = l * (1 + s);
+	  else
+	    t2 = l + s - l * s;
+	  t1 = 2 * l - t2;
+
+	  rgb = [0, 0, 0];
+	  for (var i = 0; i < 3; i++) {
+	    t3 = h + 1 / 3 * - (i - 1);
+	    t3 < 0 && t3++;
+	    t3 > 1 && t3--;
+
+	    if (6 * t3 < 1)
+	      val = t1 + (t2 - t1) * 6 * t3;
+	    else if (2 * t3 < 1)
+	      val = t2;
+	    else if (3 * t3 < 2)
+	      val = t1 + (t2 - t1) * (2 / 3 - t3) * 6;
+	    else
+	      val = t1;
+
+	    rgb[i] = val * 255;
+	  }
+
+	  return rgb;
+	}
+
+	function hsl2hsv(hsl) {
+	  var h = hsl[0],
+	      s = hsl[1] / 100,
+	      l = hsl[2] / 100,
+	      sv, v;
+
+	  if(l === 0) {
+	      // no need to do calc on black
+	      // also avoids divide by 0 error
+	      return [0, 0, 0];
+	  }
+
+	  l *= 2;
+	  s *= (l <= 1) ? l : 2 - l;
+	  v = (l + s) / 2;
+	  sv = (2 * s) / (l + s);
+	  return [h, sv * 100, v * 100];
+	}
+
+	function hsl2hwb(args) {
+	  return rgb2hwb(hsl2rgb(args));
+	}
+
+	function hsl2cmyk(args) {
+	  return rgb2cmyk(hsl2rgb(args));
+	}
+
+	function hsl2keyword(args) {
+	  return rgb2keyword(hsl2rgb(args));
+	}
+
+
+	function hsv2rgb(hsv) {
+	  var h = hsv[0] / 60,
+	      s = hsv[1] / 100,
+	      v = hsv[2] / 100,
+	      hi = Math.floor(h) % 6;
+
+	  var f = h - Math.floor(h),
+	      p = 255 * v * (1 - s),
+	      q = 255 * v * (1 - (s * f)),
+	      t = 255 * v * (1 - (s * (1 - f))),
+	      v = 255 * v;
+
+	  switch(hi) {
+	    case 0:
+	      return [v, t, p];
+	    case 1:
+	      return [q, v, p];
+	    case 2:
+	      return [p, v, t];
+	    case 3:
+	      return [p, q, v];
+	    case 4:
+	      return [t, p, v];
+	    case 5:
+	      return [v, p, q];
+	  }
+	}
+
+	function hsv2hsl(hsv) {
+	  var h = hsv[0],
+	      s = hsv[1] / 100,
+	      v = hsv[2] / 100,
+	      sl, l;
+
+	  l = (2 - s) * v;
+	  sl = s * v;
+	  sl /= (l <= 1) ? l : 2 - l;
+	  sl = sl || 0;
+	  l /= 2;
+	  return [h, sl * 100, l * 100];
+	}
+
+	function hsv2hwb(args) {
+	  return rgb2hwb(hsv2rgb(args))
+	}
+
+	function hsv2cmyk(args) {
+	  return rgb2cmyk(hsv2rgb(args));
+	}
+
+	function hsv2keyword(args) {
+	  return rgb2keyword(hsv2rgb(args));
+	}
+
+	// http://dev.w3.org/csswg/css-color/#hwb-to-rgb
+	function hwb2rgb(hwb) {
+	  var h = hwb[0] / 360,
+	      wh = hwb[1] / 100,
+	      bl = hwb[2] / 100,
+	      ratio = wh + bl,
+	      i, v, f, n;
+
+	  // wh + bl cant be > 1
+	  if (ratio > 1) {
+	    wh /= ratio;
+	    bl /= ratio;
+	  }
+
+	  i = Math.floor(6 * h);
+	  v = 1 - bl;
+	  f = 6 * h - i;
+	  if ((i & 0x01) != 0) {
+	    f = 1 - f;
+	  }
+	  n = wh + f * (v - wh);  // linear interpolation
+
+	  switch (i) {
+	    default:
+	    case 6:
+	    case 0: r = v; g = n; b = wh; break;
+	    case 1: r = n; g = v; b = wh; break;
+	    case 2: r = wh; g = v; b = n; break;
+	    case 3: r = wh; g = n; b = v; break;
+	    case 4: r = n; g = wh; b = v; break;
+	    case 5: r = v; g = wh; b = n; break;
+	  }
+
+	  return [r * 255, g * 255, b * 255];
+	}
+
+	function hwb2hsl(args) {
+	  return rgb2hsl(hwb2rgb(args));
+	}
+
+	function hwb2hsv(args) {
+	  return rgb2hsv(hwb2rgb(args));
+	}
+
+	function hwb2cmyk(args) {
+	  return rgb2cmyk(hwb2rgb(args));
+	}
+
+	function hwb2keyword(args) {
+	  return rgb2keyword(hwb2rgb(args));
+	}
+
+	function cmyk2rgb(cmyk) {
+	  var c = cmyk[0] / 100,
+	      m = cmyk[1] / 100,
+	      y = cmyk[2] / 100,
+	      k = cmyk[3] / 100,
+	      r, g, b;
+
+	  r = 1 - Math.min(1, c * (1 - k) + k);
+	  g = 1 - Math.min(1, m * (1 - k) + k);
+	  b = 1 - Math.min(1, y * (1 - k) + k);
+	  return [r * 255, g * 255, b * 255];
+	}
+
+	function cmyk2hsl(args) {
+	  return rgb2hsl(cmyk2rgb(args));
+	}
+
+	function cmyk2hsv(args) {
+	  return rgb2hsv(cmyk2rgb(args));
+	}
+
+	function cmyk2hwb(args) {
+	  return rgb2hwb(cmyk2rgb(args));
+	}
+
+	function cmyk2keyword(args) {
+	  return rgb2keyword(cmyk2rgb(args));
+	}
+
+
+	function xyz2rgb(xyz) {
+	  var x = xyz[0] / 100,
+	      y = xyz[1] / 100,
+	      z = xyz[2] / 100,
+	      r, g, b;
+
+	  r = (x * 3.2406) + (y * -1.5372) + (z * -0.4986);
+	  g = (x * -0.9689) + (y * 1.8758) + (z * 0.0415);
+	  b = (x * 0.0557) + (y * -0.2040) + (z * 1.0570);
+
+	  // assume sRGB
+	  r = r > 0.0031308 ? ((1.055 * Math.pow(r, 1.0 / 2.4)) - 0.055)
+	    : r = (r * 12.92);
+
+	  g = g > 0.0031308 ? ((1.055 * Math.pow(g, 1.0 / 2.4)) - 0.055)
+	    : g = (g * 12.92);
+
+	  b = b > 0.0031308 ? ((1.055 * Math.pow(b, 1.0 / 2.4)) - 0.055)
+	    : b = (b * 12.92);
+
+	  r = Math.min(Math.max(0, r), 1);
+	  g = Math.min(Math.max(0, g), 1);
+	  b = Math.min(Math.max(0, b), 1);
+
+	  return [r * 255, g * 255, b * 255];
+	}
+
+	function xyz2lab(xyz) {
+	  var x = xyz[0],
+	      y = xyz[1],
+	      z = xyz[2],
+	      l, a, b;
+
+	  x /= 95.047;
+	  y /= 100;
+	  z /= 108.883;
+
+	  x = x > 0.008856 ? Math.pow(x, 1/3) : (7.787 * x) + (16 / 116);
+	  y = y > 0.008856 ? Math.pow(y, 1/3) : (7.787 * y) + (16 / 116);
+	  z = z > 0.008856 ? Math.pow(z, 1/3) : (7.787 * z) + (16 / 116);
+
+	  l = (116 * y) - 16;
+	  a = 500 * (x - y);
+	  b = 200 * (y - z);
+
+	  return [l, a, b];
+	}
+
+	function xyz2lch(args) {
+	  return lab2lch(xyz2lab(args));
+	}
+
+	function lab2xyz(lab) {
+	  var l = lab[0],
+	      a = lab[1],
+	      b = lab[2],
+	      x, y, z, y2;
+
+	  if (l <= 8) {
+	    y = (l * 100) / 903.3;
+	    y2 = (7.787 * (y / 100)) + (16 / 116);
+	  } else {
+	    y = 100 * Math.pow((l + 16) / 116, 3);
+	    y2 = Math.pow(y / 100, 1/3);
+	  }
+
+	  x = x / 95.047 <= 0.008856 ? x = (95.047 * ((a / 500) + y2 - (16 / 116))) / 7.787 : 95.047 * Math.pow((a / 500) + y2, 3);
+
+	  z = z / 108.883 <= 0.008859 ? z = (108.883 * (y2 - (b / 200) - (16 / 116))) / 7.787 : 108.883 * Math.pow(y2 - (b / 200), 3);
+
+	  return [x, y, z];
+	}
+
+	function lab2lch(lab) {
+	  var l = lab[0],
+	      a = lab[1],
+	      b = lab[2],
+	      hr, h, c;
+
+	  hr = Math.atan2(b, a);
+	  h = hr * 360 / 2 / Math.PI;
+	  if (h < 0) {
+	    h += 360;
+	  }
+	  c = Math.sqrt(a * a + b * b);
+	  return [l, c, h];
+	}
+
+	function lab2rgb(args) {
+	  return xyz2rgb(lab2xyz(args));
+	}
+
+	function lch2lab(lch) {
+	  var l = lch[0],
+	      c = lch[1],
+	      h = lch[2],
+	      a, b, hr;
+
+	  hr = h / 360 * 2 * Math.PI;
+	  a = c * Math.cos(hr);
+	  b = c * Math.sin(hr);
+	  return [l, a, b];
+	}
+
+	function lch2xyz(args) {
+	  return lab2xyz(lch2lab(args));
+	}
+
+	function lch2rgb(args) {
+	  return lab2rgb(lch2lab(args));
+	}
+
+	function keyword2rgb(keyword) {
+	  return cssKeywords[keyword];
+	}
+
+	function keyword2hsl(args) {
+	  return rgb2hsl(keyword2rgb(args));
+	}
+
+	function keyword2hsv(args) {
+	  return rgb2hsv(keyword2rgb(args));
+	}
+
+	function keyword2hwb(args) {
+	  return rgb2hwb(keyword2rgb(args));
+	}
+
+	function keyword2cmyk(args) {
+	  return rgb2cmyk(keyword2rgb(args));
+	}
+
+	function keyword2lab(args) {
+	  return rgb2lab(keyword2rgb(args));
+	}
+
+	function keyword2xyz(args) {
+	  return rgb2xyz(keyword2rgb(args));
+	}
+
+	var cssKeywords = {
+	  aliceblue:  [240,248,255],
+	  antiquewhite: [250,235,215],
+	  aqua: [0,255,255],
+	  aquamarine: [127,255,212],
+	  azure:  [240,255,255],
+	  beige:  [245,245,220],
+	  bisque: [255,228,196],
+	  black:  [0,0,0],
+	  blanchedalmond: [255,235,205],
+	  blue: [0,0,255],
+	  blueviolet: [138,43,226],
+	  brown:  [165,42,42],
+	  burlywood:  [222,184,135],
+	  cadetblue:  [95,158,160],
+	  chartreuse: [127,255,0],
+	  chocolate:  [210,105,30],
+	  coral:  [255,127,80],
+	  cornflowerblue: [100,149,237],
+	  cornsilk: [255,248,220],
+	  crimson:  [220,20,60],
+	  cyan: [0,255,255],
+	  darkblue: [0,0,139],
+	  darkcyan: [0,139,139],
+	  darkgoldenrod:  [184,134,11],
+	  darkgray: [169,169,169],
+	  darkgreen:  [0,100,0],
+	  darkgrey: [169,169,169],
+	  darkkhaki:  [189,183,107],
+	  darkmagenta:  [139,0,139],
+	  darkolivegreen: [85,107,47],
+	  darkorange: [255,140,0],
+	  darkorchid: [153,50,204],
+	  darkred:  [139,0,0],
+	  darksalmon: [233,150,122],
+	  darkseagreen: [143,188,143],
+	  darkslateblue:  [72,61,139],
+	  darkslategray:  [47,79,79],
+	  darkslategrey:  [47,79,79],
+	  darkturquoise:  [0,206,209],
+	  darkviolet: [148,0,211],
+	  deeppink: [255,20,147],
+	  deepskyblue:  [0,191,255],
+	  dimgray:  [105,105,105],
+	  dimgrey:  [105,105,105],
+	  dodgerblue: [30,144,255],
+	  firebrick:  [178,34,34],
+	  floralwhite:  [255,250,240],
+	  forestgreen:  [34,139,34],
+	  fuchsia:  [255,0,255],
+	  gainsboro:  [220,220,220],
+	  ghostwhite: [248,248,255],
+	  gold: [255,215,0],
+	  goldenrod:  [218,165,32],
+	  gray: [128,128,128],
+	  green:  [0,128,0],
+	  greenyellow:  [173,255,47],
+	  grey: [128,128,128],
+	  honeydew: [240,255,240],
+	  hotpink:  [255,105,180],
+	  indianred:  [205,92,92],
+	  indigo: [75,0,130],
+	  ivory:  [255,255,240],
+	  khaki:  [240,230,140],
+	  lavender: [230,230,250],
+	  lavenderblush:  [255,240,245],
+	  lawngreen:  [124,252,0],
+	  lemonchiffon: [255,250,205],
+	  lightblue:  [173,216,230],
+	  lightcoral: [240,128,128],
+	  lightcyan:  [224,255,255],
+	  lightgoldenrodyellow: [250,250,210],
+	  lightgray:  [211,211,211],
+	  lightgreen: [144,238,144],
+	  lightgrey:  [211,211,211],
+	  lightpink:  [255,182,193],
+	  lightsalmon:  [255,160,122],
+	  lightseagreen:  [32,178,170],
+	  lightskyblue: [135,206,250],
+	  lightslategray: [119,136,153],
+	  lightslategrey: [119,136,153],
+	  lightsteelblue: [176,196,222],
+	  lightyellow:  [255,255,224],
+	  lime: [0,255,0],
+	  limegreen:  [50,205,50],
+	  linen:  [250,240,230],
+	  magenta:  [255,0,255],
+	  maroon: [128,0,0],
+	  mediumaquamarine: [102,205,170],
+	  mediumblue: [0,0,205],
+	  mediumorchid: [186,85,211],
+	  mediumpurple: [147,112,219],
+	  mediumseagreen: [60,179,113],
+	  mediumslateblue:  [123,104,238],
+	  mediumspringgreen:  [0,250,154],
+	  mediumturquoise:  [72,209,204],
+	  mediumvioletred:  [199,21,133],
+	  midnightblue: [25,25,112],
+	  mintcream:  [245,255,250],
+	  mistyrose:  [255,228,225],
+	  moccasin: [255,228,181],
+	  navajowhite:  [255,222,173],
+	  navy: [0,0,128],
+	  oldlace:  [253,245,230],
+	  olive:  [128,128,0],
+	  olivedrab:  [107,142,35],
+	  orange: [255,165,0],
+	  orangered:  [255,69,0],
+	  orchid: [218,112,214],
+	  palegoldenrod:  [238,232,170],
+	  palegreen:  [152,251,152],
+	  paleturquoise:  [175,238,238],
+	  palevioletred:  [219,112,147],
+	  papayawhip: [255,239,213],
+	  peachpuff:  [255,218,185],
+	  peru: [205,133,63],
+	  pink: [255,192,203],
+	  plum: [221,160,221],
+	  powderblue: [176,224,230],
+	  purple: [128,0,128],
+	  rebeccapurple: [102, 51, 153],
+	  red:  [255,0,0],
+	  rosybrown:  [188,143,143],
+	  royalblue:  [65,105,225],
+	  saddlebrown:  [139,69,19],
+	  salmon: [250,128,114],
+	  sandybrown: [244,164,96],
+	  seagreen: [46,139,87],
+	  seashell: [255,245,238],
+	  sienna: [160,82,45],
+	  silver: [192,192,192],
+	  skyblue:  [135,206,235],
+	  slateblue:  [106,90,205],
+	  slategray:  [112,128,144],
+	  slategrey:  [112,128,144],
+	  snow: [255,250,250],
+	  springgreen:  [0,255,127],
+	  steelblue:  [70,130,180],
+	  tan:  [210,180,140],
+	  teal: [0,128,128],
+	  thistle:  [216,191,216],
+	  tomato: [255,99,71],
+	  turquoise:  [64,224,208],
+	  violet: [238,130,238],
+	  wheat:  [245,222,179],
+	  white:  [255,255,255],
+	  whitesmoke: [245,245,245],
+	  yellow: [255,255,0],
+	  yellowgreen:  [154,205,50]
+	};
+
+	var reverseKeywords = {};
+	for (var key in cssKeywords) {
+	  reverseKeywords[JSON.stringify(cssKeywords[key])] = key;
+	}
+
+
+/***/ },
+/* 303 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* MIT license */
+	var colorNames = __webpack_require__(304);
+
+	module.exports = {
+	   getRgba: getRgba,
+	   getHsla: getHsla,
+	   getRgb: getRgb,
+	   getHsl: getHsl,
+	   getHwb: getHwb,
+	   getAlpha: getAlpha,
+
+	   hexString: hexString,
+	   rgbString: rgbString,
+	   rgbaString: rgbaString,
+	   percentString: percentString,
+	   percentaString: percentaString,
+	   hslString: hslString,
+	   hslaString: hslaString,
+	   hwbString: hwbString,
+	   keyword: keyword
+	}
+
+	function getRgba(string) {
+	   if (!string) {
+	      return;
+	   }
+	   var abbr =  /^#([a-fA-F0-9]{3})$/,
+	       hex =  /^#([a-fA-F0-9]{6})$/,
+	       rgba = /^rgba?\(\s*([+-]?\d+)\s*,\s*([+-]?\d+)\s*,\s*([+-]?\d+)\s*(?:,\s*([+-]?[\d\.]+)\s*)?\)$/,
+	       per = /^rgba?\(\s*([+-]?[\d\.]+)\%\s*,\s*([+-]?[\d\.]+)\%\s*,\s*([+-]?[\d\.]+)\%\s*(?:,\s*([+-]?[\d\.]+)\s*)?\)$/,
+	       keyword = /(\D+)/;
+
+	   var rgb = [0, 0, 0],
+	       a = 1,
+	       match = string.match(abbr);
+	   if (match) {
+	      match = match[1];
+	      for (var i = 0; i < rgb.length; i++) {
+	         rgb[i] = parseInt(match[i] + match[i], 16);
+	      }
+	   }
+	   else if (match = string.match(hex)) {
+	      match = match[1];
+	      for (var i = 0; i < rgb.length; i++) {
+	         rgb[i] = parseInt(match.slice(i * 2, i * 2 + 2), 16);
+	      }
+	   }
+	   else if (match = string.match(rgba)) {
+	      for (var i = 0; i < rgb.length; i++) {
+	         rgb[i] = parseInt(match[i + 1]);
+	      }
+	      a = parseFloat(match[4]);
+	   }
+	   else if (match = string.match(per)) {
+	      for (var i = 0; i < rgb.length; i++) {
+	         rgb[i] = Math.round(parseFloat(match[i + 1]) * 2.55);
+	      }
+	      a = parseFloat(match[4]);
+	   }
+	   else if (match = string.match(keyword)) {
+	      if (match[1] == "transparent") {
+	         return [0, 0, 0, 0];
+	      }
+	      rgb = colorNames[match[1]];
+	      if (!rgb) {
+	         return;
+	      }
+	   }
+
+	   for (var i = 0; i < rgb.length; i++) {
+	      rgb[i] = scale(rgb[i], 0, 255);
+	   }
+	   if (!a && a != 0) {
+	      a = 1;
+	   }
+	   else {
+	      a = scale(a, 0, 1);
+	   }
+	   rgb[3] = a;
+	   return rgb;
+	}
+
+	function getHsla(string) {
+	   if (!string) {
+	      return;
+	   }
+	   var hsl = /^hsla?\(\s*([+-]?\d+)(?:deg)?\s*,\s*([+-]?[\d\.]+)%\s*,\s*([+-]?[\d\.]+)%\s*(?:,\s*([+-]?[\d\.]+)\s*)?\)/;
+	   var match = string.match(hsl);
+	   if (match) {
+	      var alpha = parseFloat(match[4]);
+	      var h = scale(parseInt(match[1]), 0, 360),
+	          s = scale(parseFloat(match[2]), 0, 100),
+	          l = scale(parseFloat(match[3]), 0, 100),
+	          a = scale(isNaN(alpha) ? 1 : alpha, 0, 1);
+	      return [h, s, l, a];
+	   }
+	}
+
+	function getHwb(string) {
+	   if (!string) {
+	      return;
+	   }
+	   var hwb = /^hwb\(\s*([+-]?\d+)(?:deg)?\s*,\s*([+-]?[\d\.]+)%\s*,\s*([+-]?[\d\.]+)%\s*(?:,\s*([+-]?[\d\.]+)\s*)?\)/;
+	   var match = string.match(hwb);
+	   if (match) {
+	    var alpha = parseFloat(match[4]);
+	      var h = scale(parseInt(match[1]), 0, 360),
+	          w = scale(parseFloat(match[2]), 0, 100),
+	          b = scale(parseFloat(match[3]), 0, 100),
+	          a = scale(isNaN(alpha) ? 1 : alpha, 0, 1);
+	      return [h, w, b, a];
+	   }
+	}
+
+	function getRgb(string) {
+	   var rgba = getRgba(string);
+	   return rgba && rgba.slice(0, 3);
+	}
+
+	function getHsl(string) {
+	  var hsla = getHsla(string);
+	  return hsla && hsla.slice(0, 3);
+	}
+
+	function getAlpha(string) {
+	   var vals = getRgba(string);
+	   if (vals) {
+	      return vals[3];
+	   }
+	   else if (vals = getHsla(string)) {
+	      return vals[3];
+	   }
+	   else if (vals = getHwb(string)) {
+	      return vals[3];
+	   }
+	}
+
+	// generators
+	function hexString(rgb) {
+	   return "#" + hexDouble(rgb[0]) + hexDouble(rgb[1])
+	              + hexDouble(rgb[2]);
+	}
+
+	function rgbString(rgba, alpha) {
+	   if (alpha < 1 || (rgba[3] && rgba[3] < 1)) {
+	      return rgbaString(rgba, alpha);
+	   }
+	   return "rgb(" + rgba[0] + ", " + rgba[1] + ", " + rgba[2] + ")";
+	}
+
+	function rgbaString(rgba, alpha) {
+	   if (alpha === undefined) {
+	      alpha = (rgba[3] !== undefined ? rgba[3] : 1);
+	   }
+	   return "rgba(" + rgba[0] + ", " + rgba[1] + ", " + rgba[2]
+	           + ", " + alpha + ")";
+	}
+
+	function percentString(rgba, alpha) {
+	   if (alpha < 1 || (rgba[3] && rgba[3] < 1)) {
+	      return percentaString(rgba, alpha);
+	   }
+	   var r = Math.round(rgba[0]/255 * 100),
+	       g = Math.round(rgba[1]/255 * 100),
+	       b = Math.round(rgba[2]/255 * 100);
+
+	   return "rgb(" + r + "%, " + g + "%, " + b + "%)";
+	}
+
+	function percentaString(rgba, alpha) {
+	   var r = Math.round(rgba[0]/255 * 100),
+	       g = Math.round(rgba[1]/255 * 100),
+	       b = Math.round(rgba[2]/255 * 100);
+	   return "rgba(" + r + "%, " + g + "%, " + b + "%, " + (alpha || rgba[3] || 1) + ")";
+	}
+
+	function hslString(hsla, alpha) {
+	   if (alpha < 1 || (hsla[3] && hsla[3] < 1)) {
+	      return hslaString(hsla, alpha);
+	   }
+	   return "hsl(" + hsla[0] + ", " + hsla[1] + "%, " + hsla[2] + "%)";
+	}
+
+	function hslaString(hsla, alpha) {
+	   if (alpha === undefined) {
+	      alpha = (hsla[3] !== undefined ? hsla[3] : 1);
+	   }
+	   return "hsla(" + hsla[0] + ", " + hsla[1] + "%, " + hsla[2] + "%, "
+	           + alpha + ")";
+	}
+
+	// hwb is a bit different than rgb(a) & hsl(a) since there is no alpha specific syntax
+	// (hwb have alpha optional & 1 is default value)
+	function hwbString(hwb, alpha) {
+	   if (alpha === undefined) {
+	      alpha = (hwb[3] !== undefined ? hwb[3] : 1);
+	   }
+	   return "hwb(" + hwb[0] + ", " + hwb[1] + "%, " + hwb[2] + "%"
+	           + (alpha !== undefined && alpha !== 1 ? ", " + alpha : "") + ")";
+	}
+
+	function keyword(rgb) {
+	  return reverseNames[rgb.slice(0, 3)];
+	}
+
+	// helpers
+	function scale(num, min, max) {
+	   return Math.min(Math.max(min, num), max);
+	}
+
+	function hexDouble(num) {
+	  var str = num.toString(16).toUpperCase();
+	  return (str.length < 2) ? "0" + str : str;
+	}
+
+
+	//create a list of reverse color names
+	var reverseNames = {};
+	for (var name in colorNames) {
+	   reverseNames[colorNames[name]] = name;
+	}
+
+
+/***/ },
+/* 304 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = {
+		"aliceblue": [
+			240,
+			248,
+			255
+		],
+		"antiquewhite": [
+			250,
+			235,
+			215
+		],
+		"aqua": [
+			0,
+			255,
+			255
+		],
+		"aquamarine": [
+			127,
+			255,
+			212
+		],
+		"azure": [
+			240,
+			255,
+			255
+		],
+		"beige": [
+			245,
+			245,
+			220
+		],
+		"bisque": [
+			255,
+			228,
+			196
+		],
+		"black": [
+			0,
+			0,
+			0
+		],
+		"blanchedalmond": [
+			255,
+			235,
+			205
+		],
+		"blue": [
+			0,
+			0,
+			255
+		],
+		"blueviolet": [
+			138,
+			43,
+			226
+		],
+		"brown": [
+			165,
+			42,
+			42
+		],
+		"burlywood": [
+			222,
+			184,
+			135
+		],
+		"cadetblue": [
+			95,
+			158,
+			160
+		],
+		"chartreuse": [
+			127,
+			255,
+			0
+		],
+		"chocolate": [
+			210,
+			105,
+			30
+		],
+		"coral": [
+			255,
+			127,
+			80
+		],
+		"cornflowerblue": [
+			100,
+			149,
+			237
+		],
+		"cornsilk": [
+			255,
+			248,
+			220
+		],
+		"crimson": [
+			220,
+			20,
+			60
+		],
+		"cyan": [
+			0,
+			255,
+			255
+		],
+		"darkblue": [
+			0,
+			0,
+			139
+		],
+		"darkcyan": [
+			0,
+			139,
+			139
+		],
+		"darkgoldenrod": [
+			184,
+			134,
+			11
+		],
+		"darkgray": [
+			169,
+			169,
+			169
+		],
+		"darkgreen": [
+			0,
+			100,
+			0
+		],
+		"darkgrey": [
+			169,
+			169,
+			169
+		],
+		"darkkhaki": [
+			189,
+			183,
+			107
+		],
+		"darkmagenta": [
+			139,
+			0,
+			139
+		],
+		"darkolivegreen": [
+			85,
+			107,
+			47
+		],
+		"darkorange": [
+			255,
+			140,
+			0
+		],
+		"darkorchid": [
+			153,
+			50,
+			204
+		],
+		"darkred": [
+			139,
+			0,
+			0
+		],
+		"darksalmon": [
+			233,
+			150,
+			122
+		],
+		"darkseagreen": [
+			143,
+			188,
+			143
+		],
+		"darkslateblue": [
+			72,
+			61,
+			139
+		],
+		"darkslategray": [
+			47,
+			79,
+			79
+		],
+		"darkslategrey": [
+			47,
+			79,
+			79
+		],
+		"darkturquoise": [
+			0,
+			206,
+			209
+		],
+		"darkviolet": [
+			148,
+			0,
+			211
+		],
+		"deeppink": [
+			255,
+			20,
+			147
+		],
+		"deepskyblue": [
+			0,
+			191,
+			255
+		],
+		"dimgray": [
+			105,
+			105,
+			105
+		],
+		"dimgrey": [
+			105,
+			105,
+			105
+		],
+		"dodgerblue": [
+			30,
+			144,
+			255
+		],
+		"firebrick": [
+			178,
+			34,
+			34
+		],
+		"floralwhite": [
+			255,
+			250,
+			240
+		],
+		"forestgreen": [
+			34,
+			139,
+			34
+		],
+		"fuchsia": [
+			255,
+			0,
+			255
+		],
+		"gainsboro": [
+			220,
+			220,
+			220
+		],
+		"ghostwhite": [
+			248,
+			248,
+			255
+		],
+		"gold": [
+			255,
+			215,
+			0
+		],
+		"goldenrod": [
+			218,
+			165,
+			32
+		],
+		"gray": [
+			128,
+			128,
+			128
+		],
+		"green": [
+			0,
+			128,
+			0
+		],
+		"greenyellow": [
+			173,
+			255,
+			47
+		],
+		"grey": [
+			128,
+			128,
+			128
+		],
+		"honeydew": [
+			240,
+			255,
+			240
+		],
+		"hotpink": [
+			255,
+			105,
+			180
+		],
+		"indianred": [
+			205,
+			92,
+			92
+		],
+		"indigo": [
+			75,
+			0,
+			130
+		],
+		"ivory": [
+			255,
+			255,
+			240
+		],
+		"khaki": [
+			240,
+			230,
+			140
+		],
+		"lavender": [
+			230,
+			230,
+			250
+		],
+		"lavenderblush": [
+			255,
+			240,
+			245
+		],
+		"lawngreen": [
+			124,
+			252,
+			0
+		],
+		"lemonchiffon": [
+			255,
+			250,
+			205
+		],
+		"lightblue": [
+			173,
+			216,
+			230
+		],
+		"lightcoral": [
+			240,
+			128,
+			128
+		],
+		"lightcyan": [
+			224,
+			255,
+			255
+		],
+		"lightgoldenrodyellow": [
+			250,
+			250,
+			210
+		],
+		"lightgray": [
+			211,
+			211,
+			211
+		],
+		"lightgreen": [
+			144,
+			238,
+			144
+		],
+		"lightgrey": [
+			211,
+			211,
+			211
+		],
+		"lightpink": [
+			255,
+			182,
+			193
+		],
+		"lightsalmon": [
+			255,
+			160,
+			122
+		],
+		"lightseagreen": [
+			32,
+			178,
+			170
+		],
+		"lightskyblue": [
+			135,
+			206,
+			250
+		],
+		"lightslategray": [
+			119,
+			136,
+			153
+		],
+		"lightslategrey": [
+			119,
+			136,
+			153
+		],
+		"lightsteelblue": [
+			176,
+			196,
+			222
+		],
+		"lightyellow": [
+			255,
+			255,
+			224
+		],
+		"lime": [
+			0,
+			255,
+			0
+		],
+		"limegreen": [
+			50,
+			205,
+			50
+		],
+		"linen": [
+			250,
+			240,
+			230
+		],
+		"magenta": [
+			255,
+			0,
+			255
+		],
+		"maroon": [
+			128,
+			0,
+			0
+		],
+		"mediumaquamarine": [
+			102,
+			205,
+			170
+		],
+		"mediumblue": [
+			0,
+			0,
+			205
+		],
+		"mediumorchid": [
+			186,
+			85,
+			211
+		],
+		"mediumpurple": [
+			147,
+			112,
+			219
+		],
+		"mediumseagreen": [
+			60,
+			179,
+			113
+		],
+		"mediumslateblue": [
+			123,
+			104,
+			238
+		],
+		"mediumspringgreen": [
+			0,
+			250,
+			154
+		],
+		"mediumturquoise": [
+			72,
+			209,
+			204
+		],
+		"mediumvioletred": [
+			199,
+			21,
+			133
+		],
+		"midnightblue": [
+			25,
+			25,
+			112
+		],
+		"mintcream": [
+			245,
+			255,
+			250
+		],
+		"mistyrose": [
+			255,
+			228,
+			225
+		],
+		"moccasin": [
+			255,
+			228,
+			181
+		],
+		"navajowhite": [
+			255,
+			222,
+			173
+		],
+		"navy": [
+			0,
+			0,
+			128
+		],
+		"oldlace": [
+			253,
+			245,
+			230
+		],
+		"olive": [
+			128,
+			128,
+			0
+		],
+		"olivedrab": [
+			107,
+			142,
+			35
+		],
+		"orange": [
+			255,
+			165,
+			0
+		],
+		"orangered": [
+			255,
+			69,
+			0
+		],
+		"orchid": [
+			218,
+			112,
+			214
+		],
+		"palegoldenrod": [
+			238,
+			232,
+			170
+		],
+		"palegreen": [
+			152,
+			251,
+			152
+		],
+		"paleturquoise": [
+			175,
+			238,
+			238
+		],
+		"palevioletred": [
+			219,
+			112,
+			147
+		],
+		"papayawhip": [
+			255,
+			239,
+			213
+		],
+		"peachpuff": [
+			255,
+			218,
+			185
+		],
+		"peru": [
+			205,
+			133,
+			63
+		],
+		"pink": [
+			255,
+			192,
+			203
+		],
+		"plum": [
+			221,
+			160,
+			221
+		],
+		"powderblue": [
+			176,
+			224,
+			230
+		],
+		"purple": [
+			128,
+			0,
+			128
+		],
+		"rebeccapurple": [
+			102,
+			51,
+			153
+		],
+		"red": [
+			255,
+			0,
+			0
+		],
+		"rosybrown": [
+			188,
+			143,
+			143
+		],
+		"royalblue": [
+			65,
+			105,
+			225
+		],
+		"saddlebrown": [
+			139,
+			69,
+			19
+		],
+		"salmon": [
+			250,
+			128,
+			114
+		],
+		"sandybrown": [
+			244,
+			164,
+			96
+		],
+		"seagreen": [
+			46,
+			139,
+			87
+		],
+		"seashell": [
+			255,
+			245,
+			238
+		],
+		"sienna": [
+			160,
+			82,
+			45
+		],
+		"silver": [
+			192,
+			192,
+			192
+		],
+		"skyblue": [
+			135,
+			206,
+			235
+		],
+		"slateblue": [
+			106,
+			90,
+			205
+		],
+		"slategray": [
+			112,
+			128,
+			144
+		],
+		"slategrey": [
+			112,
+			128,
+			144
+		],
+		"snow": [
+			255,
+			250,
+			250
+		],
+		"springgreen": [
+			0,
+			255,
+			127
+		],
+		"steelblue": [
+			70,
+			130,
+			180
+		],
+		"tan": [
+			210,
+			180,
+			140
+		],
+		"teal": [
+			0,
+			128,
+			128
+		],
+		"thistle": [
+			216,
+			191,
+			216
+		],
+		"tomato": [
+			255,
+			99,
+			71
+		],
+		"turquoise": [
+			64,
+			224,
+			208
+		],
+		"violet": [
+			238,
+			130,
+			238
+		],
+		"wheat": [
+			245,
+			222,
+			179
+		],
+		"white": [
+			255,
+			255,
+			255
+		],
+		"whitesmoke": [
+			245,
+			245,
+			245
+		],
+		"yellow": [
+			255,
+			255,
+			0
+		],
+		"yellowgreen": [
+			154,
+			205,
+			50
+		]
+	}
+
+/***/ },
+/* 305 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } (function () {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () {
+	  function defineProperties(target, props) {
+	    for (var i = 0; i < props.length; i++) {
+	      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+	    }
+	  }return function (Constructor, protoProps, staticProps) {
+	    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+	  };
+	})();
+
+	function _classCallCheck(instance, Constructor) {
+	  if (!(instance instanceof Constructor)) {
+	    throw new TypeError('Cannot call a class as a function');
+	  }
+	}
+
+	var ConvertTemp = (function () {
+	  function ConvertTemp() {
+	    _classCallCheck(this, ConvertTemp);
+	  }
+
+	  _createClass(ConvertTemp, [{
+	    key: 'toFahrenheit',
+	    value: function toFahrenheit(num) {
+	      return Math.round(num * (9 / 5) + 32);
+	    }
+	  }, {
+	    key: 'toCelsius',
+	    value: function toCelsius(num) {
+	      return Math.round((num - 32) * (5 / 9));
+	    }
+	  }, {
+	    key: 'convertUnits',
+
+	    /* converts given number to target units
+	     * e.g. convertUnits(0, 'imperial') = 32
+	     */
+	    value: function convertUnits(num, unit) {
+	      if (unit === 'metric') {
+	        return this.toCelsius(num);
+	      } else if (unit === 'imperial') {
+	        return this.toFahrenheit(num);
+	      } else {
+	        throw 'error - unknown unit type ' + unit;
+	      }
+	    }
+	  }]);
+
+	  return ConvertTemp;
+	})();
+
+	exports['default'] = new ConvertTemp();
+	module.exports = exports['default'];
+
+	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "convertTemp.js" + ": " + err.message); } }); } } })(); }
+
+/***/ },
+/* 306 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } (function () {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () {
+	  function defineProperties(target, props) {
+	    for (var i = 0; i < props.length; i++) {
+	      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+	    }
+	  }return function (Constructor, protoProps, staticProps) {
+	    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+	  };
+	})();
+
+	var _get = function get(_x, _x2, _x3) {
+	  var _again = true;_function: while (_again) {
+	    var object = _x,
+	        property = _x2,
+	        receiver = _x3;desc = parent = getter = undefined;_again = false;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
+	      var parent = Object.getPrototypeOf(object);if (parent === null) {
+	        return undefined;
+	      } else {
+	        _x = parent;_x2 = property;_x3 = receiver;_again = true;continue _function;
+	      }
+	    } else if ('value' in desc) {
+	      return desc.value;
+	    } else {
+	      var getter = desc.get;if (getter === undefined) {
+	        return undefined;
+	      }return getter.call(receiver);
+	    }
+	  }
+	};
+
+	function _interopRequireDefault(obj) {
+	  return obj && obj.__esModule ? obj : { 'default': obj };
+	}
+
+	function _classCallCheck(instance, Constructor) {
+	  if (!(instance instanceof Constructor)) {
+	    throw new TypeError('Cannot call a class as a function');
+	  }
+	}
+
+	function _inherits(subClass, superClass) {
+	  if (typeof superClass !== 'function' && superClass !== null) {
+	    throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+	  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) subClass.__proto__ = superClass;
+	}
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _forecastHourlyJs = __webpack_require__(307);
+
+	var _forecastHourlyJs2 = _interopRequireDefault(_forecastHourlyJs);
+
+	var _forecastNowJs = __webpack_require__(312);
+
+	var _forecastNowJs2 = _interopRequireDefault(_forecastNowJs);
+
+	var _radium = __webpack_require__(197);
+
+	var _radium2 = _interopRequireDefault(_radium);
+
+	var _utilsConvertTempJs = __webpack_require__(305);
+
+	var _utilsConvertTempJs2 = _interopRequireDefault(_utilsConvertTempJs);
+
+	var styles = {
+	  base: {
+	    flexGrow: 1,
+	    overflowY: 'scroll',
+	    overflowX: 'hidden'
+	  },
+
+	  overflowDiv: {
+	    overflowY: 'scroll',
+	    overflowX: 'hidden',
+	    height: '55vh'
+	  }
+	};
+
+	var ForecastToday = (function (_React$Component) {
+	  function ForecastToday(props) {
+	    _classCallCheck(this, ForecastToday);
+
+	    _get(Object.getPrototypeOf(ForecastToday.prototype), 'constructor', this).call(this, props);
+	    this.state = { overflowHeight: '55vh' };
+	  }
+
+	  _inherits(ForecastToday, _React$Component);
+
+	  _createClass(ForecastToday, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var todayDivHeight = document.getElementById('todayDiv').clientHeight;
+	      var mainDividerHeight = document.getElementById('mainDivider').clientHeight;
+	      this.setState({
+	        overflowHeight: todayDivHeight - mainDividerHeight - 30
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this = this;
+
+	      styles.overflowDiv.height = this.state.overflowHeight;
+	      var forecasts = this.props.forecasts;
+	      if (forecasts && forecasts.length > 8) {
+	        forecasts = forecasts.slice(1, 9);
+	      }
+
+	      return _react2['default'].createElement('div', {
+	        id: 'todayDiv',
+	        style: styles.base }, _react2['default'].createElement(_forecastNowJs2['default'], {
+	        conditionsId: this.props.conditionsId,
+	        currentConditions: this.props.currentConditions,
+	        temp: this.props.temp,
+	        units: this.props.units }), _react2['default'].createElement('div', { style: styles.overflowDiv }, forecasts.map(function (f, index) {
+	        return _react2['default'].createElement(_forecastHourlyJs2['default'], {
+	          key: index,
+	          temp: f.main.temp,
+	          time: f.dt_txt,
+	          units: _this.props.units,
+	          conditionId: f.weather[0].id });
+	      })));
+	    }
+	  }]);
+
+	  return ForecastToday;
+	})(_react2['default'].Component);
+
+	ForecastToday.propTypes = {
+	  conditionsId: _react2['default'].PropTypes.number,
+	  currentConditions: _react2['default'].PropTypes.string,
+	  forecasts: _react2['default'].PropTypes.array,
+	  temp: _react2['default'].PropTypes.number,
+	  units: _react2['default'].PropTypes.string
+	};
+
+	exports['default'] = new _radium2['default'](ForecastToday);
+	module.exports = exports['default'];
+
+	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "forecastToday.js" + ": " + err.message); } }); } } })(); }
+
+/***/ },
 /* 307 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } (function () {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () {
+	  function defineProperties(target, props) {
+	    for (var i = 0; i < props.length; i++) {
+	      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+	    }
+	  }return function (Constructor, protoProps, staticProps) {
+	    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+	  };
+	})();
+
+	function _interopRequireDefault(obj) {
+	  return obj && obj.__esModule ? obj : { 'default': obj };
+	}
+
+	function _classCallCheck(instance, Constructor) {
+	  if (!(instance instanceof Constructor)) {
+	    throw new TypeError('Cannot call a class as a function');
+	  }
+	}
+
+	function _inherits(subClass, superClass) {
+	  if (typeof superClass !== 'function' && superClass !== null) {
+	    throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+	  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) subClass.__proto__ = superClass;
+	}
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _radium = __webpack_require__(197);
+
+	var _radium2 = _interopRequireDefault(_radium);
+
+	var _utilsWeatherColorJs = __webpack_require__(296);
+
+	var _moment = __webpack_require__(210);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	var _utilsWeatherJs = __webpack_require__(308);
+
+	var _utilsConvertTempJs = __webpack_require__(305);
+
+	var _utilsConvertTempJs2 = _interopRequireDefault(_utilsConvertTempJs);
+
+	var styles = {
+	  base: {
+	    display: 'flex',
+	    flexDirection: 'row',
+	    flexGrow: 1,
+	    flexWrap: 'nowrap',
+	    justifyContent: 'center',
+	    alignItems: 'center',
+	    minHeight: '90px'
+	  },
+	  timeStyle: {
+	    fontSize: '1.5em',
+	    flexBasis: '20vw',
+	    flexGrow: 1,
+	    textAlign: 'center'
+	  },
+	  tempStyle: {
+	    fontSize: '1.5em',
+	    flexBasis: '10vw',
+	    flexGrow: 1,
+	    textAlign: 'center'
+	  },
+	  iStyle: {
+	    fontSize: '3em',
+	    flexGrow: 1,
+	    textAlign: 'center'
+	  }
+	};
+
+	var ForecastHourly = (function (_React$Component) {
+	  function ForecastHourly() {
+	    _classCallCheck(this, ForecastHourly);
+
+	    if (_React$Component != null) {
+	      _React$Component.apply(this, arguments);
+	    }
+	  }
+
+	  _inherits(ForecastHourly, _React$Component);
+
+	  _createClass(ForecastHourly, [{
+	    key: 'render',
+	    value: function render() {
+	      styles.base.backgroundColor = (0, _utilsWeatherColorJs.weatherColor)(this.props.temp);
+	      var timeObj = (0, _moment2['default'])(this.props.time + ' +0000', 'YYYY-MM-DD HH:mm:ss Z');
+	      var temp = this.props.units === 'imperial' ? this.props.temp : _utilsConvertTempJs2['default'].toCelsius(this.props.temp);
+
+	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.timeStyle }, timeObj.format('h:mm a')), _react2['default'].createElement('i', { className: 'wi wi-' + (0, _utilsWeatherJs.mapWeather)(this.props.conditionId),
+	        style: styles.iStyle }), _react2['default'].createElement('div', { style: styles.tempStyle }, Math.round(temp), '°'));
+	    }
+	  }]);
+
+	  return ForecastHourly;
+	})(_react2['default'].Component);
+
+	ForecastHourly.propTypes = {
+	  temp: _react2['default'].PropTypes.number,
+	  time: _react2['default'].PropTypes.string,
+	  units: _react2['default'].PropTypes.string,
+	  conditionId: _react2['default'].PropTypes.number
+	};
+
+	exports['default'] = new _radium2['default'](ForecastHourly);
+	module.exports = exports['default'];
+
+	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "forecastHourly.js" + ": " + err.message); } }); } } })(); }
+
+/***/ },
+/* 308 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } (function () {
@@ -38551,7 +38646,7 @@
 	  return obj && obj.__esModule ? obj : { 'default': obj };
 	}
 
-	var _superagent = __webpack_require__(308);
+	var _superagent = __webpack_require__(309);
 
 	var _superagent2 = _interopRequireDefault(_superagent);
 
@@ -38654,15 +38749,15 @@
 	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "weather.js" + ": " + err.message); } }); } } })(); }
 
 /***/ },
-/* 308 */
+/* 309 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Module dependencies.
 	 */
 
-	var Emitter = __webpack_require__(309);
-	var reduce = __webpack_require__(310);
+	var Emitter = __webpack_require__(310);
+	var reduce = __webpack_require__(311);
 
 	/**
 	 * Root reference for iframes.
@@ -39783,7 +39878,7 @@
 
 
 /***/ },
-/* 309 */
+/* 310 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -39953,7 +40048,7 @@
 
 
 /***/ },
-/* 310 */
+/* 311 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -39982,7 +40077,7 @@
 	};
 
 /***/ },
-/* 311 */
+/* 312 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } (function () {
@@ -40043,21 +40138,25 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _radium = __webpack_require__(199);
+	var _radium = __webpack_require__(197);
 
 	var _radium2 = _interopRequireDefault(_radium);
 
-	var _dividerJs = __webpack_require__(312);
+	var _dividerJs = __webpack_require__(313);
 
 	var _dividerJs2 = _interopRequireDefault(_dividerJs);
 
-	var _color = __webpack_require__(215);
+	var _color = __webpack_require__(300);
 
 	var _color2 = _interopRequireDefault(_color);
 
-	var _utilsWeatherColorJs = __webpack_require__(211);
+	var _utilsWeatherColorJs = __webpack_require__(296);
 
-	var _utilsWeatherJs = __webpack_require__(307);
+	var _utilsWeatherJs = __webpack_require__(308);
+
+	var _utilsConvertTempJs = __webpack_require__(305);
+
+	var _utilsConvertTempJs2 = _interopRequireDefault(_utilsConvertTempJs);
 
 	var styles = {
 	  base: {
@@ -40129,7 +40228,7 @@
 	    key: 'render',
 	    value: function render() {
 	      styles.base.height = this.state.height;
-	      var mainColor = (0, _utilsWeatherColorJs.weatherColor)(this.props.temp, this.props.units);
+	      var mainColor = (0, _utilsWeatherColorJs.weatherColor)(this.props.temp);
 	      var colorDark = 'white';
 	      var colorLight = 'white';
 
@@ -40143,8 +40242,9 @@
 
 	      styles.base.borderBottomColor = colorDark;
 	      styles.base.boxShadow = '0 2px ' + colorLight;
+	      var temp = this.props.units === 'imperial' ? this.props.temp : _utilsConvertTempJs2['default'].toCelsius(this.props.temp);
 
-	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.flexGrow }), _react2['default'].createElement('div', { style: styles.mainTempWrapper }, _react2['default'].createElement('span', null, this.props.temp), _react2['default'].createElement('span', { style: styles.degrees }, '°')), _react2['default'].createElement('div', { style: styles.forecastAndChance }, _react2['default'].createElement('div', { style: styles.forecastAndChanceChild }, _react2['default'].createElement('i', { className: 'wi wi-' + (0, _utilsWeatherJs.mapWeather)(this.props.conditionsId),
+	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.flexGrow }), _react2['default'].createElement('div', { style: styles.mainTempWrapper }, _react2['default'].createElement('span', null, temp), _react2['default'].createElement('span', { style: styles.degrees }, '°')), _react2['default'].createElement('div', { style: styles.forecastAndChance }, _react2['default'].createElement('div', { style: styles.forecastAndChanceChild }, _react2['default'].createElement('i', { className: 'wi wi-' + (0, _utilsWeatherJs.mapWeather)(this.props.conditionsId),
 	        style: styles.icon }), _react2['default'].createElement('p', null, this.props.currentConditions)), _react2['default'].createElement('div', { style: styles.verticalDivider }), _react2['default'].createElement('div', { style: styles.forecastAndChanceChild }, _react2['default'].createElement('i', { className: 'wi wi-sprinkles',
 	        style: styles.icon }), _react2['default'].createElement('p', null, '50%'))), _react2['default'].createElement('div', { style: styles.flexGrow }), _react2['default'].createElement(_dividerJs2['default'], null));
 	    }
@@ -40166,7 +40266,7 @@
 	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "forecastNow.js" + ": " + err.message); } }); } } })(); }
 
 /***/ },
-/* 312 */
+/* 313 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } (function () {
@@ -40207,7 +40307,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _radium = __webpack_require__(199);
+	var _radium = __webpack_require__(197);
 
 	var _radium2 = _interopRequireDefault(_radium);
 
@@ -40258,106 +40358,6 @@
 	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "divider.js" + ": " + err.message); } }); } } })(); }
 
 /***/ },
-/* 313 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } (function () {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-
-	function _interopRequireDefault(obj) {
-	  return obj && obj.__esModule ? obj : { 'default': obj };
-	}
-
-	var _react = __webpack_require__(5);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _radium = __webpack_require__(199);
-
-	var _radium2 = _interopRequireDefault(_radium);
-
-	var _moment = __webpack_require__(221);
-
-	var _moment2 = _interopRequireDefault(_moment);
-
-	var _reactRouter = __webpack_require__(1);
-
-	var _utilsWeatherColorJs = __webpack_require__(211);
-
-	var styles = {
-	  base: {
-	    padding: '7px 0px 7px 7px',
-	    flexShrink: '0',
-	    display: 'flex',
-	    flexDirection: 'row'
-	  },
-	  cityTimeWrapper: {
-	    flexGrow: 1
-	  },
-
-	  cityState: {
-	    fontFamily: '"Comfortaa-Bold", sans-serif',
-	    fontSize: '1.8em',
-	    margin: '0'
-	  },
-
-	  headerDate: {
-	    margin: '0',
-	    fontSize: '1.3em'
-	  },
-
-	  settingsIcon: {
-	    fontSize: '2.2em',
-	    padding: '10px 10px'
-	  }
-	};
-
-	var Header = _react2['default'].createClass({
-	  displayName: 'Header',
-
-	  propTypes: {
-	    cityName: _react2['default'].PropTypes.string,
-	    country: _react2['default'].PropTypes.string,
-	    temp: _react2['default'].PropTypes.number,
-	    units: _react2['default'].PropTypes.string
-	  },
-	  mixins: [_reactRouter.Navigation],
-
-	  render: function render() {
-	    var _this = this;
-
-	    styles.base.backgroundColor = (0, _utilsWeatherColorJs.weatherColor)(this.props.temp, this.props.units);
-	    var cityState = this.props.cityName + ', ' + this.props.country;
-	    if (cityState.length > 20) {
-	      cityState = cityState.slice(0, 18) + ' ...';
-	    }
-	    if (window.device && device.platform === 'iOS') {
-	      styles.base.padding = '23px 0px 7px 7px';
-	    }
-
-	    return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.cityTimeWrapper }, _react2['default'].createElement('p', { style: styles.cityState }, cityState), _react2['default'].createElement('p', { style: styles.headerDate }, (0, _moment2['default'])().format('dddd, MMMM D'))), _react2['default'].createElement('i', {
-	      className: 'fa fa-gears',
-	      onClick: function onClick() {
-	        return _this.transitionTo('settings');
-	      },
-	      onTouchStart: function onTouchStart() {
-	        return _this.transitionTo('settings');
-	      },
-	      style: styles.settingsIcon }));
-	  }
-	});
-
-	exports['default'] = new _radium2['default'](Header);
-	module.exports = exports['default'];
-
-	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/harrymoreno/programming/r3dm/temp/tempAppWeb/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "header.js" + ": " + err.message); } }); } } })(); }
-
-/***/ },
 /* 314 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -40399,21 +40399,25 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _radium = __webpack_require__(199);
+	var _radium = __webpack_require__(197);
 
 	var _radium2 = _interopRequireDefault(_radium);
 
-	var _color = __webpack_require__(215);
+	var _color = __webpack_require__(300);
 
 	var _color2 = _interopRequireDefault(_color);
 
-	var _moment = __webpack_require__(221);
+	var _moment = __webpack_require__(210);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
-	var _utilsWeatherColorJs = __webpack_require__(211);
+	var _utilsWeatherColorJs = __webpack_require__(296);
 
-	var _utilsWeatherJs = __webpack_require__(307);
+	var _utilsWeatherJs = __webpack_require__(308);
+
+	var _utilsConvertTempJs = __webpack_require__(305);
+
+	var _utilsConvertTempJs2 = _interopRequireDefault(_utilsConvertTempJs);
 
 	var styles = {
 	  base: {
@@ -40448,7 +40452,7 @@
 	    key: 'render',
 	    value: function render() {
 	      var avg = (this.props.high + this.props.low) / 2;
-	      var mainColor = (0, _utilsWeatherColorJs.weatherColor)(avg, this.props.units);
+	      var mainColor = (0, _utilsWeatherColorJs.weatherColor)(avg);
 	      var colorDark = 'white';
 	      var colorLight = 'white';
 
@@ -40461,10 +40465,12 @@
 	      styles.base.borderTop = '2px solid ' + colorLight;
 	      styles.base.boxShadow = '0 -2px ' + colorDark;
 	      var timeObj = (0, _moment2['default'])(this.props.time, 'X');
+	      var high = this.props.units === 'imperial' ? this.props.high : _utilsConvertTempJs2['default'].toCelsius(this.props.high);
+	      var low = this.props.units === 'imperial' ? this.props.low : _utilsConvertTempJs2['default'].toCelsius(this.props.low);
 
 	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('h3', { style: styles.dayName }, timeObj.format('ddd')), _react2['default'].createElement('i', {
 	        className: 'wi wi-' + (0, _utilsWeatherJs.mapWeather)(this.props.conditionsId),
-	        style: styles.icon }), _react2['default'].createElement('p', { style: styles.highLow }, this.props.high, '/', this.props.low));
+	        style: styles.icon }), _react2['default'].createElement('p', { style: styles.highLow }, Math.round(high), '/', Math.round(low)));
 	    }
 	  }]);
 
@@ -40505,13 +40511,13 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _radium = __webpack_require__(199);
+	var _radium = __webpack_require__(197);
 
 	var _radium2 = _interopRequireDefault(_radium);
 
 	var _reactRouter = __webpack_require__(1);
 
-	var _utilsWeatherColorJs = __webpack_require__(211);
+	var _utilsWeatherColorJs = __webpack_require__(296);
 
 	var sunIconKeyframes = _radium2['default'].keyframes({
 	  '0%': {
@@ -40527,6 +40533,7 @@
 	    transform: 'rotate(1turn)'
 	  }
 	});
+
 	var styles = {
 	  base: {
 	    height: '100%',
@@ -40606,21 +40613,21 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _radium = __webpack_require__(199);
+	var _radium = __webpack_require__(197);
 
 	var _radium2 = _interopRequireDefault(_radium);
 
 	var _reactRouter = __webpack_require__(1);
 
-	var _utilsWeatherColorJs = __webpack_require__(211);
+	var _utilsWeatherColorJs = __webpack_require__(296);
 
-	var _utilsConvertTempJs = __webpack_require__(220);
+	var _utilsConvertTempJs = __webpack_require__(305);
 
 	var _utilsConvertTempJs2 = _interopRequireDefault(_utilsConvertTempJs);
 
-	var _utilsWeatherJs = __webpack_require__(307);
+	var _utilsWeatherJs = __webpack_require__(308);
 
-	var _color = __webpack_require__(215);
+	var _color = __webpack_require__(300);
 
 	var _color2 = _interopRequireDefault(_color);
 
@@ -40737,8 +40744,7 @@
 	  // updates settings component state upon user input to form
 	  handleChange: function handleChange(event) {
 	    this.setState({
-	      units: event.target.value,
-	      temp: _utilsConvertTempJs2['default'].convertUnits(this.state.temp, event.target.value)
+	      units: event.target.value
 	    });
 	  },
 
@@ -40760,7 +40766,7 @@
 	        console.log('browser supports geolocation, waiting for user');
 	        navigator.geolocation.getCurrentPosition(function (position) {
 	          console.log('browser gps given', position);
-	          var result = (0, _utilsWeatherJs.fetchWeather)(position.coords.latitude, position.coords.longitude, _this.state.units).then(_this.weatherCallback, _this.fetchWeatherError);
+	          var result = (0, _utilsWeatherJs.fetchWeather)(position.coords.latitude, position.coords.longitude, 'imperial').then(_this.weatherCallback, _this.fetchWeatherError);
 	          result.lat = position.coords.latitude;
 	          result.lon = position.coords.longitude;
 	          console.log('return value', result);
@@ -40808,7 +40814,7 @@
 	  render: function render() {
 	    var _this2 = this;
 
-	    var mainColor = (0, _utilsWeatherColorJs.weatherColor)(this.state.temp, this.state.units);
+	    var mainColor = (0, _utilsWeatherColorJs.weatherColor)(this.state.temp);
 	    var shadow = 'white';
 	    if (mainColor !== 'white') {
 	      shadow = new _color2['default'](mainColor).darken(0.3).hslaString();
