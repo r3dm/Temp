@@ -16,41 +16,53 @@ var styles = {
     borderBottom: '2px solid',
     position: 'relative'
   },
-
   mainTempWrapper: {
     fontSize: '7em',
     maxWidth: '50%'
   },
-
   flexGrow: {
     flexGrow: 1
   },
-
   degrees: {
     fontSize: '0.8em',
     verticalAlign: 'top'
   },
-
   forecastAndChance: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    maxWidth: '50%',
+    alignContent: 'center',
     textAlign: 'center'
   },
-
-  verticalDivider: {
-    height: '6em',
-    width: 0,
-    border: '1px solid'
-  },
-
   icon: {
-    fontSize: '3em'
+    fontSize: '15vw',
+    padding: '0 2vw'
   },
-
-  forecastAndChanceChild: {
-    width: '20vw'
+  verticalDivider: {
+    height: '20vh',
+    width: 0,
+    border: '2px solid',
+    borderRadius: '5px',
+    margin: '0 2vw'
+  },
+  forecastAndChanceChildL: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+    width: '40vw'
+  },
+  forecastAndChanceChildR: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    width: '40vw'
+  },
+  iconCaption: {
+    paddingTop: '10px',
+    fontSize: '5.5vw',
+    maxWidth: '25vw',
+    maxHeight: '15vh',
+    overflow: 'hidden'
   }
 }
 
@@ -98,19 +110,25 @@ class ForecastNow extends React.Component {
         </div>
 
         <div style={styles.forecastAndChance} >
-          <div style={styles.forecastAndChanceChild} >
+
+          <div style={styles.forecastAndChanceChildL} >
             <i className={`wi wi-${ mapWeather(this.props.conditionsId)}`}
                style={styles.icon}></i>
-            <p>{ this.props.currentConditions }</p>
+            <div style={styles.iconCaption}>
+              { this.props.currentConditions }
+            </div>
           </div>
 
           <div style={styles.verticalDivider} ></div>
 
-          <div style={styles.forecastAndChanceChild} >
+          <div style={styles.forecastAndChanceChildR} >
             <i className="wi wi-sprinkles"
                style={styles.icon}></i>
-            <p>50%</p>
+            <div style={styles.iconCaption}>
+              50%
+            </div>
           </div>
+
         </div>
 
         <div style={styles.flexGrow} ></div>
