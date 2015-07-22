@@ -17,6 +17,7 @@ var sunIconKeyframes = Radium.keyframes({
     transform: 'rotate(1turn)'
   }
 })
+
 var styles = {
   base: {
     height: '100%',

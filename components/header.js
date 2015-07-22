@@ -42,7 +42,7 @@ let Header = React.createClass({
   mixins: [Navigation],
 
   render() {
-    styles.base.backgroundColor = weatherColor(this.props.temp, this.props.units)
+    styles.base.backgroundColor = weatherColor(this.props.temp)
     var cityState = this.props.cityName + ', ' + this.props.country
     if(cityState.length > 20) {
       cityState = cityState.slice(0, 18) + ' ...'
