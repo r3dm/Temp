@@ -117,8 +117,7 @@ let Settings = React.createClass({
   // updates settings component state upon user input to form
   handleChange: function(event) {
     this.setState({
-      units: event.target.value,
-      temp: convertTemp.convertUnits(this.state.temp, event.target.value)
+      units: event.target.value
     })
   },
 
@@ -141,7 +140,7 @@ let Settings = React.createClass({
             console.log('browser gps given', position)
             var result = fetchWeather(position.coords.latitude,
                                       position.coords.longitude,
-                                      this.state.units)
+                                      'imperial')
                             .then(this.weatherCallback, this.fetchWeatherError)
             result.lat = position.coords.latitude
             result.lon = position.coords.longitude
@@ -194,7 +193,7 @@ let Settings = React.createClass({
   },
 
   render: function() {
-    let mainColor = weatherColor(this.state.temp, this.state.units)
+    let mainColor = weatherColor(this.state.temp)
     let shadow = 'white'
     if(mainColor !== 'white') {
       shadow = new Color(mainColor).darken(0.3).hslaString()
@@ -275,9 +274,7 @@ let Settings = React.createClass({
             <div>Your location:</div>
             <div>{ cityName }</div>
           </div>
-
         </div>
-
       </div>
     )
   }

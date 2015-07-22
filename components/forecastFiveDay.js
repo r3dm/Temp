@@ -4,6 +4,7 @@ import Color from 'color'
 import moment from 'moment'
 import { weatherColor } from '../utils/weatherColor.js'
 import { mapWeather } from '../utils/weather.js'
+import convertTemp from '../utils/convertTemp.js'
 
 var styles = {
   base: {
@@ -26,7 +27,7 @@ var styles = {
 class ForecastFiveDay extends React.Component {
   render() {
     let avg = (this.props.high + this.props.low) / 2
-    let mainColor = weatherColor(avg, this.props.units)
+    let mainColor = weatherColor(avg)
     let colorDark = 'white'
     let colorLight = 'white'
 
@@ -39,6 +40,10 @@ class ForecastFiveDay extends React.Component {
     styles.base.borderTop = `2px solid ${colorLight}`
     styles.base.boxShadow = `0 -2px ${colorDark}`
     var timeObj = moment(this.props.time, 'X')
+    let high = this.props.units === "imperial" ? this.props.high
+                                    : convertTemp.toCelsius(this.props.high)
+    let low = this.props.units === "imperial" ? this.props.low
+                                    : convertTemp.toCelsius(this.props.low)
 
     return (
       <div style={styles.base} >
@@ -49,7 +54,7 @@ class ForecastFiveDay extends React.Component {
           className={`wi wi-${ mapWeather(this.props.conditionsId)}`}
           style={styles.icon}></i>
         <p style={styles.highLow} >
-          {this.props.high}/{this.props.low}
+          {Math.round(high)}/{Math.round(low)}
         </p>
       </div>
     )

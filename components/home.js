@@ -3,7 +3,6 @@ import Radium from 'radium'
 import Header from './header.js'
 import ForecastToday from './forecastToday.js'
 import ForecastFiveDay from './forecastFiveDay.js'
-import convertTemp from '../utils/convertTemp.js'
 
 var styles = {
   base: {
@@ -41,18 +40,12 @@ class Home extends React.Component {
           units={ this.props.state.units } />
         <div style={styles.footer} >
           { fiveDayForecast.map((f, index) => {
-            let high = this.props.state.units === 'metric' ?
-                                  convertTemp.toCelsius(f.temp.max) :
-                                  Math.round(f.temp.max)
-            let low = this.props.state.units === 'metric' ?
-                                  convertTemp.toCelsius(f.temp.min) :
-                                  Math.round(f.temp.min)
             return (
               <ForecastFiveDay
                 conditionsId={f.weather[0].id}
-                high={high}
+                high={f.temp.max}
                 key={index}
-                low={low}
+                low={f.temp.min}
                 time={f.dt}
                 units={this.props.state.units} />
             )

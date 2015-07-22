@@ -52,13 +52,10 @@ class ForecastToday extends React.Component {
 
         <div style={styles.overflowDiv} >
           {forecasts.map((f, index) => {
-            let temp = this.props.units === 'metric' ?
-                                        convertTemp.toCelsius(f.main.temp) :
-                                        f.main.temp
             return (
               <ForecastHourly
                 key={index}
-                temp={temp}
+                temp={f.main.temp}
                 time={f.dt_txt}
                 units={ this.props.units }
                 conditionId={f.weather[0].id} />

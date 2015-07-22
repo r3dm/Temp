@@ -4,6 +4,7 @@ import Divider from './divider.js'
 import Color from 'color'
 import { weatherColor } from '../utils/weatherColor.js'
 import { mapWeather } from '../utils/weather.js'
+import convertTemp from '../utils/convertTemp.js'
 
 var styles = {
   base: {
@@ -68,7 +69,7 @@ class ForecastNow extends React.Component {
 
   render() {
     styles.base.height = this.state.height
-    let mainColor = weatherColor(this.props.temp, this.props.units)
+    let mainColor = weatherColor(this.props.temp)
     let colorDark = 'white'
     let colorLight = 'white'
 
@@ -82,6 +83,8 @@ class ForecastNow extends React.Component {
 
     styles.base.borderBottomColor = colorDark
     styles.base.boxShadow = `0 2px ${colorLight}`
+    let temp = this.props.units === "imperial" ? this.props.temp
+                                  : convertTemp.toCelsius(this.props.temp)
 
     return (
       <div style={styles.base} >
@@ -89,7 +92,7 @@ class ForecastNow extends React.Component {
 
         <div style={styles.mainTempWrapper} >
           <span>
-            { this.props.temp }
+            { temp }
           </span>
           <span style={styles.degrees} >&deg;</span>
         </div>

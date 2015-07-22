@@ -3,6 +3,7 @@ import Radium from 'radium'
 import { weatherColor } from '../utils/weatherColor.js'
 import moment from 'moment'
 import { mapWeather } from '../utils/weather.js'
+import convertTemp from '../utils/convertTemp.js'
 
 var styles = {
   base: {
@@ -35,8 +36,10 @@ var styles = {
 
 class ForecastHourly extends React.Component {
   render() {
-    styles.base.backgroundColor = weatherColor(this.props.temp, this.props.units)
+    styles.base.backgroundColor = weatherColor(this.props.temp)
     var timeObj = moment(this.props.time + ' +0000', 'YYYY-MM-DD HH:mm:ss Z')
+    let temp = this.props.units === "imperial" ? this.props.temp
+                                  : convertTemp.toCelsius(this.props.temp)
 
     return (
       <div style={styles.base} >
@@ -46,7 +49,7 @@ class ForecastHourly extends React.Component {
         <i className={`wi wi-${ mapWeather(this.props.conditionId)}`}
            style={styles.iStyle}></i>
         <div style={styles.tempStyle} >
-          { Math.round(this.props.temp) }&deg;
+          { Math.round(temp) }&deg;
         </div>
       </div>
     )

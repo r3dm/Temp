@@ -33,22 +33,19 @@ let contrast = function(color) {
 }
 
 /*
- * Takes a temperature and returns an appropriate color
+ * Takes a temperature in Fahrenheit and returns an appropriate color
  * in hsl you can modify by hue, saturation and lightness, so
  * we calculate a color between 'blue' & 'red' by Linear Interpolation
  * ex. lerp(start, end, ratio)
  */
-export function weatherColor(currentTemp, units) {
-  if(units === 'metric') {
-    currentTemp = ConvertTemp.toFahrenheit(currentTemp)
-  }
-  if(isNaN(currentTemp)) {
+export function weatherColor(temp) {
+  if(isNaN(temp)) {
     return 'white'
   }
 
   var result = start.clone()
 
-  var ratio = scale(currentTemp)
+  var ratio = scale(temp)
 
   var newHue = lerp(start.hue(), end.hue(), ratio)
   var newSaturation = lerp(start.saturation(), end.saturation(), ratio)
