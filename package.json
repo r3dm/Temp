@@ -19,6 +19,7 @@
     "moment": "^2.10.3",
     "radium": "^0.13.0",
     "react": "^0.13.3",
+    "react-localstorage": "^0.2.4",
     "react-router": "^0.13.3",
     "superagent": "^1.2.0"
   },

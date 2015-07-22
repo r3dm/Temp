@@ -7,6 +7,7 @@ import Home from './components/home.js'
 import Splash from './components/splash.js'
 import Settings from './components/settings.js'
 import moment from 'moment'
+import LocalStorageMixin from 'react-localstorage'
 
 const dtFmtStr = 'YYYY-MM-DD HH:00:00'
 /*
@@ -14,6 +15,7 @@ const dtFmtStr = 'YYYY-MM-DD HH:00:00'
  * screen. This way when the user visits home we likely already have the info
  */
 let App = React.createClass({
+  mixins: [LocalStorageMixin],
   getInitialState() {
     return {
       cityName: 'none',
