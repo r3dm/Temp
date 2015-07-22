@@ -95,7 +95,7 @@
 	    return {
 	      cityName: 'none',
 	      country: 'N/A',
-	      currentConditions: 'Clear',
+	      currentConditions: 'Thunderstorms and rain and clear skies',
 	      temp: 89,
 	      lat: NaN,
 	      lon: NaN,
@@ -40539,41 +40539,53 @@
 	    borderBottom: '2px solid',
 	    position: 'relative'
 	  },
-
 	  mainTempWrapper: {
 	    fontSize: '7em',
 	    maxWidth: '50%'
 	  },
-
 	  flexGrow: {
 	    flexGrow: 1
 	  },
-
 	  degrees: {
 	    fontSize: '0.8em',
 	    verticalAlign: 'top'
 	  },
-
 	  forecastAndChance: {
 	    display: 'flex',
 	    flexDirection: 'row',
 	    justifyContent: 'center',
-	    maxWidth: '50%',
+	    alignContent: 'center',
 	    textAlign: 'center'
 	  },
-
-	  verticalDivider: {
-	    height: '6em',
-	    width: 0,
-	    border: '1px solid'
-	  },
-
 	  icon: {
-	    fontSize: '3em'
+	    fontSize: '15vw',
+	    padding: '0 2vw'
 	  },
-
-	  forecastAndChanceChild: {
-	    width: '20vw'
+	  verticalDivider: {
+	    height: '20vh',
+	    width: 0,
+	    border: '2px solid',
+	    borderRadius: '5px',
+	    margin: '0 2vw'
+	  },
+	  forecastAndChanceChildL: {
+	    display: 'flex',
+	    flexDirection: 'column',
+	    alignItems: 'flex-end',
+	    width: '40vw'
+	  },
+	  forecastAndChanceChildR: {
+	    display: 'flex',
+	    flexDirection: 'column',
+	    alignItems: 'flex-start',
+	    width: '40vw'
+	  },
+	  iconCaption: {
+	    paddingTop: '10px',
+	    fontSize: '5.5vw',
+	    maxWidth: '25vw',
+	    maxHeight: '15vh',
+	    overflow: 'hidden'
 	  }
 	};
 
@@ -40615,9 +40627,9 @@
 	      styles.base.boxShadow = '0 2px ' + colorLight;
 	      var temp = this.props.units === 'imperial' ? this.props.temp : _utilsConvertTempJs2['default'].toCelsius(this.props.temp);
 
-	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.flexGrow }), _react2['default'].createElement('div', { style: styles.mainTempWrapper }, _react2['default'].createElement('span', null, temp), _react2['default'].createElement('span', { style: styles.degrees }, '°')), _react2['default'].createElement('div', { style: styles.forecastAndChance }, _react2['default'].createElement('div', { style: styles.forecastAndChanceChild }, _react2['default'].createElement('i', { className: 'wi wi-' + (0, _utilsWeatherJs.mapWeather)(this.props.conditionsId),
-	        style: styles.icon }), _react2['default'].createElement('p', null, this.props.currentConditions)), _react2['default'].createElement('div', { style: styles.verticalDivider }), _react2['default'].createElement('div', { style: styles.forecastAndChanceChild }, _react2['default'].createElement('i', { className: 'wi wi-sprinkles',
-	        style: styles.icon }), _react2['default'].createElement('p', null, '50%'))), _react2['default'].createElement('div', { style: styles.flexGrow }), _react2['default'].createElement(_dividerJs2['default'], null));
+	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.flexGrow }), _react2['default'].createElement('div', { style: styles.mainTempWrapper }, _react2['default'].createElement('span', null, temp), _react2['default'].createElement('span', { style: styles.degrees }, '°')), _react2['default'].createElement('div', { style: styles.forecastAndChance }, _react2['default'].createElement('div', { style: styles.forecastAndChanceChildL }, _react2['default'].createElement('i', { className: 'wi wi-' + (0, _utilsWeatherJs.mapWeather)(this.props.conditionsId),
+	        style: styles.icon }), _react2['default'].createElement('div', { style: styles.iconCaption }, this.props.currentConditions)), _react2['default'].createElement('div', { style: styles.verticalDivider }), _react2['default'].createElement('div', { style: styles.forecastAndChanceChildR }, _react2['default'].createElement('i', { className: 'wi wi-sprinkles',
+	        style: styles.icon }), _react2['default'].createElement('div', { style: styles.iconCaption }, '50%'))), _react2['default'].createElement('div', { style: styles.flexGrow }), _react2['default'].createElement(_dividerJs2['default'], null));
 	    }
 	  }]);
 
