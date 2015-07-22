@@ -3,6 +3,7 @@ import Radium from 'radium'
 import { Navigation } from 'react-router'
 import { weatherColor } from '../utils/weatherColor.js'
 import convertTemp from '../utils/convertTemp.js'
+import { fetchWeather } from '../utils/weather.js'
 import Color from 'color'
 
 var styles = {
@@ -65,6 +66,25 @@ var styles = {
     height: '1em',
     backgroundColor: 'white',
     borderRadius: '1em'
+  },
+  geoRow: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: '30px 0'
+  },
+  geoButton: {
+    width: '2em',
+    height: '50px',
+    fontSize: '2em',
+    color: 'white',
+    background: 'none',
+    borderRadius: '10px',
+    marginRight: '6vw'
+  },
+  geoLabel: {
+    fontSize: '2em',
+    paddingLeft: '14vw'
   }
 }
 
@@ -97,6 +117,71 @@ let Settings = React.createClass({
   transitionSync: function() {
     this.props.syncFunc(this.state)
     this.transitionTo('home')
+  },
+  fetchWeather: function() {
+    if(navigator.geolocation) {
+      var promise = new Promise((resolve) => {
+        console.log('browser supports geolocation, waiting for user')
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            console.log('browser gps given', position)
+            var result = fetchWeather(position.coords.latitude,
+                                      position.coords.longitude,
+                                      this.state.units)
+                            .then(this.weatherCallback, this.fetchWeatherError)
+            result.lat = position.coords.latitude
+            result.lon = position.coords.longitude
+            console.log('return value', result)
+
+            resolve(result)
+          },
+          () => { // error
+            console.log('geolocation error branch, fetch weather anyway')
+            resolve(
+              fetchWeather(this.state.lat, this.state.lon, this.state.units)
+                .then(this.weatherCallback, this.fetchWeatherError)
+            )
+          }
+        )
+        // window.setTimeout(() => {
+        //   console.log('timeout')
+        //   resolve(
+        //     fetchWeather(this.state.lat, this.state.lon, this.state.units)
+        //     .then(this.weatherCallback, this.fetchWeatherError)
+        //   )
+        // }, 8000)
+      })
+      promise.then((result) => {
+        this.setState(result)
+      })
+    } else {
+      console.log('no geolocation available')
+    }
+  },
+
+  weatherCallback(results) {
+    var weather = results[0].body
+    var hourlyForecast = results[1].body.list
+    var fiveDayForecast = results[2].body.list
+
+    // weather api may return an array here, so we check
+    var currentWeather = Array.isArray(weather.weather) ?
+                    weather.weather[0] :
+                    weather.weather
+    return {
+      weather,
+      hourlyForecast,
+      fiveDayForecast,
+      temp: Math.round(weather.main.temp),
+      cityName: weather.name,
+      sunrise: weather.sys.sunrise,
+      sunset: weather.sys.sunset,
+      currentConditions: currentWeather.main,
+      country: weather.sys.country
+    }
+  },
+  fetchWeatherError(reason) {
+    console.log(reason)
   },
 
   render: function() {
@@ -156,6 +241,15 @@ let Settings = React.createClass({
               { this.state.units === 'imperial' ? check : null }
             </div>
           </label>
+
+          <div style={styles.geoRow} >
+            <span style={styles.geoLabel}>Geolocation</span>
+            <button
+              style={styles.geoButton}
+              onClick={() => { this.fetchWeather() }}>
+              <i className="fa fa-location-arrow" />
+            </button>
+          </div>
 
         </div>
 
