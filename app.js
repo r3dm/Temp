@@ -11,8 +11,7 @@ import LocalStorageMixin from 'react-localstorage'
 
 const dtFmtStr = 'YYYY-MM-DD HH:00:00'
 /*
- * we let state reside in App so async weather can be fetched on the splash
- * screen. This way when the user visits home we likely already have the info
+ * Top level Component
  */
 let App = React.createClass({
   mixins: [LocalStorageMixin],
@@ -50,6 +49,7 @@ let App = React.createClass({
       }
     }
   },
+  // handler for updating top-level state
   saveSettings: function(newState) {
     this.setState(newState)
   },
@@ -74,6 +74,7 @@ let routes = (
   </Route>
 )
 
+// React app initializer
 function startApp() {
   Router.run(routes, function (Handler) {
     React.initializeTouchEvents(true)
@@ -81,6 +82,7 @@ function startApp() {
   })
 }
 
+// Cordova delay
 if (window.cordova) {
   console.log('wait for deviceready')
   document.addEventListener('deviceready', startApp, false);

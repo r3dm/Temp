@@ -104,7 +104,6 @@ let Settings = React.createClass({
   },
   mixins: [Navigation],
 
-  // declare setting component initial state based off passed in props
   getInitialState: function() {
     return {
       online: window.navigator.onLine,
@@ -128,16 +127,15 @@ let Settings = React.createClass({
     })
   },
 
-  // syncronizes the settings component state object with the app's topmost
-  // state object, this is neccessary due to the way form state works with
-  // react
+  // synchronizes the settings component state object with the app's topmost
+  // state object
   transitionSync: function() {
     this.props.syncFunc(this.state)
     this.transitionTo('home')
   },
 
   // request geolocation data from browser
-  // pass this info to api
+  // pass latitude/longitude to openweathermap.org api
   fetchWeather: function() {
     if(navigator.geolocation) {
       var promise = new Promise((resolve) => {
@@ -173,7 +171,7 @@ let Settings = React.createClass({
   },
 
   // used for weather api callbacks, parses the raw response into the fields
-  // we expect
+  // we want
   weatherCallback(results) {
     console.log('response:', results)
     var weather = results[0].body
@@ -207,7 +205,6 @@ let Settings = React.createClass({
     this.setState({ querying: false })
   },
   warnOffline() {
-    // TODO properly test this
     if(navigator.notification) {
       navigator.notification.alert("you are currently offline", // message
                                    null, // callback
@@ -249,18 +246,23 @@ let Settings = React.createClass({
     return (
       <div style={styles.base} >
 
-        <i
-          className="fa fa-angle-double-left"
-          onClick={() => this.transitionSync()}
-          onTouchEnd={() => this.transitionSync()}
-          style={styles.backIcon}></i>
-        <div style={styles.navigation} >
-          <p style={styles.header}>
-            Settings
-          </p>
-        </div>
+        <nav>
+          <i
+            className="fa fa-angle-double-left"
+            onClick={() => this.transitionSync()}
+            onTouchEnd={() => this.transitionSync()}
+            style={styles.backIcon}></i>
+
+          <div style={styles.navigation} >
+            <p style={styles.header}>
+              Settings
+            </p>
+          </div>
+        </nav>
 
         <div style={styles.body} >
+
+          // Celsius/Farenheit checkboxes
           <label style={styles.label}>
             <input
               checked={this.state.units === 'metric'}
@@ -290,6 +292,7 @@ let Settings = React.createClass({
             </div>
           </label>
 
+          // Geolocation button
           <div style={styles.geoRow} >
             <div style={styles.geoLabel}>Geolocation</div>
             <button
@@ -306,10 +309,12 @@ let Settings = React.createClass({
             </button>
           </div>
 
+          // Location Display
           <div style={styles.location} >
             <div>Your location:</div>
             <div>{ cityName }</div>
           </div>
+
         </div>
       </div>
     )
