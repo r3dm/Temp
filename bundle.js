@@ -40559,7 +40559,7 @@
 	    position: 'relative'
 	  },
 	  mainTempWrapper: {
-	    fontSize: '7em',
+	    fontSize: '6em',
 	    maxWidth: '50%'
 	  },
 	  flexGrow: {
