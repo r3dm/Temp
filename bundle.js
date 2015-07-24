@@ -94,7 +94,7 @@
 	    return {
 	      cityName: 'none',
 	      country: 'N/A',
-	      currentConditions: 'Thunderstorms and rain and clear skies',
+	      currentConditions: 'thunderstorm with light drizzle',
 	      temp: 89,
 	      lat: NaN,
 	      lon: NaN,
@@ -252,24 +252,27 @@
 	    display: 'flex',
 	    flexDirection: 'row',
 	    justifyContent: 'space-between',
-	    padding: '30px 0'
+	    padding: '1em 0'
 	  },
 	  geoButton: {
-	    width: '2em',
-	    height: '50px',
+	    width: '1.3em',
+	    height: '1.3em',
 	    fontSize: '2em',
 	    color: 'white',
 	    background: 'none',
+	    border: '3px solid white',
 	    borderRadius: '10px',
-	    marginRight: '6vw',
-	    flexShrink: 0
+	    marginRight: '9vw',
+	    flexShrink: 0,
+	    textAlign: 'center'
+	  },
+	  geoLabelContainer: {
+	    fontSize: '1.8em',
+	    flexGrow: 1,
+	    flexShrink: 1
 	  },
 	  geoLabel: {
-	    fontSize: '2em',
-	    flexBasis: '50vw',
-	    flexGrow: 1,
-	    flexShrink: 1,
-	    textAlign: 'center'
+	    padding: '5px 0 0 15vw'
 	  },
 	  location: {
 	    fontSize: '1.5em',
@@ -438,7 +441,7 @@
 	      onChange: this.handleChange,
 	      style: styles.input,
 	      type: 'radio',
-	      value: 'imperial' }), _react2['default'].createElement('span', { style: styles.optionText }, 'Fahrenheit'), _react2['default'].createElement('div', { style: styles.radio }, this.state.units === 'imperial' ? check : null)), _react2['default'].createElement('div', { style: styles.geoRow }, _react2['default'].createElement('div', { style: styles.geoLabel }, 'Geolocation'), _react2['default'].createElement('button', {
+	      value: 'imperial' }), _react2['default'].createElement('span', { style: styles.optionText }, 'Fahrenheit'), _react2['default'].createElement('div', { style: styles.radio }, this.state.units === 'imperial' ? check : null)), _react2['default'].createElement('div', { style: styles.geoRow }, _react2['default'].createElement('div', { style: styles.geoLabelContainer }, _react2['default'].createElement('div', { style: styles.geoLabel }, 'Geolocation')), _react2['default'].createElement('div', {
 	      style: styles.geoButton,
 	      onClick: function onClick() {
 	        if (_this2.state.online) {
@@ -40252,6 +40255,8 @@
 
 	var _utilsConvertTempJs2 = _interopRequireDefault(_utilsConvertTempJs);
 
+	var _utilsWeatherColorJs = __webpack_require__(210);
+
 	var styles = {
 	  base: {
 	    flexGrow: 1,
@@ -40262,7 +40267,8 @@
 	  overflowDiv: {
 	    overflowY: 'scroll',
 	    overflowX: 'hidden',
-	    height: '55vh'
+	    height: '55vh',
+	    backgroundColor: _utilsWeatherColorJs.splashRed.hslaString()
 	  }
 	};
 
@@ -40292,8 +40298,8 @@
 
 	      styles.overflowDiv.height = this.state.overflowHeight;
 	      var forecasts = this.props.forecasts;
-	      if (forecasts && forecasts.length > 8) {
-	        forecasts = forecasts.slice(1, 9);
+	      if (forecasts && forecasts.length > 9) {
+	        forecasts = forecasts.slice(1, 10);
 	      }
 
 	      return _react2['default'].createElement('div', {
@@ -40559,7 +40565,7 @@
 	    position: 'relative'
 	  },
 	  mainTempWrapper: {
-	    fontSize: '6em',
+	    fontSize: '25vw',
 	    maxWidth: '50%'
 	  },
 	  flexGrow: {
@@ -40573,41 +40579,37 @@
 	    display: 'flex',
 	    flexDirection: 'row',
 	    justifyContent: 'center',
-	    alignContent: 'center',
-	    textAlign: 'center'
-	  },
-	  icon: {
-	    fontSize: '15vw',
-	    padding: '0 2vw'
+	    alignContent: 'center'
 	  },
 	  verticalDivider: {
-	    height: '20vh',
-	    width: 0,
-	    border: '2px solid',
-	    borderRadius: '5px',
-	    margin: '0 2vw'
+	    width: '1vw',
+	    borderRadius: '5px'
 	  },
 	  forecastAndChanceChildL: {
 	    display: 'flex',
 	    flexDirection: 'column',
-	    alignItems: 'flex-end',
+	    justifyContent: 'center',
+	    alignItems: 'center',
 	    width: '40vw'
 	  },
 	  forecastAndChanceChildR: {
 	    display: 'flex',
 	    flexDirection: 'column',
-	    alignItems: 'flex-start',
+	    justifyContent: 'center',
+	    alignItems: 'center',
 	    width: '40vw'
 	  },
-	  iconCaption: {
-	    paddingTop: '5px',
-	    fontSize: '5.5vw',
-	    maxWidth: '25vw',
-	    maxHeight: '14vh',
-	    overflow: 'hidden'
+	  icon: {
+	    fontSize: '10vw',
+	    padding: '0 2vw'
 	  },
 	  metric: {
-	    paddingTop: '20px'
+	    fontSize: '5vw'
+	  },
+	  caption: {
+	    padding: '5px 1em 0 1em',
+	    fontSize: '5vw',
+	    textAlign: 'center'
 	  }
 	};
 
@@ -40643,14 +40645,14 @@
 	      }
 
 	      styles.base.backgroundColor = mainColor;
-	      styles.verticalDivider.color = colorDark;
+	      styles.verticalDivider.backgroundColor = colorDark;
 
 	      styles.base.borderBottomColor = colorDark;
 	      styles.base.boxShadow = '0 2px ' + colorLight;
 	      var temp = this.props.units === 'imperial' ? this.props.temp : _utilsConvertTempJs2['default'].toCelsius(this.props.temp);
 
 	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.flexGrow }), _react2['default'].createElement('div', { style: styles.mainTempWrapper }, _react2['default'].createElement('span', null, temp), _react2['default'].createElement('span', { style: styles.degrees }, '°')), _react2['default'].createElement('div', { style: styles.forecastAndChance }, _react2['default'].createElement('div', { style: styles.forecastAndChanceChildL }, _react2['default'].createElement('i', { className: 'wi wi-' + (0, _utilsWeatherJs.mapWeather)(this.props.conditionsId),
-	        style: styles.icon }), _react2['default'].createElement('div', { style: styles.iconCaption }, this.props.currentConditions)), _react2['default'].createElement('div', { style: styles.verticalDivider }), _react2['default'].createElement('div', { style: styles.forecastAndChanceChildR }, _react2['default'].createElement('div', { style: styles.metric }, 'humidity'), _react2['default'].createElement('div', { style: styles.iconCaption }, this.props.humidity, '%'))), _react2['default'].createElement('div', { style: styles.flexGrow }), _react2['default'].createElement(_dividerJs2['default'], null));
+	        style: styles.icon }), _react2['default'].createElement('div', { style: styles.caption }, this.props.currentConditions)), _react2['default'].createElement('div', { style: styles.verticalDivider }), _react2['default'].createElement('div', { style: styles.forecastAndChanceChildR }, _react2['default'].createElement('div', { style: styles.metric }, 'humidity'), _react2['default'].createElement('div', { style: styles.caption }, this.props.humidity, '%'))), _react2['default'].createElement('div', { style: styles.flexGrow }), _react2['default'].createElement(_dividerJs2['default'], null));
 	    }
 	  }]);
 
