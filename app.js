@@ -19,7 +19,7 @@ let App = React.createClass({
     return {
       cityName: 'none',
       country: 'N/A',
-      currentConditions: 'Thunderstorms and rain and clear skies',
+      currentConditions: 'thunderstorm with light drizzle',
       temp: 89,
       lat: NaN,
       lon: NaN,
