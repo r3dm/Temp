@@ -426,7 +426,7 @@
 	      onTouchEnd: function onTouchEnd() {
 	        return _this2.transitionSync();
 	      },
-	      style: styles.backIcon }), _react2['default'].createElement('div', { style: styles.navigation }, _react2['default'].createElement('p', { style: styles.header }, 'Settings'))), _react2['default'].createElement('div', { style: styles.body }, '// Celsius/Farenheit checkboxes', _react2['default'].createElement('label', { style: styles.label }, _react2['default'].createElement('input', {
+	      style: styles.backIcon }), _react2['default'].createElement('div', { style: styles.navigation }, _react2['default'].createElement('p', { style: styles.header }, 'Settings'))), _react2['default'].createElement('div', { style: styles.body }, _react2['default'].createElement('label', { style: styles.label }, _react2['default'].createElement('input', {
 	      checked: this.state.units === 'metric',
 	      name: 'unitsSelect',
 	      onChange: this.handleChange,
@@ -438,7 +438,7 @@
 	      onChange: this.handleChange,
 	      style: styles.input,
 	      type: 'radio',
-	      value: 'imperial' }), _react2['default'].createElement('span', { style: styles.optionText }, 'Fahrenheit'), _react2['default'].createElement('div', { style: styles.radio }, this.state.units === 'imperial' ? check : null)), '// Geolocation button', _react2['default'].createElement('div', { style: styles.geoRow }, _react2['default'].createElement('div', { style: styles.geoLabel }, 'Geolocation'), _react2['default'].createElement('button', {
+	      value: 'imperial' }), _react2['default'].createElement('span', { style: styles.optionText }, 'Fahrenheit'), _react2['default'].createElement('div', { style: styles.radio }, this.state.units === 'imperial' ? check : null)), _react2['default'].createElement('div', { style: styles.geoRow }, _react2['default'].createElement('div', { style: styles.geoLabel }, 'Geolocation'), _react2['default'].createElement('button', {
 	      style: styles.geoButton,
 	      onClick: function onClick() {
 	        if (_this2.state.online) {
@@ -447,7 +447,7 @@
 	        } else {
 	          _this2.warnOffline();
 	        }
-	      } }, _react2['default'].createElement('i', { className: spinnerClasses }))), '// Location Display', _react2['default'].createElement('div', { style: styles.location }, _react2['default'].createElement('div', null, 'Your location:'), _react2['default'].createElement('div', null, cityName))));
+	      } }, _react2['default'].createElement('i', { className: spinnerClasses }))), _react2['default'].createElement('div', { style: styles.location }, _react2['default'].createElement('div', null, 'Your location:'), _react2['default'].createElement('div', null, cityName))));
 	  }
 	});
 
