@@ -3,6 +3,7 @@ import ForecastHourly from './forecastHourly.js'
 import ForecastNow from './forecastNow.js'
 import Radium from 'radium'
 import convertTemp from '../utils/convertTemp.js'
+import { splashRed } from '../utils/weatherColor.js'
 
 var styles = {
   base: {
@@ -14,7 +15,8 @@ var styles = {
   overflowDiv: {
     overflowY: 'scroll',
     overflowX: 'hidden',
-    height: '55vh'
+    height: '55vh',
+    backgroundColor: splashRed.hslaString()
   }
 }
 
@@ -35,8 +37,8 @@ class ForecastToday extends React.Component {
   render() {
     styles.overflowDiv.height = this.state.overflowHeight
     var forecasts = this.props.forecasts
-    if(forecasts && forecasts.length > 8) {
-      forecasts = forecasts.slice(1, 9)
+    if(forecasts && forecasts.length > 9) {
+      forecasts = forecasts.slice(1, 10)
     }
 
     return (

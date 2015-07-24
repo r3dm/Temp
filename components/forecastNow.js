@@ -17,7 +17,7 @@ var styles = {
     position: 'relative'
   },
   mainTempWrapper: {
-    fontSize: '6em',
+    fontSize: '25vw',
     maxWidth: '50%'
   },
   flexGrow: {
@@ -31,41 +31,37 @@ var styles = {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    alignContent: 'center',
-    textAlign: 'center'
-  },
-  icon: {
-    fontSize: '15vw',
-    padding: '0 2vw'
+    alignContent: 'center'
   },
   verticalDivider: {
-    height: '20vh',
-    width: 0,
-    border: '2px solid',
-    borderRadius: '5px',
-    margin: '0 2vw'
+    width: '1vw',
+    borderRadius: '5px'
   },
   forecastAndChanceChildL: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'flex-end',
+    justifyContent: 'center',
+    alignItems: 'center',
     width: '40vw'
   },
   forecastAndChanceChildR: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'flex-start',
+    justifyContent: 'center',
+    alignItems: 'center',
     width: '40vw'
   },
-  iconCaption: {
-    paddingTop: '5px',
-    fontSize: '5.5vw',
-    maxWidth: '25vw',
-    maxHeight: '14vh',
-    overflow: 'hidden'
+  icon: {
+    fontSize: '10vw',
+    padding: '0 2vw'
   },
   metric: {
-    paddingTop: '20px'
+    fontSize: '5vw'
+  },
+  caption: {
+    padding: '5px 1em 0 1em',
+    fontSize: '5vw',
+    textAlign: 'center'
   }
 }
 
@@ -94,7 +90,7 @@ class ForecastNow extends React.Component {
     }
 
     styles.base.backgroundColor = mainColor
-    styles.verticalDivider.color = colorDark
+    styles.verticalDivider.backgroundColor = colorDark
 
     styles.base.borderBottomColor = colorDark
     styles.base.boxShadow = `0 2px ${colorLight}`
@@ -117,7 +113,7 @@ class ForecastNow extends React.Component {
           <div style={styles.forecastAndChanceChildL} >
             <i className={`wi wi-${ mapWeather(this.props.conditionsId)}`}
                style={styles.icon}></i>
-            <div style={styles.iconCaption}>
+            <div style={styles.caption}>
               { this.props.currentConditions }
             </div>
           </div>
@@ -128,7 +124,7 @@ class ForecastNow extends React.Component {
             <div style={styles.metric}>
               humidity
             </div>
-            <div style={styles.iconCaption}>
+            <div style={styles.caption}>
               { this.props.humidity }%
             </div>
           </div>

@@ -72,24 +72,27 @@ var styles = {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: '30px 0'
+    padding: '1em 0'
   },
   geoButton: {
-    width: '2em',
-    height: '50px',
+    width: '1.3em',
+    height: '1.3em',
     fontSize: '2em',
     color: 'white',
     background: 'none',
+    border: '3px solid white',
     borderRadius: '10px',
-    marginRight: '6vw',
-    flexShrink: 0
+    marginRight: '9vw',
+    flexShrink: 0,
+    textAlign: 'center'
+  },
+  geoLabelContainer: {
+    fontSize: '1.8em',
+    flexGrow: 1,
+    flexShrink: 1
   },
   geoLabel: {
-    fontSize: '2em',
-    flexBasis: '50vw',
-    flexGrow: 1,
-    flexShrink: 1,
-    textAlign: 'center'
+    padding: '5px 0 0 15vw'
   },
   location: {
     fontSize: '1.5em',
@@ -292,8 +295,12 @@ let Settings = React.createClass({
           </label>
 
           <div style={styles.geoRow} >
-            <div style={styles.geoLabel}>Geolocation</div>
-            <button
+            <div style={styles.geoLabelContainer}>
+              <div style={styles.geoLabel}>
+                Geolocation
+              </div>
+            </div>
+            <div
               style={styles.geoButton}
               onClick={() => {
                 if(this.state.online) {
@@ -304,7 +311,7 @@ let Settings = React.createClass({
                 }
               }}>
               <i className={spinnerClasses} />
-            </button>
+            </div>
           </div>
 
           <div style={styles.location} >
