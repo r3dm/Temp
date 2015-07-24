@@ -28964,7 +28964,7 @@
 	    styles.base.backgroundColor = (0, _utilsWeatherColorJs.weatherColor)(this.props.temp);
 	    var cityState = this.props.cityName + ', ' + this.props.country;
 	    if (cityState.length > 20) {
-	      cityState = cityState.slice(0, 16) + ' ...';
+	      cityState = cityState.slice(0, 15) + ' ...';
 	    }
 	    if (window.device && device.platform === 'iOS') {
 	      styles.base.padding = '23px 0px 7px 7px';
