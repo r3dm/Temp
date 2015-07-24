@@ -47,6 +47,7 @@ class ForecastToday extends React.Component {
         <ForecastNow
           conditionsId={ this.props.conditionsId }
           currentConditions={ this.props.currentConditions }
+          humidity={ this.props.humidity }
           temp={ this.props.temp }
           units={ this.props.units } />
 
@@ -71,6 +72,7 @@ ForecastToday.propTypes = {
   conditionsId: React.PropTypes.number,
   currentConditions: React.PropTypes.string,
   forecasts: React.PropTypes.array,
+  humidity: React.PropTypes.number,
   temp: React.PropTypes.number,
   units: React.PropTypes.string
 }

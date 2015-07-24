@@ -43,6 +43,9 @@ let App = React.createClass({
         { dt: parseInt(moment().add( 4, 'd').format('X')), temp: { max: 89, min: 65 }, weather: [{id: 804}]}
       ],
       weather: {
+        main: {
+          humidity: 80
+        },
         weather: [
           { id: 800 }
         ]
