@@ -40600,10 +40600,10 @@
 	    width: '40vw'
 	  },
 	  iconCaption: {
-	    paddingTop: '10px',
+	    paddingTop: '5px',
 	    fontSize: '5.5vw',
 	    maxWidth: '25vw',
-	    maxHeight: '15vh',
+	    maxHeight: '14vh',
 	    overflow: 'hidden'
 	  },
 	  metric: {
