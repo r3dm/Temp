@@ -63,6 +63,9 @@ var styles = {
     maxWidth: '25vw',
     maxHeight: '15vh',
     overflow: 'hidden'
+  },
+  metric: {
+    paddingTop: '20px'
   }
 }
 
@@ -122,10 +125,11 @@ class ForecastNow extends React.Component {
           <div style={styles.verticalDivider} ></div>
 
           <div style={styles.forecastAndChanceChildR} >
-            <i className="wi wi-sprinkles"
-               style={styles.icon}></i>
+            <div style={styles.metric}>
+              humidity
+            </div>
             <div style={styles.iconCaption}>
-              50%
+              { this.props.humidity }%
             </div>
           </div>
 
@@ -141,6 +145,7 @@ class ForecastNow extends React.Component {
 ForecastNow.propTypes = {
   conditionsId: React.PropTypes.number,
   currentConditions: React.PropTypes.string,
+  humidity: React.PropTypes.number,
   temp: React.PropTypes.number,
   units: React.PropTypes.string
 }
