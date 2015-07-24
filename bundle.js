@@ -84,8 +84,7 @@
 
 	var dtFmtStr = 'YYYY-MM-DD HH:00:00';
 	/*
-	 * we let state reside in App so async weather can be fetched on the splash
-	 * screen. This way when the user visits home we likely already have the info
+	 * Top level Component
 	 */
 	var App = _react2['default'].createClass({
 	  displayName: 'App',
@@ -103,10 +102,14 @@
 	      hourlyForecast: [{ dt_txt: (0, _moment2['default'])().add(1, 'h').format(dtFmtStr), weather: [{ id: 800, description: 'light rain' }], main: { temp: 89 } }, { dt_txt: (0, _moment2['default'])().add(4, 'h').format(dtFmtStr), weather: [{ id: 800, description: 'scattered clouds' }], main: { temp: 99 } }, { dt_txt: (0, _moment2['default'])().add(7, 'h').format(dtFmtStr), weather: [{ id: 800, description: 'light rain' }], main: { temp: 89 } }, { dt_txt: (0, _moment2['default'])().add(10, 'h').format(dtFmtStr), weather: [{ id: 800, description: 'sky is clear' }], main: { temp: 79 } }, { dt_txt: (0, _moment2['default'])().add(13, 'h').format(dtFmtStr), weather: [{ id: 800, description: 'scattered clouds' }], main: { temp: 69 } }, { dt_txt: (0, _moment2['default'])().add(16, 'h').format(dtFmtStr), weather: [{ id: 800, description: 'light rain' }], main: { temp: 59 } }, { dt_txt: (0, _moment2['default'])().add(19, 'h').format(dtFmtStr), weather: [{ id: 800, description: 'few clouds' }], main: { temp: 69 } }, { dt_txt: (0, _moment2['default'])().add(22, 'h').format(dtFmtStr), weather: [{ id: 800, description: 'sky is clear scattered clouds' }], main: { temp: 79 } }, { dt_txt: (0, _moment2['default'])().add(25, 'h').format(dtFmtStr), weather: [{ id: 800, description: 'sky is clear' }], main: { temp: 89 } }],
 	      fiveDayForecast: [{ dt: parseInt((0, _moment2['default'])().add(0, 'd').format('X')), temp: { max: 92, min: 65 }, weather: [{ id: 800 }] }, { dt: parseInt((0, _moment2['default'])().add(1, 'd').format('X')), temp: { max: 83, min: 65 }, weather: [{ id: 801 }] }, { dt: parseInt((0, _moment2['default'])().add(2, 'd').format('X')), temp: { max: 92, min: 69 }, weather: [{ id: 802 }] }, { dt: parseInt((0, _moment2['default'])().add(3, 'd').format('X')), temp: { max: 89, min: 70 }, weather: [{ id: 803 }] }, { dt: parseInt((0, _moment2['default'])().add(4, 'd').format('X')), temp: { max: 89, min: 65 }, weather: [{ id: 804 }] }],
 	      weather: {
+	        main: {
+	          humidity: 80
+	        },
 	        weather: [{ id: 800 }]
 	      }
 	    };
 	  },
+	  // handler for updating top-level state
 	  saveSettings: function saveSettings(newState) {
 	    this.setState(newState);
 	  },
@@ -123,6 +126,7 @@
 	  name: 'settings',
 	  path: '/settings' }));
 
+	// React app initializer
 	function startApp() {
 	  _reactRouter2['default'].run(routes, function (Handler) {
 	    _react2['default'].initializeTouchEvents(true);
@@ -130,6 +134,7 @@
 	  });
 	}
 
+	// Cordova delay
 	if (window.cordova) {
 	  console.log('wait for deviceready');
 	  document.addEventListener('deviceready', startApp, false);
@@ -281,7 +286,6 @@
 	  },
 	  mixins: [_reactRouter.Navigation],
 
-	  // declare setting component initial state based off passed in props
 	  getInitialState: function getInitialState() {
 	    return {
 	      online: window.navigator.onLine,
@@ -304,16 +308,15 @@
 	    });
 	  },
 
-	  // syncronizes the settings component state object with the app's topmost
-	  // state object, this is neccessary due to the way form state works with
-	  // react
+	  // synchronizes the settings component state object with the app's topmost
+	  // state object
 	  transitionSync: function transitionSync() {
 	    this.props.syncFunc(this.state);
 	    this.transitionTo('home');
 	  },
 
 	  // request geolocation data from browser
-	  // pass this info to api
+	  // pass latitude/longitude to openweathermap.org api
 	  fetchWeather: function fetchWeather() {
 	    var _this = this;
 
@@ -343,7 +346,7 @@
 	  },
 
 	  // used for weather api callbacks, parses the raw response into the fields
-	  // we expect
+	  // we want
 	  weatherCallback: function weatherCallback(results) {
 	    console.log('response:', results);
 	    var weather = results[0].body;
@@ -375,7 +378,6 @@
 	    this.setState({ querying: false });
 	  },
 	  warnOffline: function warnOffline() {
-	    // TODO properly test this
 	    if (navigator.notification) {
 	      navigator.notification.alert('you are currently offline', // message
 	      null, // callback
@@ -416,7 +418,7 @@
 	      'fa-circle-o-notch fa-spin': this.state.querying
 	    });
 
-	    return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('i', {
+	    return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('nav', null, _react2['default'].createElement('i', {
 	      className: 'fa fa-angle-double-left',
 	      onClick: function onClick() {
 	        return _this2.transitionSync();
@@ -424,7 +426,7 @@
 	      onTouchEnd: function onTouchEnd() {
 	        return _this2.transitionSync();
 	      },
-	      style: styles.backIcon }), _react2['default'].createElement('div', { style: styles.navigation }, _react2['default'].createElement('p', { style: styles.header }, 'Settings')), _react2['default'].createElement('div', { style: styles.body }, _react2['default'].createElement('label', { style: styles.label }, _react2['default'].createElement('input', {
+	      style: styles.backIcon }), _react2['default'].createElement('div', { style: styles.navigation }, _react2['default'].createElement('p', { style: styles.header }, 'Settings'))), _react2['default'].createElement('div', { style: styles.body }, '// Celsius/Farenheit checkboxes', _react2['default'].createElement('label', { style: styles.label }, _react2['default'].createElement('input', {
 	      checked: this.state.units === 'metric',
 	      name: 'unitsSelect',
 	      onChange: this.handleChange,
@@ -436,7 +438,7 @@
 	      onChange: this.handleChange,
 	      style: styles.input,
 	      type: 'radio',
-	      value: 'imperial' }), _react2['default'].createElement('span', { style: styles.optionText }, 'Fahrenheit'), _react2['default'].createElement('div', { style: styles.radio }, this.state.units === 'imperial' ? check : null)), _react2['default'].createElement('div', { style: styles.geoRow }, _react2['default'].createElement('div', { style: styles.geoLabel }, 'Geolocation'), _react2['default'].createElement('button', {
+	      value: 'imperial' }), _react2['default'].createElement('span', { style: styles.optionText }, 'Fahrenheit'), _react2['default'].createElement('div', { style: styles.radio }, this.state.units === 'imperial' ? check : null)), '// Geolocation button', _react2['default'].createElement('div', { style: styles.geoRow }, _react2['default'].createElement('div', { style: styles.geoLabel }, 'Geolocation'), _react2['default'].createElement('button', {
 	      style: styles.geoButton,
 	      onClick: function onClick() {
 	        if (_this2.state.online) {
@@ -445,7 +447,7 @@
 	        } else {
 	          _this2.warnOffline();
 	        }
-	      } }, _react2['default'].createElement('i', { className: spinnerClasses }))), _react2['default'].createElement('div', { style: styles.location }, _react2['default'].createElement('div', null, 'Your location:'), _react2['default'].createElement('div', null, cityName))));
+	      } }, _react2['default'].createElement('i', { className: spinnerClasses }))), '// Location Display', _react2['default'].createElement('div', { style: styles.location }, _react2['default'].createElement('div', null, 'Your location:'), _react2['default'].createElement('div', null, cityName))));
 	  }
 	});
 
@@ -28857,6 +28859,7 @@
 	        temp: this.props.state.temp,
 	        units: this.props.state.units }), _react2['default'].createElement(_forecastTodayJs2['default'], {
 	        conditionsId: this.props.state.weather.weather[0].id,
+	        humidity: this.props.state.weather.main.humidity,
 	        currentConditions: this.props.state.currentConditions,
 	        forecasts: this.props.state.hourlyForecast,
 	        temp: this.props.state.temp,
@@ -40298,6 +40301,7 @@
 	        style: styles.base }, _react2['default'].createElement(_forecastNowJs2['default'], {
 	        conditionsId: this.props.conditionsId,
 	        currentConditions: this.props.currentConditions,
+	        humidity: this.props.humidity,
 	        temp: this.props.temp,
 	        units: this.props.units }), _react2['default'].createElement('div', { style: styles.overflowDiv }, forecasts.map(function (f, index) {
 	        return _react2['default'].createElement(_forecastHourlyJs2['default'], {
@@ -40318,6 +40322,7 @@
 	  conditionsId: _react2['default'].PropTypes.number,
 	  currentConditions: _react2['default'].PropTypes.string,
 	  forecasts: _react2['default'].PropTypes.array,
+	  humidity: _react2['default'].PropTypes.number,
 	  temp: _react2['default'].PropTypes.number,
 	  units: _react2['default'].PropTypes.string
 	};
@@ -40600,6 +40605,9 @@
 	    maxWidth: '25vw',
 	    maxHeight: '15vh',
 	    overflow: 'hidden'
+	  },
+	  metric: {
+	    paddingTop: '20px'
 	  }
 	};
 
@@ -40642,8 +40650,7 @@
 	      var temp = this.props.units === 'imperial' ? this.props.temp : _utilsConvertTempJs2['default'].toCelsius(this.props.temp);
 
 	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.flexGrow }), _react2['default'].createElement('div', { style: styles.mainTempWrapper }, _react2['default'].createElement('span', null, temp), _react2['default'].createElement('span', { style: styles.degrees }, '°')), _react2['default'].createElement('div', { style: styles.forecastAndChance }, _react2['default'].createElement('div', { style: styles.forecastAndChanceChildL }, _react2['default'].createElement('i', { className: 'wi wi-' + (0, _utilsWeatherJs.mapWeather)(this.props.conditionsId),
-	        style: styles.icon }), _react2['default'].createElement('div', { style: styles.iconCaption }, this.props.currentConditions)), _react2['default'].createElement('div', { style: styles.verticalDivider }), _react2['default'].createElement('div', { style: styles.forecastAndChanceChildR }, _react2['default'].createElement('i', { className: 'wi wi-sprinkles',
-	        style: styles.icon }), _react2['default'].createElement('div', { style: styles.iconCaption }, '50%'))), _react2['default'].createElement('div', { style: styles.flexGrow }), _react2['default'].createElement(_dividerJs2['default'], null));
+	        style: styles.icon }), _react2['default'].createElement('div', { style: styles.iconCaption }, this.props.currentConditions)), _react2['default'].createElement('div', { style: styles.verticalDivider }), _react2['default'].createElement('div', { style: styles.forecastAndChanceChildR }, _react2['default'].createElement('div', { style: styles.metric }, 'humidity'), _react2['default'].createElement('div', { style: styles.iconCaption }, this.props.humidity, '%'))), _react2['default'].createElement('div', { style: styles.flexGrow }), _react2['default'].createElement(_dividerJs2['default'], null));
 	    }
 	  }]);
 
@@ -40653,6 +40660,7 @@
 	ForecastNow.propTypes = {
 	  conditionsId: _react2['default'].PropTypes.number,
 	  currentConditions: _react2['default'].PropTypes.string,
+	  humidity: _react2['default'].PropTypes.number,
 	  temp: _react2['default'].PropTypes.number,
 	  units: _react2['default'].PropTypes.string
 	};
