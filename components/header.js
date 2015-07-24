@@ -45,7 +45,7 @@ let Header = React.createClass({
     styles.base.backgroundColor = weatherColor(this.props.temp)
     var cityState = this.props.cityName + ', ' + this.props.country
     if(cityState.length > 20) {
-      cityState = cityState.slice(0, 17) + ' ...'
+      cityState = cityState.slice(0, 15) + '...'
     }
     if(window.device && device.platform === 'iOS') {
       styles.base.padding = '23px 0px 7px 7px'
