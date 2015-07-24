@@ -262,7 +262,6 @@ let Settings = React.createClass({
 
         <div style={styles.body} >
 
-          // Celsius/Farenheit checkboxes
           <label style={styles.label}>
             <input
               checked={this.state.units === 'metric'}
@@ -292,7 +291,6 @@ let Settings = React.createClass({
             </div>
           </label>
 
-          // Geolocation button
           <div style={styles.geoRow} >
             <div style={styles.geoLabel}>Geolocation</div>
             <button
@@ -309,7 +307,6 @@ let Settings = React.createClass({
             </button>
           </div>
 
-          // Location Display
           <div style={styles.location} >
             <div>Your location:</div>
             <div>{ cityName }</div>
