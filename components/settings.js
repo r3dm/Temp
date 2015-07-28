@@ -136,70 +136,12 @@ let Settings = React.createClass({
     this.props.syncFunc(this.state)
     this.transitionTo('home')
   },
-
-  // request geolocation data from browser
-  // pass latitude/longitude to openweathermap.org api
-  fetchWeather: function() {
-    if(navigator.geolocation) {
-      var promise = new Promise((resolve) => {
-        console.log('browser supports geolocation, waiting for user')
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            console.log('browser gps given', position)
-            var result = fetchWeather(position.coords.latitude,
-                                      position.coords.longitude,
-                                      'imperial')
-                            .then(this.weatherCallback, this.fetchWeatherError)
-            result.lat = position.coords.latitude
-            result.lon = position.coords.longitude
-            console.log('return value', result)
-
-            resolve(result)
-          },
-          () => { // error
-            console.log('geolocation error branch, fetch weather anyway')
-            resolve(
-              fetchWeather(this.state.lat, this.state.lon, this.state.units)
-                .then(this.weatherCallback, this.fetchWeatherError)
-            )
-          }
-        )
-      })
-      promise.then((result) => {
-        this.setState(result)
-      })
-    } else {
-      console.log('no geolocation available')
-    }
-  },
-
-  // used for weather api callbacks, parses the raw response into the fields
-  // we want
-  weatherCallback(results) {
-    console.log('response:', results)
-    var weather = results[0].body
-    var hourlyForecast = results[1].body.list
-    var fiveDayForecast = results[2].body.list
-
-    // weather api may return an array here, so we check
-    var currentWeather = Array.isArray(weather.weather) ?
-                    weather.weather[0] :
-                    weather.weather
-    this.hideSpinner()
-    return {
-      weather,
-      hourlyForecast,
-      fiveDayForecast,
-      temp: Math.round(weather.main.temp),
-      cityName: weather.name,
-      sunrise: weather.sys.sunrise,
-      sunset: weather.sys.sunset,
-      currentConditions: currentWeather.main,
-      country: weather.sys.country
-    }
-  },
-  fetchWeatherError(reason) {
-    console.log(reason)
+  fetchNewWeather() {
+    this.showSpinner()
+    fetchWeather().then((result) => {
+      this.setState(result)
+      this.hideSpinner()
+    })
   },
   showSpinner() {
     this.setState({ querying: true })
@@ -304,8 +246,7 @@ let Settings = React.createClass({
               style={styles.geoButton}
               onClick={() => {
                 if(this.state.online) {
-                  this.fetchWeather()
-                  this.showSpinner()
+                  this.fetchNewWeather()
                 } else {
                   this.warnOffline()
                 }

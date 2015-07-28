@@ -24,7 +24,7 @@ var styles = {
   tempStyle: {
     fontSize: '1.5em',
     flexBasis: '10vw',
-    flexGrow: 1,
+    flexGrow: 2,
     textAlign: 'center'
   },
   iStyle: {
@@ -52,7 +52,7 @@ class ForecastHourly extends React.Component {
     return (
       <div style={styles.base} >
         <div style={styles.timeStyle} >
-          {timeObj.format(' h a')}
+          {timeObj.format('h a')}
         </div>
         <div style={styles.iconStyle}>
           <i className={`wi wi-${ mapWeather(this.props.conditionId)}`}

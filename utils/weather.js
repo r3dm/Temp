@@ -4,13 +4,14 @@ const urlHourly = 'http://api.openweathermap.org/data/2.5/forecast'
 const urlDaily = 'http://api.openweathermap.org/data/2.5/forecast/daily'
 const mode = 'json'
 const cnt = 5
+const type = 'accurate'
 
 /*
  * fetches weather from api. Returns a Promise object.
  * we initiate two ajax requests in parallel as an optimization
  * returns an array of json responses
  */
-export function fetchWeather(lat, lon, units) {
+function fetchWeatherFromAPI(lat, lon, units) {
   if (isNaN(lat)) {
     return Promise.reject('error: dont hit api with NaN')
   } else {
@@ -18,7 +19,7 @@ export function fetchWeather(lat, lon, units) {
       new Promise((resolve, reject) => {
         request
           .get(urlCurrent)
-          .query({ lat, lon, units })
+          .query({ lat, lon, units, type })
           .end(function(err, res) {
             if(err) {
               reject(err)
@@ -29,7 +30,7 @@ export function fetchWeather(lat, lon, units) {
       new Promise((resolve, reject) => {
         request
           .get(urlHourly)
-          .query({ lat, lon, units })
+          .query({ lat, lon, units, type })
           .end(function(err, res) {
             if(err) {
               reject(err)
@@ -40,7 +41,7 @@ export function fetchWeather(lat, lon, units) {
       new Promise((resolve, reject) => {
         request
           .get(urlDaily)
-          .query({ lat, lon, units, cnt, mode })
+          .query({ lat, lon, units, cnt, mode, type })
           .end(function(err, res) {
             if(err) {
               reject(err)
@@ -104,4 +105,63 @@ export function mapWeather(id, night) {
   } else {
     return lookup[series]
   }
+}
+
+
+// request geolocation data from browser
+// pass latitude/longitude to openweathermap.org api
+// returns promise for new state
+export function fetchWeather() {
+  if(navigator.geolocation) {
+    var promise = new Promise((resolve) => {
+      console.log('browser supports geolocation, waiting for user')
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          console.log('browser gps given', position)
+          var result = fetchWeatherFromAPI(position.coords.latitude,
+                                    position.coords.longitude,
+                                    'imperial')
+                          .then(weatherCallback, fetchWeatherError)
+          result.lat = position.coords.latitude
+          result.lon = position.coords.longitude
+          console.log('return value', result)
+
+          resolve(result)
+         }
+      )
+    })
+    return promise
+  } else {
+    console.log('no geolocation available')
+  }
+}
+
+// used for weather api callbacks, parses the raw response into the fields
+// we want
+function weatherCallback(results) {
+  console.log('response:', results)
+  var weather = results[0].body
+  var hourlyForecast = results[1].body.list
+  var fiveDayForecast = results[2].body.list
+
+  // weather api may return an array here, so we check
+  var currentWeather = Array.isArray(weather.weather) ?
+                  weather.weather[0] :
+                  weather.weather
+  return {
+    weather,
+    hourlyForecast,
+    fiveDayForecast,
+    temp: Math.round(weather.main.temp),
+    timestamp: Date.now(),
+    cityName: weather.name,
+    sunrise: weather.sys.sunrise,
+    sunset: weather.sys.sunset,
+    currentConditions: currentWeather.main,
+    country: weather.sys.country
+  }
+}
+
+function fetchWeatherError(reason) {
+  console.log(reason)
 }

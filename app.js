@@ -8,6 +8,7 @@ import Splash from './components/splash.js'
 import Settings from './components/settings.js'
 import moment from 'moment'
 import LocalStorageMixin from 'react-localstorage'
+import { fetchWeather } from './utils/weather.js'
 
 const dtFmtStr = 'YYYY-MM-DD HH:00:00'
 /*
@@ -21,6 +22,7 @@ let App = React.createClass({
       country: 'N/A',
       currentConditions: 'thunderstorm with light drizzle',
       temp: 89,
+      timestamp: null,
       lat: NaN,
       lon: NaN,
       units: 'imperial',
@@ -55,6 +57,11 @@ let App = React.createClass({
   // handler for updating top-level state
   saveSettings: function(newState) {
     this.setState(newState)
+  },
+  componentDidUpdate: function() {
+    if(Date.now() - this.state.timestamp > 60 * 60 * 1000) {
+      this.setState(fetchWeather())
+    }
   },
   render() {
     return (
