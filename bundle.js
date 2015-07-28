@@ -117,8 +117,14 @@
 	    this.setState(newState);
 	  },
 	  componentDidUpdate: function componentDidUpdate() {
+	    var _this = this;
+
+	    // if(Date.now() - this.state.timestamp > 1000) {
 	    if (Date.now() - this.state.timestamp > 60 * 60 * 1000) {
-	      this.setState((0, _utilsWeatherJs.fetchWeather)());
+	      console.log('state is stale');
+	      (0, _utilsWeatherJs.fetchWeather)().then(function (result) {
+	        _this.setState(result);
+	      });
 	    }
 	  },
 	  render: function render() {
