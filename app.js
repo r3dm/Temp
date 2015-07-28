@@ -59,8 +59,12 @@ let App = React.createClass({
     this.setState(newState)
   },
   componentDidUpdate: function() {
+    // if(Date.now() - this.state.timestamp > 1000) {
     if(Date.now() - this.state.timestamp > 60 * 60 * 1000) {
-      this.setState(fetchWeather())
+      console.log('state is stale')
+      fetchWeather().then((result) => {
+        this.setState(result)
+      })
     }
   },
   render() {
