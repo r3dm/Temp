@@ -1,10 +1,10 @@
 import React from 'react'
+import { PureRenderMixin } from 'react/addons'
 import Radium from 'radium'
 import { Navigation } from 'react-router'
 import { weatherColor } from '../utils/weatherColor.js'
 import { fetchWeather } from '../utils/weather.js'
 import Color from 'color'
-import classNames from 'classnames'
 import Modal from 'boron/FadeModal'
 import modalStyles from '../utils/modalStyles.js'
 
@@ -106,7 +106,10 @@ let Settings = React.createClass({
     state: React.PropTypes.object,
     syncFunc: React.PropTypes.func
   },
-  mixins: [Navigation],
+  mixins: [
+    Navigation,
+    PureRenderMixin
+  ],
 
   getInitialState: function() {
     return {

@@ -10,10 +10,12 @@ import moment from 'moment'
 import LocalStorageMixin from 'react-localstorage'
 import { fetchWeather } from './utils/weather.js'
 import EventListener from 'react-event-listener'
+import { PureRenderMixin } from 'react/addons'
 
 const dtFmtStr = 'YYYY-MM-DD HH:00:00'
-// const staleTime = 60 * 60 * 1000
-const staleTime = 1 * 1000
+const staleTime = 60 * 60 * 1000
+// const staleTime = 10 * 1000
+// const staleTime = 1 * 1000
 
 /*
  * Top level Component
@@ -21,7 +23,8 @@ const staleTime = 1 * 1000
 let App = React.createClass({
   mixins: [
     EventListener,
-    LocalStorageMixin
+    LocalStorageMixin,
+    PureRenderMixin
   ],
   getInitialState() {
     return {

@@ -1,4 +1,5 @@
 import React from 'react'
+import { PureRenderMixin } from 'react/addons'
 import Radium from 'radium'
 import { Navigation } from 'react-router'
 import { splashRed } from '../utils/weatherColor.js'
@@ -53,7 +54,10 @@ var styles = {
 }
 
 let Splash = React.createClass({
-  mixins: [Navigation],
+  mixins: [
+    Navigation,
+    PureRenderMixin
+  ],
 
   render: function() {
     return (

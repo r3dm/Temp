@@ -1,4 +1,5 @@
 import React from 'react'
+import { PureRenderMixin } from 'react/addons'
 import Radium from 'radium'
 import moment from 'moment'
 import { Navigation } from 'react-router'
@@ -39,7 +40,10 @@ let Header = React.createClass({
     temp: React.PropTypes.number,
     units: React.PropTypes.string
   },
-  mixins: [Navigation],
+  mixins: [
+    Navigation,
+    PureRenderMixin
+  ],
 
   render() {
     styles.base.backgroundColor = weatherColor(this.props.temp)
