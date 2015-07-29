@@ -94,8 +94,8 @@ class ForecastNow extends React.Component {
 
     styles.base.borderBottomColor = colorDark
     styles.base.boxShadow = `0 2px ${colorLight}`
-    let temp = this.props.units === "imperial" ? this.props.temp
-                                  : convertTemp.toCelsius(this.props.temp)
+    let temp = this.props.units === 'imperial' ? this.props.temp
+                                        : convertTemp.toCelsius(this.props.temp)
 
     return (
       <div style={styles.base} >

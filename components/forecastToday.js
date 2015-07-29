@@ -2,7 +2,6 @@ import React from 'react'
 import ForecastHourly from './forecastHourly.js'
 import ForecastNow from './forecastNow.js'
 import Radium from 'radium'
-import convertTemp from '../utils/convertTemp.js'
 import { splashRed } from '../utils/weatherColor.js'
 
 var styles = {
@@ -57,12 +56,13 @@ class ForecastToday extends React.Component {
           {forecasts.map((f, index) => {
             return (
               <ForecastHourly
+                conditionId={f.weather[0].id}
+                conditions={f.weather[0].description}
                 key={index}
                 temp={f.main.temp}
                 time={f.dt_txt}
                 units={ this.props.units }
-                conditionId={f.weather[0].id}
-                conditions={f.weather[0].description} />
+                />
             )
           })}
         </div>

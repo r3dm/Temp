@@ -40,10 +40,10 @@ class ForecastFiveDay extends React.Component {
     styles.base.borderTop = `2px solid ${colorLight}`
     styles.base.boxShadow = `0 -2px ${colorDark}`
     var timeObj = moment(this.props.time, 'X')
-    let high = this.props.units === "imperial" ? this.props.high
-                                    : convertTemp.toCelsius(this.props.high)
-    let low = this.props.units === "imperial" ? this.props.low
-                                    : convertTemp.toCelsius(this.props.low)
+    let high = this.props.units === 'imperial' ? this.props.high
+                                        : convertTemp.toCelsius(this.props.high)
+    let low = this.props.units === 'imperial' ? this.props.low
+                                         : convertTemp.toCelsius(this.props.low)
 
     return (
       <div style={styles.base} >

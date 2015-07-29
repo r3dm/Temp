@@ -2,7 +2,6 @@ import React from 'react'
 import Radium from 'radium'
 import { Navigation } from 'react-router'
 import { weatherColor } from '../utils/weatherColor.js'
-import convertTemp from '../utils/convertTemp.js'
 import { fetchWeather } from '../utils/weather.js'
 import Color from 'color'
 import classNames from 'classnames'
@@ -112,7 +111,7 @@ let Settings = React.createClass({
       online: window.navigator.onLine,
       querying: false,
       temp: this.props.state.temp,
-      units: this.props.state.units,
+      units: this.props.state.units
     }
   },
 
@@ -151,7 +150,7 @@ let Settings = React.createClass({
   },
   warnOffline() {
     if(navigator.notification) {
-      navigator.notification.alert("you are currently offline", // message
+      navigator.notification.alert('you are currently offline', // message
                                    null, // callback
                                    'Warning', // title
                                    'OK') // button name
@@ -176,7 +175,7 @@ let Settings = React.createClass({
     }
 
     // cityName has two sources of truth - give precedence to local state object
-    var cityName = 'N/A';
+    var cityName = 'N/A'
     if(this.state.cityName) {
       cityName = this.state.cityName
     } else if (this.props.state.cityName) {
@@ -243,14 +242,15 @@ let Settings = React.createClass({
               </div>
             </div>
             <div
-              style={styles.geoButton}
               onClick={() => {
                 if(this.state.online) {
                   this.fetchNewWeather()
                 } else {
                   this.warnOffline()
                 }
-              }}>
+              }}
+              style={styles.geoButton}
+              >
               <i className={spinnerClasses} />
             </div>
           </div>

@@ -46,8 +46,8 @@ class ForecastHourly extends React.Component {
   render() {
     styles.base.backgroundColor = weatherColor(this.props.temp)
     var timeObj = moment(this.props.time + ' +0000', 'YYYY-MM-DD HH:mm:ss Z')
-    let temp = this.props.units === "imperial" ? this.props.temp
-                                  : convertTemp.toCelsius(this.props.temp)
+    let temp = this.props.units === 'imperial' ? this.props.temp
+                                        : convertTemp.toCelsius(this.props.temp)
 
     return (
       <div style={styles.base} >
@@ -67,11 +67,11 @@ class ForecastHourly extends React.Component {
   }
 }
 ForecastHourly.propTypes = {
+  conditionId: React.PropTypes.number,
+  conditions: React.PropTypes.string,
   temp: React.PropTypes.number,
   time: React.PropTypes.string,
-  units: React.PropTypes.string,
-  conditionId: React.PropTypes.number,
-  conditions: React.PropTypes.string
+  units: React.PropTypes.string
 }
 
 export default new Radium(ForecastHourly)

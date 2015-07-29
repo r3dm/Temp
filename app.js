@@ -9,13 +9,21 @@ import Settings from './components/settings.js'
 import moment from 'moment'
 import LocalStorageMixin from 'react-localstorage'
 import { fetchWeather } from './utils/weather.js'
+import EventListener from 'react-event-listener'
 
 const dtFmtStr = 'YYYY-MM-DD HH:00:00'
+const oneHourMs = 60 * 60 * 1000
+// const oneMinMs = 60 * 1000
+// const tenSecondsMs = 10 * 1000
+
 /*
  * Top level Component
  */
 let App = React.createClass({
-  mixins: [LocalStorageMixin],
+  mixins: [
+    EventListener,
+    LocalStorageMixin
+  ],
   getInitialState() {
     return {
       cityName: 'none',
@@ -54,17 +62,28 @@ let App = React.createClass({
       }
     }
   },
-  // handler for updating top-level state
+  componentDidUpdate: function() {
+    this.testStaleAndUpdate()
+  },
+  listeners: {
+    document: {
+      resume: 'testStaleAndUpdate',
+      visibilitychange: 'onVisibilityChange'
+    }
+  },
+  onVisibilityChange: function() {
+    if(!document.hidden) {
+      console.log('recieved focus')
+      this.testStaleAndUpdate()
+    }
+  },
   saveSettings: function(newState) {
     this.setState(newState)
   },
-  componentDidUpdate: function() {
-    // if(Date.now() - this.state.timestamp > 1000) {
-    if(Date.now() - this.state.timestamp > 60 * 60 * 1000) {
+  testStaleAndUpdate: function() {
+    if(Date.now() - this.state.timestamp > oneHourMs) {
       console.log('state is stale')
-      fetchWeather().then((result) => {
-        this.setState(result)
-      })
+      fetchWeather().then(this.saveSettings)
     }
   },
   render() {
@@ -99,8 +118,8 @@ function startApp() {
 // Cordova delay
 if (window.cordova) {
   console.log('wait for deviceready')
-  document.addEventListener('deviceready', startApp, false);
+  document.addEventListener('deviceready', startApp, false)
 } else {
   // browser, start asap
-  startApp();
+  startApp()
 }
