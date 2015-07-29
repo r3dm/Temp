@@ -10,11 +10,12 @@ import moment from 'moment'
 import LocalStorageMixin from 'react-localstorage'
 import { fetchWeather } from './utils/weather.js'
 import EventListener from 'react-event-listener'
+import { PureRenderMixin } from 'react/addons'
 
 const dtFmtStr = 'YYYY-MM-DD HH:00:00'
-const oneHourMs = 60 * 60 * 1000
-// const oneMinMs = 60 * 1000
-// const tenSecondsMs = 10 * 1000
+const staleTime = 60 * 60 * 1000
+// const staleTime = 10 * 1000
+// const staleTime = 1 * 1000
 
 /*
  * Top level Component
@@ -22,7 +23,8 @@ const oneHourMs = 60 * 60 * 1000
 let App = React.createClass({
   mixins: [
     EventListener,
-    LocalStorageMixin
+    LocalStorageMixin,
+    PureRenderMixin
   ],
   getInitialState() {
     return {
@@ -81,7 +83,7 @@ let App = React.createClass({
     this.setState(newState)
   },
   testStaleAndUpdate: function() {
-    if(Date.now() - this.state.timestamp > oneHourMs) {
+    if(Date.now() - this.state.timestamp > staleTime) {
       console.log('state is stale')
       fetchWeather().then(this.saveSettings)
     }
@@ -120,6 +122,5 @@ if (window.cordova) {
   console.log('wait for deviceready')
   document.addEventListener('deviceready', startApp, false)
 } else {
-  // browser, start asap
   startApp()
 }
