@@ -6,6 +6,7 @@ import { fetchWeather } from '../utils/weather.js'
 import Color from 'color'
 import classNames from 'classnames'
 import Modal from 'boron/FadeModal'
+import modalStyles from '../utils/modalStyles.js'
 
 var styles = {
   base: {
@@ -97,16 +98,6 @@ var styles = {
   location: {
     fontSize: '1.5em',
     textAlign: 'center'
-  },
-  modal: {
-    maxWidth: '30vw',
-    margin: '0 auto',
-    padding: '1px'
-  },
-  modalText: {
-    borderRadius: '10px',
-    fontSize: '5em',
-    textAlign: 'center'
   }
 }
 
@@ -175,7 +166,7 @@ let Settings = React.createClass({
     }
     styles.base.backgroundColor = mainColor
     styles.radio.backgroundImage = `radial-gradient(circle, ${mainColor} 10%, ${shadow} 80%)`
-    styles.modalText.backgroundColor = new Color(mainColor).darken(0.2).hslaString()
+    modalStyles.modalText.backgroundColor = new Color(mainColor).darken(0.2).hslaString()
 
     // radio button check-fill object
     var check = <div style={styles.check} ></div>
@@ -268,8 +259,8 @@ let Settings = React.createClass({
 
         </div>
         <Modal ref="modal" >
-          <div style={styles.modal} >
-            <h2 style={styles.modalText} >
+          <div style={modalStyles.modal} >
+            <h2 style={modalStyles.modalText} >
               <i className='fa fa-circle-o-notch fa-spin' />
             </h2>
           </div>

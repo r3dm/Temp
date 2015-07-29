@@ -10,12 +10,10 @@ import moment from 'moment'
 import LocalStorageMixin from 'react-localstorage'
 import { fetchWeather } from './utils/weather.js'
 import EventListener from 'react-event-listener'
-import Modal from 'boron/FadeModal'
 
 const dtFmtStr = 'YYYY-MM-DD HH:00:00'
-const oneHourMs = 60 * 60 * 1000
-// const oneMinMs = 60 * 1000
-// const tenSecondsMs = 10 * 1000
+// const staleTime = 60 * 60 * 1000
+const staleTime = 1 * 1000
 
 /*
  * Top level Component
@@ -82,7 +80,7 @@ let App = React.createClass({
     this.setState(newState)
   },
   testStaleAndUpdate: function() {
-    if(Date.now() - this.state.timestamp > oneHourMs) {
+    if(Date.now() - this.state.timestamp > staleTime) {
       console.log('state is stale')
       fetchWeather().then(this.saveSettings)
     }

@@ -25,6 +25,7 @@ var styles = {
 class Home extends React.Component {
   render() {
     let fiveDayForecast = this.props.state.fiveDayForecast.slice(1, 5)
+
     return (
       <div style={styles.base} >
         <Header
