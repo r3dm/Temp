@@ -5,6 +5,7 @@ import { weatherColor } from '../utils/weatherColor.js'
 import { fetchWeather } from '../utils/weather.js'
 import Color from 'color'
 import classNames from 'classnames'
+import Modal from 'boron/FadeModal'
 
 var styles = {
   base: {
@@ -96,6 +97,16 @@ var styles = {
   location: {
     fontSize: '1.5em',
     textAlign: 'center'
+  },
+  modal: {
+    maxWidth: '30vw',
+    margin: '0 auto',
+    padding: '1px'
+  },
+  modalText: {
+    borderRadius: '10px',
+    fontSize: '5em',
+    textAlign: 'center'
   }
 }
 
@@ -109,7 +120,6 @@ let Settings = React.createClass({
   getInitialState: function() {
     return {
       online: window.navigator.onLine,
-      querying: false,
       temp: this.props.state.temp,
       units: this.props.state.units
     }
@@ -143,10 +153,10 @@ let Settings = React.createClass({
     })
   },
   showSpinner() {
-    this.setState({ querying: true })
+    this.refs.modal.show()
   },
   hideSpinner() {
-    this.setState({ querying: false })
+    this.refs.modal.hide()
   },
   warnOffline() {
     if(navigator.notification) {
@@ -165,6 +175,7 @@ let Settings = React.createClass({
     }
     styles.base.backgroundColor = mainColor
     styles.radio.backgroundImage = `radial-gradient(circle, ${mainColor} 10%, ${shadow} 80%)`
+    styles.modalText.backgroundColor = new Color(mainColor).darken(0.2).hslaString()
 
     // radio button check-fill object
     var check = <div style={styles.check} ></div>
@@ -181,11 +192,6 @@ let Settings = React.createClass({
     } else if (this.props.state.cityName) {
       cityName = this.props.state.cityName
     }
-    var spinnerClasses = classNames({
-      'fa': true,
-      'fa-location-arrow': !this.state.querying,
-      'fa-circle-o-notch fa-spin': this.state.querying
-    })
 
     return (
       <div style={styles.base} >
@@ -251,7 +257,7 @@ let Settings = React.createClass({
               }}
               style={styles.geoButton}
               >
-              <i className={spinnerClasses} />
+              <i className='fa fa-location-arrow' />
             </div>
           </div>
 
@@ -261,6 +267,13 @@ let Settings = React.createClass({
           </div>
 
         </div>
+        <Modal ref="modal" >
+          <div style={styles.modal} >
+            <h2 style={styles.modalText} >
+              <i className='fa fa-circle-o-notch fa-spin' />
+            </h2>
+          </div>
+        </Modal>
       </div>
     )
   }

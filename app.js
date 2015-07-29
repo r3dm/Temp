@@ -10,6 +10,7 @@ import moment from 'moment'
 import LocalStorageMixin from 'react-localstorage'
 import { fetchWeather } from './utils/weather.js'
 import EventListener from 'react-event-listener'
+import Modal from 'boron/FadeModal'
 
 const dtFmtStr = 'YYYY-MM-DD HH:00:00'
 const oneHourMs = 60 * 60 * 1000
@@ -120,6 +121,5 @@ if (window.cordova) {
   console.log('wait for deviceready')
   document.addEventListener('deviceready', startApp, false)
 } else {
-  // browser, start asap
   startApp()
 }
