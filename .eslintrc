@@ -1,9 +1,13 @@
 {
+  "globals": {
+    device: true
+  },
   "parser": "babel-eslint",
   "plugins": [
     "react"
   ],
   "rules": {
+    "camelcase": 0,
     "react/display-name": 0,
     "react/jsx-boolean-value": 1,
     "react/jsx-no-undef": 1,

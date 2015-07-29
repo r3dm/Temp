@@ -13,8 +13,9 @@ import EventListener from 'react-event-listener'
 
 const dtFmtStr = 'YYYY-MM-DD HH:00:00'
 const oneHourMs = 60 * 60 * 1000
-const oneMinMs = 60 * 1000
-const tenSecondsMs = 10 * 1000
+// const oneMinMs = 60 * 1000
+// const tenSecondsMs = 10 * 1000
+
 /*
  * Top level Component
  */
@@ -61,6 +62,9 @@ let App = React.createClass({
       }
     }
   },
+  componentDidUpdate: function() {
+    this.testStaleAndUpdate()
+  },
   listeners: {
     document: {
       resume: 'testStaleAndUpdate',
@@ -81,9 +85,6 @@ let App = React.createClass({
       console.log('state is stale')
       fetchWeather().then(this.saveSettings)
     }
-  },
-  componentDidUpdate: function() {
-    this.testStaleAndUpdate()
   },
   render() {
     return (
@@ -117,8 +118,8 @@ function startApp() {
 // Cordova delay
 if (window.cordova) {
   console.log('wait for deviceready')
-  document.addEventListener('deviceready', startApp, false);
+  document.addEventListener('deviceready', startApp, false)
 } else {
   // browser, start asap
-  startApp();
+  startApp()
 }

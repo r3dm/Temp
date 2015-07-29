@@ -6,6 +6,36 @@ const mode = 'json'
 const cnt = 5
 const type = 'accurate'
 
+// used for weather api callbacks, parses the raw response into the fields
+// we want
+function weatherCallback(results) {
+  console.log('response:', results)
+  var weather = results[0].body
+  var hourlyForecast = results[1].body.list
+  var fiveDayForecast = results[2].body.list
+
+  // weather api may return an array here, so we check
+  var currentWeather = Array.isArray(weather.weather) ?
+                  weather.weather[0] :
+                  weather.weather
+  return {
+    weather,
+    hourlyForecast,
+    fiveDayForecast,
+    temp: Math.round(weather.main.temp),
+    timestamp: Date.now(),
+    cityName: weather.name,
+    sunrise: weather.sys.sunrise,
+    sunset: weather.sys.sunset,
+    currentConditions: currentWeather.main,
+    country: weather.sys.country
+  }
+}
+
+function fetchWeatherError(reason) {
+  console.log(reason)
+}
+
 /*
  * fetches weather from api. Returns a Promise object.
  * we initiate two ajax requests in parallel as an optimization
@@ -134,34 +164,4 @@ export function fetchWeather() {
   } else {
     console.log('no geolocation available')
   }
-}
-
-// used for weather api callbacks, parses the raw response into the fields
-// we want
-function weatherCallback(results) {
-  console.log('response:', results)
-  var weather = results[0].body
-  var hourlyForecast = results[1].body.list
-  var fiveDayForecast = results[2].body.list
-
-  // weather api may return an array here, so we check
-  var currentWeather = Array.isArray(weather.weather) ?
-                  weather.weather[0] :
-                  weather.weather
-  return {
-    weather,
-    hourlyForecast,
-    fiveDayForecast,
-    temp: Math.round(weather.main.temp),
-    timestamp: Date.now(),
-    cityName: weather.name,
-    sunrise: weather.sys.sunrise,
-    sunset: weather.sys.sunset,
-    currentConditions: currentWeather.main,
-    country: weather.sys.country
-  }
-}
-
-function fetchWeatherError(reason) {
-  console.log(reason)
 }

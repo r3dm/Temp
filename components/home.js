@@ -34,9 +34,9 @@ class Home extends React.Component {
           units={ this.props.state.units } />
         <ForecastToday
           conditionsId = { this.props.state.weather.weather[0].id }
-          humidity = { this.props.state.weather.main.humidity }
           currentConditions = { this.props.state.currentConditions }
           forecasts = { this.props.state.hourlyForecast }
+          humidity = { this.props.state.weather.main.humidity }
           temp={ this.props.state.temp }
           units={ this.props.state.units } />
         <div style={styles.footer} >
