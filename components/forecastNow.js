@@ -10,7 +10,7 @@ var styles = {
   base: {
     display: 'flex',
     flexDirection: 'column',
-    flexWrap: 'wrap',
+    flexWrap: 'nowrap',
     justifyContent: 'center',
     alignItems: 'center',
     borderBottom: '2px solid',
@@ -98,7 +98,9 @@ class ForecastNow extends React.Component {
                                         : convertTemp.toCelsius(this.props.temp)
 
     return (
-      <div style={styles.base} >
+      <div
+        id="forecastNowContainer"
+        style={styles.base} >
         <div style={styles.flexGrow} ></div>
 
         <div style={styles.mainTempWrapper} >
