@@ -10,7 +10,7 @@ var styles = {
   base: {
     display: 'flex',
     flexDirection: 'column',
-    flexWrap: 'wrap',
+    flexWrap: 'nowrap',
     justifyContent: 'center',
     alignItems: 'center',
     borderBottom: '2px solid',
@@ -18,7 +18,10 @@ var styles = {
   },
   mainTempWrapper: {
     fontSize: '25vw',
-    maxWidth: '50%'
+    maxWidth: '50%',
+    '@media screen and (min-width: 768px)': {
+      fontSize: '10em'
+    }
   },
   flexGrow: {
     flexGrow: 1
@@ -53,15 +56,24 @@ var styles = {
   },
   icon: {
     fontSize: '10vw',
-    padding: '0 2vw'
+    padding: '0 2vw',
+    '@media screen and (min-width: 768px)': {
+      fontSize: '5em'
+    }
   },
   metric: {
-    fontSize: '5vw'
+    fontSize: '5vw',
+    '@media screen and (min-width: 768px)': {
+      fontSize: '3em'
+    }
   },
   caption: {
     padding: '5px 1em 0 1em',
     fontSize: '5vw',
-    textAlign: 'center'
+    textAlign: 'center',
+    '@media screen and (min-width: 768px)': {
+      fontSize: '2.5em'
+    }
   }
 }
 
@@ -98,10 +110,15 @@ class ForecastNow extends React.Component {
                                         : convertTemp.toCelsius(this.props.temp)
 
     return (
-      <div style={styles.base} >
+      <div
+        id="forecastNowContainer"
+        style={styles.base} >
         <div style={styles.flexGrow} ></div>
 
-        <div style={styles.mainTempWrapper} >
+        <div
+          id="mainTempWrapper"
+          style={styles.mainTempWrapper}
+          key="one">
           <span>
             { temp }
           </span>
@@ -111,8 +128,10 @@ class ForecastNow extends React.Component {
         <div style={styles.forecastAndChance} >
 
           <div style={styles.forecastAndChanceChildL} >
-            <i className={`wi wi-${ mapWeather(this.props.conditionsId)}`}
-               style={styles.icon}></i>
+            <i
+              className={`wi wi-${ mapWeather(this.props.conditionsId)}`}
+              style={styles.icon}
+              key="two"></i>
             <div style={styles.caption}>
               { this.props.currentConditions }
             </div>
@@ -121,10 +140,14 @@ class ForecastNow extends React.Component {
           <div style={styles.verticalDivider} ></div>
 
           <div style={styles.forecastAndChanceChildR} >
-            <div style={styles.metric}>
+            <div
+              style={styles.metric}
+              key="three">
               humidity
             </div>
-            <div style={styles.caption}>
+            <div
+              style={styles.caption}
+              key="four">
               { this.props.humidity }%
             </div>
           </div>
