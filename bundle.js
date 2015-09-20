@@ -42389,7 +42389,7 @@
 	  base: {
 	    display: 'flex',
 	    flexDirection: 'column',
-	    flexWrap: 'wrap',
+	    flexWrap: 'nowrap',
 	    justifyContent: 'center',
 	    alignItems: 'center',
 	    borderBottom: '2px solid',
@@ -42397,7 +42397,10 @@
 	  },
 	  mainTempWrapper: {
 	    fontSize: '25vw',
-	    maxWidth: '50%'
+	    maxWidth: '50%',
+	    '@media screen and (min-width: 768px)': {
+	      fontSize: '10em'
+	    }
 	  },
 	  flexGrow: {
 	    flexGrow: 1
@@ -42432,15 +42435,24 @@
 	  },
 	  icon: {
 	    fontSize: '10vw',
-	    padding: '0 2vw'
+	    padding: '0 2vw',
+	    '@media screen and (min-width: 768px)': {
+	      fontSize: '5em'
+	    }
 	  },
 	  metric: {
-	    fontSize: '5vw'
+	    fontSize: '5vw',
+	    '@media screen and (min-width: 768px)': {
+	      fontSize: '3em'
+	    }
 	  },
 	  caption: {
 	    padding: '5px 1em 0 1em',
 	    fontSize: '5vw',
-	    textAlign: 'center'
+	    textAlign: 'center',
+	    '@media screen and (min-width: 768px)': {
+	      fontSize: '2.5em'
+	    }
 	  }
 	};
 
@@ -42482,8 +42494,19 @@
 	      styles.base.boxShadow = '0 2px ' + colorLight;
 	      var temp = this.props.units === 'imperial' ? this.props.temp : _utilsConvertTempJs2['default'].toCelsius(this.props.temp);
 
-	      return _react2['default'].createElement('div', { style: styles.base }, _react2['default'].createElement('div', { style: styles.flexGrow }), _react2['default'].createElement('div', { style: styles.mainTempWrapper }, _react2['default'].createElement('span', null, temp), _react2['default'].createElement('span', { style: styles.degrees }, '°')), _react2['default'].createElement('div', { style: styles.forecastAndChance }, _react2['default'].createElement('div', { style: styles.forecastAndChanceChildL }, _react2['default'].createElement('i', { className: 'wi wi-' + (0, _utilsWeatherJs.mapWeather)(this.props.conditionsId),
-	        style: styles.icon }), _react2['default'].createElement('div', { style: styles.caption }, this.props.currentConditions)), _react2['default'].createElement('div', { style: styles.verticalDivider }), _react2['default'].createElement('div', { style: styles.forecastAndChanceChildR }, _react2['default'].createElement('div', { style: styles.metric }, 'humidity'), _react2['default'].createElement('div', { style: styles.caption }, this.props.humidity, '%'))), _react2['default'].createElement('div', { style: styles.flexGrow }), _react2['default'].createElement(_dividerJs2['default'], null));
+	      return _react2['default'].createElement('div', {
+	        id: 'forecastNowContainer',
+	        style: styles.base }, _react2['default'].createElement('div', { style: styles.flexGrow }), _react2['default'].createElement('div', {
+	        id: 'mainTempWrapper',
+	        style: styles.mainTempWrapper,
+	        key: 'one' }, _react2['default'].createElement('span', null, temp), _react2['default'].createElement('span', { style: styles.degrees }, '°')), _react2['default'].createElement('div', { style: styles.forecastAndChance }, _react2['default'].createElement('div', { style: styles.forecastAndChanceChildL }, _react2['default'].createElement('i', {
+	        className: 'wi wi-' + (0, _utilsWeatherJs.mapWeather)(this.props.conditionsId),
+	        style: styles.icon,
+	        key: 'two' }), _react2['default'].createElement('div', { style: styles.caption }, this.props.currentConditions)), _react2['default'].createElement('div', { style: styles.verticalDivider }), _react2['default'].createElement('div', { style: styles.forecastAndChanceChildR }, _react2['default'].createElement('div', {
+	        style: styles.metric,
+	        key: 'three' }, 'humidity'), _react2['default'].createElement('div', {
+	        style: styles.caption,
+	        key: 'four' }, this.props.humidity, '%'))), _react2['default'].createElement('div', { style: styles.flexGrow }), _react2['default'].createElement(_dividerJs2['default'], null));
 	    }
 	  }]);
 
